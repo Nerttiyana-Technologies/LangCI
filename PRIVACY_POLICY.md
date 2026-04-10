@@ -56,9 +56,9 @@ If we ever change how LangCI handles data, we will update this page and update t
 
 ## Contact
 
-If you have questions about this policy or about how LangCI handles your data, please contact:
+If you have questions about this policy or about how LangCI handles your data:
 
-**Email:** i.suresh.subramanian@gmail.com
+**Issues:** Please open an issue at https://github.com/isureshsubramanian/LangCI/issues
 
 ---
 
