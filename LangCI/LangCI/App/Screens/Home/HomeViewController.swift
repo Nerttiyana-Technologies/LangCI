@@ -1,0 +1,600 @@
+// HomeViewController.swift
+// LangCI
+//
+// Production-quality UIKit dashboard for Home screen with scrollable layout,
+// gradient hero header, level/points card, stats, quick actions, and recent activity.
+
+import UIKit
+
+// MARK: - HomeViewController
+
+final class HomeViewController: UIViewController {
+
+    // MARK: - UI Components
+
+    private let scrollView = UIScrollView()
+    private let containerStack = UIStackView()
+
+    // Wow-factor hero: animated gradient + greeting
+    private let heroHeaderView = AnimatedGradientHeroView()
+    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
+
+    // Today's practice CTA card — big, coloured, tappable
+    private let practiceCTA = PracticeCTACard()
+
+    // Level & Points Card (unchanged) + daily goal ring
+    private let levelCard = LCCard()
+    private let levelBadge = UIView()
+    private let levelBadgeLabel = UILabel()
+    private let levelTitleLabel = UILabel()
+    private let levelSubtitleLabel = UILabel()
+    private let progressBar = ProgressBarView()
+    private let progressCaption = UILabel()
+    private let dailyGoalRing = DailyGoalRingView()
+
+    // Stats Row (4 cards) with count-up numbers
+    private let statsRow = UIStackView()
+    private let streakCard = StatCardView(icon: "flame.fill", value: "0", label: "Streak", tint: .lcOrange)
+    private let accuracyCard = StatCardView(icon: "target", value: "0%", label: "Accuracy", tint: .lcGreen)
+    private let sessionsCard = StatCardView(icon: "books.vertical.fill", value: "0", label: "Sessions", tint: .lcBlue)
+    private let badgesCard = StatCardView(icon: "medal.fill", value: "0", label: "Badges", tint: .lcGold)
+
+    // Quick Actions
+    private let actionsRow = UIStackView()
+    private let secondaryActionsRow = UIStackView()
+    private let startTrainingButton = LCButton(title: "Start Training", color: .lcGreen)
+    private let ling6Button = LCButton(title: "Ling 6 Test", color: .lcTeal)
+    private let confusionDrillButton = LCButton(title: "Confusion Drill", color: .lcPurple)
+
+    // Recent Activity
+    private let activityHeaderView = SectionHeaderView(title: "Recent Activity")
+    private let activityTable = UITableView(frame: .zero, style: .plain)
+    private var activityHeightConstraint: NSLayoutConstraint!
+
+    // State
+    private var recentSessions: [TrainingSession] = []
+    private var homeStats: HomeStats?
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        buildUI()
+        setupTableView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadHomeData()
+    }
+
+    // MARK: - UI Setup
+
+    private func buildUI() {
+        view.backgroundColor = .lcBackground
+
+        // Configure scroll view
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(scrollView)
+
+        // Configure container stack
+        containerStack.axis = .vertical
+        containerStack.spacing = LC.sectionSpacing
+        containerStack.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(containerStack)
+
+        // 1. Hero Header — animated gradient greeting
+        containerStack.addArrangedSubview(heroHeaderView)
+
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        heroHeaderView.addSubview(loadingIndicator)
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: heroHeaderView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: heroHeaderView.centerYAnchor)
+        ])
+
+        // 2. Today's practice CTA
+        practiceCTA.addTarget(self, action: #selector(didTapStartTraining), for: .touchUpInside)
+        containerStack.addArrangedSubview(practiceCTA)
+
+        // 3. Level & Points Card (with daily-goal ring)
+        buildLevelCard()
+        containerStack.addArrangedSubview(levelCard)
+
+        // 4. Stats Row
+        buildStatsRow()
+        containerStack.addArrangedSubview(statsRow)
+
+        // 5. Quick Actions
+        buildQuickActions()
+        containerStack.addArrangedSubview(actionsRow)
+        containerStack.addArrangedSubview(secondaryActionsRow)
+
+        // 6. Recent Activity
+        containerStack.addArrangedSubview(activityHeaderView)
+        containerStack.addArrangedSubview(activityTable)
+
+        // Layout constraints
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            containerStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: LC.cardPadding),
+            containerStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -LC.cardPadding),
+            containerStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: LC.cardPadding),
+            containerStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -LC.cardPadding),
+            containerStack.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * LC.cardPadding),
+
+            heroHeaderView.heightAnchor.constraint(equalToConstant: 140),
+            practiceCTA.heightAnchor.constraint(equalToConstant: 110)
+        ])
+
+        activityHeightConstraint = activityTable.heightAnchor.constraint(equalToConstant: 200)
+        activityHeightConstraint.isActive = true
+    }
+
+    private func buildLevelCard() {
+        levelCard.translatesAutoresizingMaskIntoConstraints = false
+        let padding = LC.cardPadding
+
+        // Level badge (circle on left)
+        levelBadge.translatesAutoresizingMaskIntoConstraints = false
+        levelBadge.backgroundColor = .lcBlue
+        levelBadge.layer.cornerRadius = 28
+        levelBadge.clipsToBounds = true
+
+        levelBadgeLabel.text = "1"
+        levelBadgeLabel.font = UIFont.lcCardValue()
+        levelBadgeLabel.textColor = .white
+        levelBadgeLabel.textAlignment = .center
+        levelBadgeLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        levelBadge.addSubview(levelBadgeLabel)
+        NSLayoutConstraint.activate([
+            levelBadgeLabel.centerXAnchor.constraint(equalTo: levelBadge.centerXAnchor),
+            levelBadgeLabel.centerYAnchor.constraint(equalTo: levelBadge.centerYAnchor)
+        ])
+
+        // Right side: title, subtitle, progress bar, caption
+        levelTitleLabel.text = "Level 1"
+        levelTitleLabel.font = UIFont.lcBodyBold()
+        levelTitleLabel.textColor = .label
+        levelTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        levelSubtitleLabel.text = "0 points"
+        levelSubtitleLabel.font = UIFont.lcCaption()
+        levelSubtitleLabel.textColor = .secondaryLabel
+        levelSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        progressBar.color = .lcBlue
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+
+        progressCaption.text = "0 pts to Level 2"
+        progressCaption.font = UIFont.lcCaption()
+        progressCaption.textColor = .secondaryLabel
+        progressCaption.translatesAutoresizingMaskIntoConstraints = false
+
+        // Vertical stack for right side
+        let rightStack = UIStackView(arrangedSubviews: [
+            levelTitleLabel,
+            levelSubtitleLabel,
+            progressBar,
+            progressCaption
+        ])
+        rightStack.axis = .vertical
+        rightStack.spacing = 6
+        rightStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Daily goal ring on the far right of the level card
+        dailyGoalRing.ringColor = .lcOrange
+        dailyGoalRing.translatesAutoresizingMaskIntoConstraints = false
+
+        // Horizontal stack for badge + right side + daily ring
+        let hStack = UIStackView(arrangedSubviews: [levelBadge, rightStack, dailyGoalRing])
+        hStack.axis = .horizontal
+        hStack.spacing = 16
+        hStack.alignment = .center
+        hStack.translatesAutoresizingMaskIntoConstraints = false
+
+        levelCard.addSubview(hStack)
+        NSLayoutConstraint.activate([
+            hStack.topAnchor.constraint(equalTo: levelCard.topAnchor, constant: padding),
+            hStack.bottomAnchor.constraint(equalTo: levelCard.bottomAnchor, constant: -padding),
+            hStack.leadingAnchor.constraint(equalTo: levelCard.leadingAnchor, constant: padding),
+            hStack.trailingAnchor.constraint(equalTo: levelCard.trailingAnchor, constant: -padding),
+
+            levelBadge.widthAnchor.constraint(equalToConstant: 56),
+            levelBadge.heightAnchor.constraint(equalToConstant: 56),
+
+            dailyGoalRing.widthAnchor.constraint(equalToConstant: 64),
+            dailyGoalRing.heightAnchor.constraint(equalToConstant: 64),
+
+            progressBar.heightAnchor.constraint(equalToConstant: 6)
+        ])
+    }
+
+    private func buildStatsRow() {
+        statsRow.axis = .horizontal
+        statsRow.distribution = .fillEqually
+        statsRow.spacing = 12
+        statsRow.translatesAutoresizingMaskIntoConstraints = false
+
+        statsRow.addArrangedSubview(streakCard)
+        statsRow.addArrangedSubview(accuracyCard)
+        statsRow.addArrangedSubview(sessionsCard)
+        statsRow.addArrangedSubview(badgesCard)
+
+        NSLayoutConstraint.activate([
+            streakCard.heightAnchor.constraint(equalToConstant: 100),
+            accuracyCard.heightAnchor.constraint(equalToConstant: 100),
+            sessionsCard.heightAnchor.constraint(equalToConstant: 100),
+            badgesCard.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+
+    private func buildQuickActions() {
+        actionsRow.axis = .horizontal
+        actionsRow.distribution = .fillEqually
+        actionsRow.spacing = 12
+        actionsRow.translatesAutoresizingMaskIntoConstraints = false
+
+        startTrainingButton.addTarget(self, action: #selector(didTapStartTraining), for: .touchUpInside)
+        ling6Button.addTarget(self, action: #selector(didTapLing6), for: .touchUpInside)
+
+        actionsRow.addArrangedSubview(startTrainingButton)
+        actionsRow.addArrangedSubview(ling6Button)
+
+        NSLayoutConstraint.activate([
+            startTrainingButton.heightAnchor.constraint(equalToConstant: 50),
+            ling6Button.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
+        // Secondary row: personal drills
+        secondaryActionsRow.axis = .horizontal
+        secondaryActionsRow.distribution = .fillEqually
+        secondaryActionsRow.spacing = 12
+        secondaryActionsRow.translatesAutoresizingMaskIntoConstraints = false
+
+        confusionDrillButton.addTarget(self, action: #selector(didTapConfusionDrill), for: .touchUpInside)
+        secondaryActionsRow.addArrangedSubview(confusionDrillButton)
+
+        NSLayoutConstraint.activate([
+            confusionDrillButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+
+    private func setupTableView() {
+        activityTable.translatesAutoresizingMaskIntoConstraints = false
+        activityTable.dataSource = self
+        activityTable.delegate = self
+        activityTable.backgroundColor = .lcBackground
+        activityTable.separatorStyle = .singleLine
+        activityTable.separatorInset = UIEdgeInsets(top: 0, left: LC.cardPadding, bottom: 0, right: LC.cardPadding)
+        activityTable.register(ActivitySessionCell.self, forCellReuseIdentifier: ActivitySessionCell.identifier)
+        activityTable.isScrollEnabled = false
+    }
+
+    // MARK: - Data Loading
+
+    private func loadHomeData() {
+        loadingIndicator.startAnimating()
+
+        Task {
+            do {
+                // Load home stats and recent sessions in parallel
+                async let stats = ServiceLocator.shared.progressService.getHomeStats()
+                async let sessions = ServiceLocator.shared.trainingService.getRecentSessions(count: 3)
+
+                self.homeStats = try await stats
+                self.recentSessions = try await sessions
+
+                await MainActor.run {
+                    self.updateUI()
+                    self.loadingIndicator.stopAnimating()
+                }
+            } catch {
+                await MainActor.run {
+                    self.loadingIndicator.stopAnimating()
+                    self.showErrorState(error: error)
+                }
+            }
+        }
+    }
+
+    private func updateUI() {
+        guard let stats = homeStats else { return }
+
+        // Update hero subtitle with greeting
+        let streakSubtitle: String
+        if stats.currentStreak > 0 {
+            streakSubtitle = "🔥 \(stats.currentStreak)-day streak — keep it going!"
+        } else {
+            streakSubtitle = "A 3-minute drill keeps your ears sharp."
+        }
+        heroHeaderView.updateSubtitle(streakSubtitle)
+
+        // Update level card
+        levelBadgeLabel.text = "\(stats.currentLevel)"
+        levelTitleLabel.text = "Level \(stats.currentLevel)"
+        levelSubtitleLabel.text = "\(stats.totalPoints) points"
+
+        // Calculate progress to next level
+        let progressValue = stats.pointsForCurrentLevel > 0
+            ? Double(stats.totalPoints - (stats.pointsForCurrentLevel - stats.pointsForNextLevel)) / Double(stats.pointsForCurrentLevel)
+            : 0.0
+        progressBar.setProgress(progressValue, animated: true)
+        progressCaption.text = "\(stats.pointsToNextLevel) pts to Level \(stats.currentLevel + 1)"
+
+        // Daily-goal ring: count today's sessions (cap at 3)
+        let dailyGoal = 3
+        let sessionsToday = countSessionsToday()
+        let ringFraction = Double(min(sessionsToday, dailyGoal)) / Double(dailyGoal)
+        dailyGoalRing.setProgress(ringFraction, done: sessionsToday, goal: dailyGoal)
+
+        // Practice CTA caption changes based on goal progress
+        if sessionsToday == 0 {
+            practiceCTA.updateCaption("Start a 3-minute listening drill →")
+        } else if sessionsToday < dailyGoal {
+            practiceCTA.updateCaption("\(dailyGoal - sessionsToday) more to hit today's goal →")
+        } else {
+            practiceCTA.updateCaption("Goal reached — bonus round? →")
+        }
+
+        // Stats cards — use count-up on the numeric ones for a subtle
+        // "wow" effect. Fall back to direct updates where the value is
+        // formatted (accuracy %).
+        animateStatCardValue(streakCard, to: stats.currentStreak)
+        // Mirror the authoritative streak into StreakService's UserDefaults
+        // cache so other screens can read it instantly, and fire confetti
+        // if a milestone was just crossed.
+        StreakService.shared.updateCache(
+            current: stats.currentStreak,
+            longest: stats.longestStreak
+        )
+        if let milestone = StreakService.shared.consumeNewMilestone(for: stats.currentStreak) {
+            celebrateMilestone(milestone)
+        }
+        let accuracyPercent = stats.totalAttempts > 0
+            ? Int(Double(stats.totalCorrect) / Double(stats.totalAttempts) * 100)
+            : 0
+        accuracyCard.update(value: "\(accuracyPercent)%")
+        animateStatCardValue(sessionsCard, to: stats.totalSessions)
+        animateStatCardValue(badgesCard, to: stats.badgesEarned)
+
+        // Reload table with recent sessions
+        activityTable.reloadData()
+        updateTableHeight()
+    }
+
+    /// Tiny helper to spring the stat card's numeric value in a
+    /// count-up instead of a snap.
+    private func animateStatCardValue(_ card: StatCardView, to target: Int) {
+        // StatCardView exposes only `update(value:)`, so we fake a
+        // count-up by scheduling a short sequence of updates.
+        let start = 0
+        let steps = 12
+        let stepDuration: TimeInterval = 0.04
+        for i in 0...steps {
+            let t = Double(i) / Double(steps)
+            // ease-out cubic
+            let eased = 1 - pow(1 - t, 3)
+            let val = Int(Double(start) + Double(target - start) * eased)
+            DispatchQueue.main.asyncAfter(deadline: .now() + stepDuration * Double(i)) {
+                card.update(value: "\(val)")
+            }
+        }
+    }
+
+    /// Count how many training sessions the user has completed since
+    /// midnight local time. Used to fill the daily-goal ring.
+    private func countSessionsToday() -> Int {
+        let start = Calendar.current.startOfDay(for: Date())
+        return recentSessions.filter { $0.startedAt >= start }.count
+    }
+
+    private func updateTableHeight() {
+        // Calculate height based on row count
+        let rowHeight: CGFloat = 60
+        let estimatedHeight = CGFloat(recentSessions.count) * rowHeight
+        activityHeightConstraint.constant = max(estimatedHeight, 60) // Min height for empty state
+        view.layoutIfNeeded()
+    }
+
+    private func showErrorState(error: Error) {
+        // Show brief error message
+        let alert = UIAlertController(
+            title: "Unable to Load Stats",
+            message: "Please try again later.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    /// Celebrate a newly-crossed streak milestone with confetti + an
+    /// encouraging alert. The confetti fires from the top of the hero
+    /// header so it rains down over the greeting.
+    private func celebrateMilestone(_ milestone: Int) {
+        let confetti = ConfettiView(frame: view.bounds)
+        confetti.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(confetti)
+        confetti.fire(duration: 2.5)
+
+        let alert = UIAlertController(
+            title: "🔥 \(milestone)-day streak!",
+            message: StreakService.shared.milestoneMessage(for: milestone),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Keep going", style: .default))
+        // Delay the alert slightly so confetti has a moment to appear
+        // before a modal dims the screen.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+            self?.present(alert, animated: true)
+        }
+    }
+
+    // MARK: - Actions
+
+    @objc private func didTapStartTraining() {
+        NotificationCenter.default.post(name: Notification.Name("startTraining"), object: nil)
+    }
+
+    @objc private func didTapLing6() {
+        NotificationCenter.default.post(name: Notification.Name("startLing6"), object: nil)
+    }
+
+    @objc private func didTapConfusionDrill() {
+        let drill = ConfusionDrillViewController()
+        navigationController?.pushViewController(drill, animated: true)
+    }
+}
+
+// MARK: - UITableViewDataSource & UITableViewDelegate
+
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recentSessions.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ActivitySessionCell.identifier, for: indexPath) as! ActivitySessionCell
+        let session = recentSessions[indexPath.row]
+        cell.configure(with: session)
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        // Future: navigate to session detail if needed
+    }
+}
+
+// MARK: - ActivitySessionCell
+
+final class ActivitySessionCell: UITableViewCell {
+
+    static let identifier = "ActivitySessionCell"
+
+    private let dateLabel = UILabel()
+    private let detailLabel = UILabel()
+    private let modeIcon = UIImageView()
+    private let accuracyLabel = UILabel()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        buildCell()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
+    private func buildCell() {
+        backgroundColor = .lcCard
+        selectionStyle = .gray
+
+        dateLabel.font = UIFont.lcBodyBold()
+        dateLabel.textColor = .label
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        detailLabel.font = UIFont.lcCaption()
+        detailLabel.textColor = .secondaryLabel
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        modeIcon.translatesAutoresizingMaskIntoConstraints = false
+        modeIcon.contentMode = .scaleAspectFit
+
+        accuracyLabel.font = UIFont.lcBodyBold()
+        accuracyLabel.textColor = .lcGreen
+        accuracyLabel.textAlignment = .right
+        accuracyLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let leftStack = UIStackView(arrangedSubviews: [dateLabel, detailLabel])
+        leftStack.axis = .vertical
+        leftStack.spacing = 2
+        leftStack.translatesAutoresizingMaskIntoConstraints = false
+
+        let mainStack = UIStackView(arrangedSubviews: [modeIcon, leftStack, accuracyLabel])
+        mainStack.axis = .horizontal
+        mainStack.spacing = 12
+        mainStack.alignment = .center
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+
+        contentView.addSubview(mainStack)
+        NSLayoutConstraint.activate([
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LC.cardPadding),
+            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -LC.cardPadding),
+            modeIcon.widthAnchor.constraint(equalToConstant: 24),
+            modeIcon.heightAnchor.constraint(equalToConstant: 24)
+        ])
+    }
+
+    func configure(with session: TrainingSession) {
+        // Format date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        dateLabel.text = formatter.string(from: session.startedAt)
+
+        // Build detail string
+        let modeSymbol = modeString(for: session.trainingMode)
+        detailLabel.text = "\(session.totalWords) words • \(modeSymbol)"
+
+        // Set mode icon
+        let icon = iconForMode(session.trainingMode)
+        let cfg = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+        modeIcon.image = UIImage(systemName: icon, withConfiguration: cfg)
+        modeIcon.tintColor = colorForMode(session.trainingMode)
+
+        // Calculate accuracy
+        let accuracy = session.totalWords > 0
+            ? Int(Double(session.completedWords) / Double(session.totalWords) * 100)
+            : 0
+        accuracyLabel.text = "\(accuracy)%"
+    }
+
+    private func modeString(for mode: TrainingMode) -> String {
+        switch mode {
+        case .standard:
+            return "Standard"
+        case .noisyEnvironment:
+            return "Noisy"
+        case .minimalPairs:
+            return "Pairs"
+        }
+    }
+
+    private func iconForMode(_ mode: TrainingMode) -> String {
+        switch mode {
+        case .standard:
+            return "waveform.circle.fill"
+        case .noisyEnvironment:
+            return "waveform.circle"
+        case .minimalPairs:
+            return "waveform.badge.magnifyingglass"
+        }
+    }
+
+    private func colorForMode(_ mode: TrainingMode) -> UIColor {
+        switch mode {
+        case .standard:
+            return .lcBlue
+        case .noisyEnvironment:
+            return .lcOrange
+        case .minimalPairs:
+            return .lcTeal
+        }
+    }
+}

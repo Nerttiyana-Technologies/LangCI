@@ -1,0 +1,8023 @@
+[
+  {
+    "id": "ex-1.0",
+    "section": "analytic",
+    "number": "1.0",
+    "title": "Syllable counting - word length identification (monosyllable versus bisyllable versus polysyllable)",
+    "category": "Syllable counting",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "man",
+        "pairB": "magnificent"
+      },
+      {
+        "n": 2,
+        "pairA": "turkey",
+        "pairB": "telephone"
+      },
+      {
+        "n": 3,
+        "pairA": "mark",
+        "pairB": "medical"
+      },
+      {
+        "n": 4,
+        "pairA": "voice",
+        "pairB": "investigation"
+      },
+      {
+        "n": 5,
+        "pairA": "form",
+        "pairB": "formula"
+      },
+      {
+        "n": 6,
+        "pairA": "conclusion",
+        "pairB": "occasionally"
+      },
+      {
+        "n": 7,
+        "pairA": "general",
+        "pairB": "January"
+      },
+      {
+        "n": 8,
+        "pairA": "rat",
+        "pairB": "repeat"
+      },
+      {
+        "n": 9,
+        "pairA": "meat",
+        "pairB": "measure"
+      },
+      {
+        "n": 10,
+        "pairA": "time",
+        "pairB": "turkey"
+      },
+      {
+        "n": 11,
+        "pairA": "summertime",
+        "pairB": "disappointment"
+      },
+      {
+        "n": 12,
+        "pairA": "variation",
+        "pairB": "investigation"
+      },
+      {
+        "n": 13,
+        "pairA": "night",
+        "pairB": "neighbor"
+      },
+      {
+        "n": 14,
+        "pairA": "virtue",
+        "pairB": "vacation"
+      },
+      {
+        "n": 15,
+        "pairA": "disappointment",
+        "pairB": "magnificently"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.1",
+    "section": "analytic",
+    "number": "1.1",
+    "title": "Syllable counting - word length identification by syllable difference",
+    "category": "Syllable counting",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "man",
+        "pairB": "mysteriously",
+        "group": "List A (4-syllable difference)"
+      },
+      {
+        "n": 1,
+        "pairA": "gem",
+        "pairB": "general",
+        "group": "List C (2-syllable difference)"
+      },
+      {
+        "n": 2,
+        "pairA": "night",
+        "pairB": "independently",
+        "group": "List A (4-syllable difference)"
+      },
+      {
+        "n": 2,
+        "pairA": "reindeer",
+        "pairB": "medicinal",
+        "group": "List C (2-syllable difference)"
+      },
+      {
+        "n": 3,
+        "pairA": "pie",
+        "pairB": "opportunity",
+        "group": "List A (4-syllable difference)"
+      },
+      {
+        "n": 3,
+        "pairA": "vacation",
+        "pairB": "investigation",
+        "group": "List C (2-syllable difference)"
+      },
+      {
+        "n": 4,
+        "pairA": "time",
+        "pairB": "intelligently",
+        "group": "List A (4-syllable difference)"
+      },
+      {
+        "n": 4,
+        "pairA": "egg",
+        "pairB": "government",
+        "group": "List C (2-syllable difference)"
+      },
+      {
+        "n": 5,
+        "pairA": "zone",
+        "pairB": "organization",
+        "group": "List A (4-syllable difference)"
+      },
+      {
+        "n": 5,
+        "pairA": "magazine",
+        "pairB": "mysteriously",
+        "group": "List C (2-syllable difference)"
+      },
+      {
+        "n": 1,
+        "pairA": "day",
+        "pairB": "medicinal",
+        "group": "List B (3-syllable difference)"
+      },
+      {
+        "n": 1,
+        "pairA": "pie",
+        "pairB": "painful",
+        "group": "List D (1-syllable difference)"
+      },
+      {
+        "n": 2,
+        "pairA": "egg",
+        "pairB": "altogether",
+        "group": "List B (3-syllable difference)"
+      },
+      {
+        "n": 2,
+        "pairA": "turkey",
+        "pairB": "telephone",
+        "group": "List D (1-syllable difference)"
+      },
+      {
+        "n": 3,
+        "pairA": "crazy",
+        "pairB": "organization",
+        "group": "List B (3-syllable difference)"
+      },
+      {
+        "n": 3,
+        "pairA": "somebody",
+        "pairB": "medicinal",
+        "group": "List D (1-syllable difference)"
+      },
+      {
+        "n": 4,
+        "pairA": "turkey",
+        "pairB": "intelligently",
+        "group": "List B (3-syllable difference)"
+      },
+      {
+        "n": 4,
+        "pairA": "shade",
+        "pairB": "sandwich",
+        "group": "List D (1-syllable difference)"
+      },
+      {
+        "n": 5,
+        "pairA": "rat",
+        "pairB": "romantically",
+        "group": "List B (3-syllable difference)"
+      },
+      {
+        "n": 5,
+        "pairA": "repeat",
+        "pairB": "radio",
+        "group": "List D (1-syllable difference)"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.10",
+    "section": "analytic",
+    "number": "1.10",
+    "title": "Syllable counting - phrase length identification - with carrier phrase",
+    "category": "Syllable counting",
+    "format": "sentence_completion",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "carrier": "The game is ........",
+        "choices": [
+          "here",
+          "tomorrow",
+          "in the afternoon"
+        ]
+      },
+      {
+        "n": 2,
+        "carrier": "Did you see the .........? baby",
+        "choices": [
+          "Christmas tree",
+          "new teacher at school"
+        ]
+      },
+      {
+        "n": 3,
+        "carrier": "The woman ........",
+        "choices": [
+          "stayed home",
+          "went for a walk",
+          "moved to another country"
+        ]
+      },
+      {
+        "n": 4,
+        "carrier": "The glass was ........",
+        "choices": [
+          "empty",
+          "completely broken",
+          "filled with fresh strawberries"
+        ]
+      },
+      {
+        "n": 5,
+        "carrier": "My friend is ........",
+        "choices": [
+          "tall",
+          "very happy",
+          "away on a long trip"
+        ]
+      },
+      {
+        "n": 6,
+        "carrier": "We baked ........",
+        "choices": [
+          "bread",
+          "muffins",
+          "chocolate chip cookies"
+        ]
+      },
+      {
+        "n": 7,
+        "carrier": "Where is the ........?",
+        "choices": [
+          "door",
+          "kitchen",
+          "new computer"
+        ]
+      },
+      {
+        "n": 8,
+        "carrier": "How many .........?",
+        "choices": [
+          "pies",
+          "little trucks",
+          "one dollar bills"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-1.11",
+    "section": "analytic",
+    "number": "1.11",
+    "title": "Syllable counting - phrase length identification - with carrier phrase (monosyllable, bisyllable and polysyllable)",
+    "category": "Syllable counting",
+    "format": "sentence_completion",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "carrier": "I went to the .........",
+        "choices": [
+          "store",
+          "movies",
+          "mall in town"
+        ]
+      },
+      {
+        "n": 2,
+        "carrier": "We eat ........",
+        "choices": [
+          "eggs",
+          "ice-cream",
+          "bread and jam"
+        ]
+      },
+      {
+        "n": 3,
+        "carrier": "I like to ........",
+        "choices": [
+          "read",
+          "sky dive",
+          "watch TV"
+        ]
+      },
+      {
+        "n": 4,
+        "carrier": "What time is .........?",
+        "choices": [
+          "it",
+          "break time",
+          "the movie"
+        ]
+      },
+      {
+        "n": 5,
+        "carrier": "Why can't you .........?",
+        "choices": [
+          "smile",
+          "sit down",
+          "stay outside"
+        ]
+      },
+      {
+        "n": 6,
+        "carrier": "The dishes are ........",
+        "choices": [
+          "clean",
+          "dirty",
+          "in the sink"
+        ]
+      },
+      {
+        "n": 7,
+        "carrier": "The boy went ........",
+        "choices": [
+          "home",
+          "to work",
+          "for a walk"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-1.12",
+    "section": "analytic",
+    "number": "1.12",
+    "title": "Syllable counting - phrase length identification - with carrier phrase",
+    "category": "Syllable counting",
+    "format": "sentence_completion",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "carrier": "The name of the country is ........ Greece",
+        "choices": [
+          "Italy",
+          "Papua New Guinea"
+        ]
+      },
+      {
+        "n": 2,
+        "carrier": "I enjoy ........",
+        "choices": [
+          "resting at home",
+          "taking a long drive in the country",
+          "sunshine and playing tennis"
+        ]
+      },
+      {
+        "n": 3,
+        "carrier": "There is always plenty of time ........ to watch my favorite TV show",
+        "choices": [
+          "for going shopping",
+          "to catch up on my reading"
+        ]
+      },
+      {
+        "n": 4,
+        "carrier": "In the winter, ........",
+        "choices": [
+          "the ski resorts are open",
+          "days are very cold",
+          "many children throw snowballs",
+          "and build snowmen"
+        ]
+      },
+      {
+        "n": 5,
+        "carrier": "During summer, ........",
+        "choices": [
+          "many people go on vacation",
+          "volleyball is a popular game",
+          "days are very long and nights are",
+          "very short"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-2.0",
+    "section": "analytic",
+    "number": "2.0",
+    "title": "Word stress",
+    "category": "Word stress",
+    "format": "stress_sentence",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "text": "How did you know the answer?"
+      },
+      {
+        "n": 2,
+        "text": "You must listen to me."
+      },
+      {
+        "n": 3,
+        "text": "I want to go to the movies."
+      },
+      {
+        "n": 4,
+        "text": "I am so tired at night."
+      },
+      {
+        "n": 5,
+        "text": "Springtime is my favorite season."
+      },
+      {
+        "n": 6,
+        "text": "Please go with me."
+      },
+      {
+        "n": 7,
+        "text": "Have you ever had iced coffee?"
+      },
+      {
+        "n": 8,
+        "text": "Bring it to me now."
+      },
+      {
+        "n": 9,
+        "text": "That fellow is strange."
+      },
+      {
+        "n": 10,
+        "text": "Why are you so excited?"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.0",
+    "section": "analytic",
+    "number": "3.0",
+    "title": "Phonemes - short versus long vowels, contrasting formant frequencies9",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "theme",
+        "pairB": "thumb"
+      },
+      {
+        "n": 21,
+        "pairA": "port",
+        "pairB": "putt"
+      },
+      {
+        "n": 2,
+        "pairA": "sharp",
+        "pairB": "ship"
+      },
+      {
+        "n": 22,
+        "pairA": "guard",
+        "pairB": "good"
+      },
+      {
+        "n": 3,
+        "pairA": "teach",
+        "pairB": "touch"
+      },
+      {
+        "n": 23,
+        "pairA": "doors",
+        "pairB": "does"
+      },
+      {
+        "n": 4,
+        "pairA": "barn",
+        "pairB": "bin"
+      },
+      {
+        "n": 24,
+        "pairA": "lark",
+        "pairB": "look"
+      },
+      {
+        "n": 5,
+        "pairA": "leak",
+        "pairB": "luck"
+      },
+      {
+        "n": 25,
+        "pairA": "worn",
+        "pairB": "won"
+      },
+      {
+        "n": 6,
+        "pairA": "card",
+        "pairB": "kid"
+      },
+      {
+        "n": 26,
+        "pairA": "part",
+        "pairB": "put"
+      },
+      {
+        "n": 7,
+        "pairA": "neat",
+        "pairB": "nut"
+      },
+      {
+        "n": 27,
+        "pairA": "talk",
+        "pairB": "tuck"
+      },
+      {
+        "n": 8,
+        "pairA": "harm",
+        "pairB": "him"
+      },
+      {
+        "n": 28,
+        "pairA": "card",
+        "pairB": "could"
+      },
+      {
+        "n": 9,
+        "pairA": "sheet",
+        "pairB": "shut"
+      },
+      {
+        "n": 29,
+        "pairA": "bored",
+        "pairB": "bud"
+      },
+      {
+        "n": 10,
+        "pairA": "parch",
+        "pairB": "pitch"
+      },
+      {
+        "n": 30,
+        "pairA": "bark",
+        "pairB": "book"
+      },
+      {
+        "n": 11,
+        "pairA": "seen",
+        "pairB": "sun"
+      },
+      {
+        "n": 31,
+        "pairA": "court",
+        "pairB": "cut"
+      },
+      {
+        "n": 12,
+        "pairA": "lark",
+        "pairB": "lick"
+      },
+      {
+        "n": 32,
+        "pairA": "pass",
+        "pairB": "puss"
+      },
+      {
+        "n": 13,
+        "pairA": "heel",
+        "pairB": "hull"
+      },
+      {
+        "n": 33,
+        "pairA": "stalk",
+        "pairB": "stuck"
+      },
+      {
+        "n": 14,
+        "pairA": "heart",
+        "pairB": "hit"
+      },
+      {
+        "n": 34,
+        "pairA": "hard",
+        "pairB": "hood"
+      },
+      {
+        "n": 15,
+        "pairA": "bean",
+        "pairB": "bun"
+      },
+      {
+        "n": 35,
+        "pairA": "torch",
+        "pairB": "touch"
+      },
+      {
+        "n": 16,
+        "pairA": "part",
+        "pairB": "pit"
+      },
+      {
+        "n": 36,
+        "pairA": "shark",
+        "pairB": "shook"
+      },
+      {
+        "n": 17,
+        "pairA": "keep",
+        "pairB": "cup"
+      },
+      {
+        "n": 37,
+        "pairA": "torn",
+        "pairB": "ton"
+      },
+      {
+        "n": 18,
+        "pairA": "park",
+        "pairB": "pick"
+      },
+      {
+        "n": 38,
+        "pairA": "starred",
+        "pairB": "stood"
+      },
+      {
+        "n": 19,
+        "pairA": "beat",
+        "pairB": "but"
+      },
+      {
+        "n": 39,
+        "pairA": "dawn",
+        "pairB": "done"
+      },
+      {
+        "n": 20,
+        "pairA": "hard",
+        "pairB": "hid"
+      },
+      {
+        "n": 40,
+        "pairA": "hark",
+        "pairB": "hook"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.1",
+    "section": "analytic",
+    "number": "3.1",
+    "title": "Phonemes - short versus long vowels - vowel length9",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "carp",
+        "pairB": "cup"
+      },
+      {
+        "n": 2,
+        "pairA": "port",
+        "pairB": "put"
+      },
+      {
+        "n": 3,
+        "pairA": "peep",
+        "pairB": "pip"
+      },
+      {
+        "n": 4,
+        "pairA": "mast",
+        "pairB": "must"
+      },
+      {
+        "n": 5,
+        "pairA": "wall",
+        "pairB": "wool"
+      },
+      {
+        "n": 6,
+        "pairA": "sleek",
+        "pairB": "slick"
+      },
+      {
+        "n": 7,
+        "pairA": "lark",
+        "pairB": "luck"
+      },
+      {
+        "n": 8,
+        "pairA": "hawk",
+        "pairB": "hook"
+      },
+      {
+        "n": 9,
+        "pairA": "leap",
+        "pairB": "lip"
+      },
+      {
+        "n": 10,
+        "pairA": "card",
+        "pairB": "cud"
+      },
+      {
+        "n": 11,
+        "pairA": "sort",
+        "pairB": "soot"
+      },
+      {
+        "n": 12,
+        "pairA": "peat",
+        "pairB": "pit"
+      },
+      {
+        "n": 13,
+        "pairA": "heart",
+        "pairB": "hut"
+      },
+      {
+        "n": 14,
+        "pairA": "cord",
+        "pairB": "could"
+      },
+      {
+        "n": 15,
+        "pairA": "meat",
+        "pairB": "mitt"
+      },
+      {
+        "n": 16,
+        "pairA": "bark",
+        "pairB": "beak"
+      },
+      {
+        "n": 17,
+        "pairA": "fort",
+        "pairB": "foot"
+      },
+      {
+        "n": 18,
+        "pairA": "heed",
+        "pairB": "hid"
+      },
+      {
+        "n": 19,
+        "pairA": "dark",
+        "pairB": "dank"
+      },
+      {
+        "n": 20,
+        "pairA": "hoard",
+        "pairB": "hood"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.2",
+    "section": "analytic",
+    "number": "3.2",
+    "title": "Phonemes - vowel length identification (set A)",
+    "category": "Phonemes",
+    "format": "sentence_with_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "template": "They were talking about the fawn/fun they had.",
+        "choices": [
+          "fawn",
+          "fun"
+        ],
+        "sentences": [
+          "They were talking about the fawn they had.",
+          "They were talking about the fun they had."
+        ]
+      },
+      {
+        "n": 2,
+        "template": "Mary and Sue looked at the sheep/ship.",
+        "choices": [
+          "sheep",
+          "ship"
+        ],
+        "sentences": [
+          "Mary and Sue looked at the sheep.",
+          "Mary and Sue looked at the ship."
+        ]
+      },
+      {
+        "n": 3,
+        "template": "There were many coats/cots in the room.",
+        "choices": [
+          "coats",
+          "cots"
+        ],
+        "sentences": [
+          "There were many coats in the room.",
+          "There were many cots in the room."
+        ]
+      },
+      {
+        "n": 4,
+        "template": "John began to paint/pant.",
+        "choices": [
+          "paint",
+          "pant"
+        ],
+        "sentences": [
+          "John began to paint.",
+          "John began to pant."
+        ]
+      },
+      {
+        "n": 5,
+        "template": "Do you have the bait/bat in your car?",
+        "choices": [
+          "bait",
+          "bat"
+        ],
+        "sentences": [
+          "Do you have the bait in your car?",
+          "Do you have the bat in your car?"
+        ]
+      },
+      {
+        "n": 6,
+        "template": "He bought some cheap/chip board at the hardware store.",
+        "choices": [
+          "cheap",
+          "chip"
+        ],
+        "sentences": [
+          "He bought some cheap board at the hardware store.",
+          "He bought some chip board at the hardware store."
+        ]
+      },
+      {
+        "n": 7,
+        "template": "He was sorry that he beat/bit the boy.",
+        "choices": [
+          "beat",
+          "bit"
+        ],
+        "sentences": [
+          "He was sorry that he beat the boy.",
+          "He was sorry that he bit the boy."
+        ]
+      },
+      {
+        "n": 8,
+        "template": "Pass me the meat/mit.",
+        "choices": [
+          "meat",
+          "mit"
+        ],
+        "sentences": [
+          "Pass me the meat.",
+          "Pass me the mit."
+        ]
+      },
+      {
+        "n": 9,
+        "template": "It was a great feat/fit.",
+        "choices": [
+          "feat",
+          "fit"
+        ],
+        "sentences": [
+          "It was a great feat.",
+          "It was a great fit."
+        ]
+      },
+      {
+        "n": 10,
+        "template": "Roger caught/cut the fish.",
+        "choices": [
+          "caught",
+          "cut"
+        ],
+        "sentences": [
+          "Roger caught the fish.",
+          "Roger cut the fish."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.3",
+    "section": "analytic",
+    "number": "3.3",
+    "title": "Phonemes - vowel length identification (set B)",
+    "category": "Phonemes",
+    "format": "sentence_with_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "template": "The suit/seat is dirty.",
+        "choices": [
+          "suit",
+          "seat"
+        ],
+        "sentences": [
+          "The suit is dirty.",
+          "The seat is dirty."
+        ]
+      },
+      {
+        "n": 2,
+        "template": "My dress was caught/cut by the machine.",
+        "choices": [
+          "caught",
+          "cut"
+        ],
+        "sentences": [
+          "My dress was caught by the machine.",
+          "My dress was cut by the machine."
+        ]
+      },
+      {
+        "n": 3,
+        "template": "He found the meat/mit in the cabinet.",
+        "choices": [
+          "meat",
+          "mit"
+        ],
+        "sentences": [
+          "He found the meat in the cabinet.",
+          "He found the mit in the cabinet."
+        ]
+      },
+      {
+        "n": 4,
+        "template": "Did he feel/fill the cup?",
+        "choices": [
+          "feel",
+          "fill"
+        ],
+        "sentences": [
+          "Did he feel the cup?",
+          "Did he fill the cup?"
+        ]
+      },
+      {
+        "n": 5,
+        "template": "You should not peek/pick at your Christmas presents.",
+        "choices": [
+          "peek",
+          "pick"
+        ],
+        "sentences": [
+          "You should not peek at your Christmas presents.",
+          "You should not pick at your Christmas presents."
+        ]
+      },
+      {
+        "n": 6,
+        "template": "The heat/hit can cause pain.",
+        "choices": [
+          "heat",
+          "hit"
+        ],
+        "sentences": [
+          "The heat can cause pain.",
+          "The hit can cause pain."
+        ]
+      },
+      {
+        "n": 7,
+        "template": "It was a steel/still airplane.",
+        "choices": [
+          "steel",
+          "still"
+        ],
+        "sentences": [
+          "It was a steel airplane.",
+          "It was a still airplane."
+        ]
+      },
+      {
+        "n": 8,
+        "template": "She doesn't like the cake/kit.",
+        "choices": [
+          "cake",
+          "kit"
+        ],
+        "sentences": [
+          "She doesn't like the cake.",
+          "She doesn't like the kit."
+        ]
+      },
+      {
+        "n": 9,
+        "template": "Is there a way to pool/pull everything?",
+        "choices": [
+          "pool",
+          "pull"
+        ],
+        "sentences": [
+          "Is there a way to pool everything?",
+          "Is there a way to pull everything?"
+        ]
+      },
+      {
+        "n": 10,
+        "template": "Why did he sleep/slip in the bathtub?",
+        "choices": [
+          "sleep",
+          "slip"
+        ],
+        "sentences": [
+          "Why did he sleep in the bathtub?",
+          "Why did he slip in the bathtub?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.4",
+    "section": "analytic",
+    "number": "3.4",
+    "title": "Phonemes - vowel length in sentences",
+    "category": "Phonemes",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We were looking at the picture of the sheep."
+          },
+          {
+            "label": "B",
+            "text": "We were looking at the picture of the ship."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "You can see the ball over the fence."
+          },
+          {
+            "label": "B",
+            "text": "You can see the bull over the fence."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The little boy was afraid of the duck."
+          },
+          {
+            "label": "B",
+            "text": "The little boy was afraid of the dark."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "This ward should be cleaned."
+          },
+          {
+            "label": "B",
+            "text": "This wood should be cleaned."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I thought you were going to sleep."
+          },
+          {
+            "label": "B",
+            "text": "I thought you were going to slip."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The farmer was worried about the cart."
+          },
+          {
+            "label": "B",
+            "text": "The farmer was worried about the cut."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The bun was burned in the fire."
+          },
+          {
+            "label": "B",
+            "text": "The barn was burned in the fire."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It was all a ridiculous farce."
+          },
+          {
+            "label": "B",
+            "text": "It was all a ridiculous fuss."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I like the color of that wall."
+          },
+          {
+            "label": "B",
+            "text": "I like the color of that wool."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We stored the parcel in the next room."
+          },
+          {
+            "label": "B",
+            "text": "We stood the parcel in the next room."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "You shouldn't worry about your heart all the time."
+          },
+          {
+            "label": "B",
+            "text": "You shouldn't worry about your hat all the time."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The fisherman held up the cup."
+          },
+          {
+            "label": "B",
+            "text": "The fisherman held up the carp."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The mountaineer was staring at the peak."
+          },
+          {
+            "label": "B",
+            "text": "The mountaineer was staring at the pick."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "They spent all morning cleaning the cart."
+          },
+          {
+            "label": "B",
+            "text": "They spent all morning cleaning the cot."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Can you hear the bees?"
+          },
+          {
+            "label": "B",
+            "text": "Can you hear the buzz?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.5",
+    "section": "analytic",
+    "number": "3.5",
+    "title": "Phonemes - low- versus high- frequency vowels in words",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "bath",
+        "pairB": "booth"
+      },
+      {
+        "n": 2,
+        "pairA": "spark",
+        "pairB": "speak"
+      },
+      {
+        "n": 3,
+        "pairA": "tea",
+        "pairB": "too"
+      },
+      {
+        "n": 4,
+        "pairA": "parch",
+        "pairB": "peach"
+      },
+      {
+        "n": 5,
+        "pairA": "tart",
+        "pairB": "toot"
+      },
+      {
+        "n": 6,
+        "pairA": "fast",
+        "pairB": "feast"
+      },
+      {
+        "n": 7,
+        "pairA": "hard",
+        "pairB": "who'd"
+      },
+      {
+        "n": 8,
+        "pairA": "barn",
+        "pairB": "bean"
+      },
+      {
+        "n": 9,
+        "pairA": "bars",
+        "pairB": "booze"
+      },
+      {
+        "n": 10,
+        "pairA": "park",
+        "pairB": "peak"
+      },
+      {
+        "n": 11,
+        "pairA": "code",
+        "pairB": "key"
+      },
+      {
+        "n": 12,
+        "pairA": "yard",
+        "pairB": "you'd"
+      },
+      {
+        "n": 13,
+        "pairA": "grass",
+        "pairB": "grease"
+      },
+      {
+        "n": 14,
+        "pairA": "carp",
+        "pairB": "coop"
+      },
+      {
+        "n": 15,
+        "pairA": "lark",
+        "pairB": "leak"
+      },
+      {
+        "n": 16,
+        "pairA": "half",
+        "pairB": "hoof"
+      },
+      {
+        "n": 17,
+        "pairA": "farm",
+        "pairB": "firm"
+      },
+      {
+        "n": 18,
+        "pairA": "harm",
+        "pairB": "whom"
+      },
+      {
+        "n": 19,
+        "pairA": "tar",
+        "pairB": "tear"
+      },
+      {
+        "n": 20,
+        "pairA": "spark",
+        "pairB": "spook"
+      },
+      {
+        "n": 21,
+        "pairA": "pup",
+        "pairB": "pip"
+      },
+      {
+        "n": 22,
+        "pairA": "putt",
+        "pairB": "put"
+      },
+      {
+        "n": 23,
+        "pairA": "but",
+        "pairB": "bit"
+      },
+      {
+        "n": 24,
+        "pairA": "tuck",
+        "pairB": "took"
+      },
+      {
+        "n": 25,
+        "pairA": "nut",
+        "pairB": "knit"
+      },
+      {
+        "n": 26,
+        "pairA": "cud",
+        "pairB": "could"
+      },
+      {
+        "n": 27,
+        "pairA": "luck",
+        "pairB": "lick"
+      },
+      {
+        "n": 28,
+        "pairA": "luck",
+        "pairB": "look"
+      },
+      {
+        "n": 29,
+        "pairA": "bug",
+        "pairB": "big"
+      },
+      {
+        "n": 30,
+        "pairA": "stud",
+        "pairB": "stood"
+      },
+      {
+        "n": 31,
+        "pairA": "swum",
+        "pairB": "swim"
+      },
+      {
+        "n": 32,
+        "pairA": "buck",
+        "pairB": "book"
+      },
+      {
+        "n": 33,
+        "pairA": "bun",
+        "pairB": "bin"
+      },
+      {
+        "n": 34,
+        "pairA": "chuck",
+        "pairB": "chook"
+      },
+      {
+        "n": 35,
+        "pairA": "rung",
+        "pairB": "ring"
+      },
+      {
+        "n": 36,
+        "pairA": "bucks",
+        "pairB": "books"
+      },
+      {
+        "n": 37,
+        "pairA": "sunk",
+        "pairB": "sink"
+      },
+      {
+        "n": 38,
+        "pairA": "ton",
+        "pairB": "tin"
+      },
+      {
+        "n": 39,
+        "pairA": "hut",
+        "pairB": "hit"
+      },
+      {
+        "n": 40,
+        "pairA": "flung",
+        "pairB": "fling"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.2",
+    "section": "analytic",
+    "number": "1.2",
+    "title": "Syllable counting - word length identification - 5-choice",
+    "category": "Syllable counting",
+    "format": "word_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "choices": [
+          "man",
+          "mother",
+          "magazine",
+          "magnificent",
+          "mysteriously"
+        ]
+      },
+      {
+        "n": 2,
+        "choices": [
+          "night",
+          "neighbor",
+          "newspaper",
+          "nobility",
+          "independently"
+        ]
+      },
+      {
+        "n": 3,
+        "choices": [
+          "pie",
+          "police",
+          "painfully",
+          "experiment",
+          "Opportunity"
+        ]
+      },
+      {
+        "n": 4,
+        "choices": [
+          "time",
+          "turkey",
+          "telephone",
+          "transportation intelligently"
+        ]
+      },
+      {
+        "n": 5,
+        "choices": [
+          "day",
+          "reindeer",
+          "somebody",
+          "medicinal",
+          "Indian summer"
+        ]
+      },
+      {
+        "n": 6,
+        "choices": [
+          "egg",
+          "garden",
+          "government",
+          "altogether",
+          "argumentation"
+        ]
+      },
+      {
+        "n": 7,
+        "choices": [
+          "farm",
+          "famous",
+          "favorite",
+          "information",
+          "unfortunately"
+        ]
+      },
+      {
+        "n": 8,
+        "choices": [
+          "voice",
+          "virtue",
+          "vacation",
+          "variation",
+          "investigation"
+        ]
+      },
+      {
+        "n": 9,
+        "choices": [
+          "sand",
+          "sandwich",
+          "summertime",
+          "disappointment magnificently"
+        ]
+      },
+      {
+        "n": 10,
+        "choices": [
+          "zone",
+          "crazy",
+          "position",
+          "reasonable",
+          "organization"
+        ]
+      },
+      {
+        "n": 11,
+        "choices": [
+          "shade",
+          "shiver",
+          "permission",
+          "transportation professionally"
+        ]
+      },
+      {
+        "n": 12,
+        "choices": [
+          "beige",
+          "measure",
+          "conclusion",
+          "unusual",
+          "occasionally"
+        ]
+      },
+      {
+        "n": 13,
+        "choices": [
+          "gem",
+          "justice",
+          "general",
+          "January",
+          "vegetable juice"
+        ]
+      },
+      {
+        "n": 14,
+        "choices": [
+          "rat",
+          "repeat",
+          "radio",
+          "romantically recommendation"
+        ]
+      },
+      {
+        "n": 15,
+        "choices": [
+          "need",
+          "mustard",
+          "internal",
+          "inventory",
+          "intermediate"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.6",
+    "section": "analytic",
+    "number": "3.6",
+    "title": "Phonemes - low- versus high- frequency vowels in words in carrier sentences",
+    "category": "Phonemes",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I think he wants to know about the bath."
+          },
+          {
+            "label": "B",
+            "text": "I think he wants to know about the booth."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The harp was lying on the floor."
+          },
+          {
+            "label": "B",
+            "text": "The hoop was lying on the floor."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I don't know what to do about that old cart."
+          },
+          {
+            "label": "B",
+            "text": "I don't know what to do about that old coat."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He's always thinking about bars."
+          },
+          {
+            "label": "B",
+            "text": "He's always thinking about booze."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I hope you haven't lost the cat again."
+          },
+          {
+            "label": "B",
+            "text": "I hope you haven't lost the kit again."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We walked all the way to the mountain park."
+          },
+          {
+            "label": "B",
+            "text": "We walked all the way to the mountain peak."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We'll have to do something about the grass."
+          },
+          {
+            "label": "B",
+            "text": "We'll have to do something about the grease."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The farmer was very proud of his barns."
+          },
+          {
+            "label": "B",
+            "text": "The farmer was very proud of his beans."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It tastes a little like lime."
+          },
+          {
+            "label": "B",
+            "text": "It tastes a little like lamb."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We could hear the hymn very clearly."
+          },
+          {
+            "label": "B",
+            "text": "We could hear the hum very clearly."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.7",
+    "section": "analytic",
+    "number": "3.7",
+    "title": "Phonemes - F (second formant) discrimination",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "discrimination",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "tea",
+        "pairB": "too"
+      },
+      {
+        "n": 2,
+        "pairA": "pit",
+        "pairB": "put"
+      },
+      {
+        "n": 3,
+        "pairA": "cap",
+        "pairB": "cup"
+      },
+      {
+        "n": 4,
+        "pairA": "pit",
+        "pairB": "pet"
+      },
+      {
+        "n": 5,
+        "pairA": "beat",
+        "pairB": "boot"
+      },
+      {
+        "n": 6,
+        "pairA": "kid",
+        "pairB": "could"
+      },
+      {
+        "n": 7,
+        "pairA": "bat",
+        "pairB": "but"
+      },
+      {
+        "n": 8,
+        "pairA": "bid",
+        "pairB": "bed"
+      },
+      {
+        "n": 9,
+        "pairA": "feed",
+        "pairB": "food"
+      },
+      {
+        "n": 10,
+        "pairA": "pill",
+        "pairB": "pull"
+      },
+      {
+        "n": 11,
+        "pairA": "bad",
+        "pairB": "bud"
+      },
+      {
+        "n": 12,
+        "pairA": "pick",
+        "pairB": "peck"
+      },
+      {
+        "n": 13,
+        "pairA": "geese",
+        "pairB": "goose"
+      },
+      {
+        "n": 14,
+        "pairA": "kicks",
+        "pairB": "cooks"
+      },
+      {
+        "n": 15,
+        "pairA": "back",
+        "pairB": "buck"
+      },
+      {
+        "n": 16,
+        "pairA": "pig",
+        "pairB": "peg"
+      },
+      {
+        "n": 17,
+        "pairA": "peach",
+        "pairB": "pooch"
+      },
+      {
+        "n": 18,
+        "pairA": "brick",
+        "pairB": "brook"
+      },
+      {
+        "n": 19,
+        "pairA": "tag",
+        "pairB": "tug"
+      },
+      {
+        "n": 20,
+        "pairA": "miss",
+        "pairB": "mess"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.8",
+    "section": "analytic",
+    "number": "3.8",
+    "title": "Phonemes - consonant pattern identification",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "saw",
+        "pairB": "whisk"
+      },
+      {
+        "n": 2,
+        "pairA": "mass",
+        "pairB": "Sam"
+      },
+      {
+        "n": 3,
+        "pairA": "shun",
+        "pairB": "nuts"
+      },
+      {
+        "n": 4,
+        "pairA": "same",
+        "pairB": "mass"
+      },
+      {
+        "n": 5,
+        "pairA": "cheap",
+        "pairB": "match"
+      },
+      {
+        "n": 6,
+        "pairA": "show",
+        "pairB": "nose"
+      },
+      {
+        "n": 7,
+        "pairA": "charm",
+        "pairB": "march"
+      },
+      {
+        "n": 8,
+        "pairA": "zoo",
+        "pairB": "bruise"
+      },
+      {
+        "n": 9,
+        "pairA": "chair",
+        "pairB": "much"
+      },
+      {
+        "n": 10,
+        "pairA": "reach",
+        "pairB": "chair"
+      },
+      {
+        "n": 11,
+        "pairA": "same",
+        "pairB": "mash"
+      },
+      {
+        "n": 12,
+        "pairA": "chap",
+        "pairB": "patch"
+      },
+      {
+        "n": 13,
+        "pairA": "rice",
+        "pairB": "sign"
+      },
+      {
+        "n": 14,
+        "pairA": "shine",
+        "pairB": "mesh"
+      },
+      {
+        "n": 15,
+        "pairA": "jacket",
+        "pairB": "t-shirt"
+      },
+      {
+        "n": 16,
+        "pairA": "shore",
+        "pairB": "wash"
+      },
+      {
+        "n": 17,
+        "pairA": "chum",
+        "pairB": "much"
+      },
+      {
+        "n": 18,
+        "pairA": "boss",
+        "pairB": "some"
+      },
+      {
+        "n": 19,
+        "pairA": "chill",
+        "pairB": "leach"
+      },
+      {
+        "n": 20,
+        "pairA": "maze",
+        "pairB": "sane"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.9",
+    "section": "analytic",
+    "number": "3.9",
+    "title": "Phonemes - common consonant confusions",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "fail",
+        "pairB": "shale",
+        "group": "F and Sh"
+      },
+      {
+        "n": 1,
+        "pairA": "fat",
+        "pairB": "pat",
+        "group": "F and P"
+      },
+      {
+        "n": 2,
+        "pairA": "fought",
+        "pairB": "short",
+        "group": "F and Sh"
+      },
+      {
+        "n": 2,
+        "pairA": "fill",
+        "pairB": "pill",
+        "group": "F and P"
+      },
+      {
+        "n": 3,
+        "pairA": "few",
+        "pairB": "shoe",
+        "group": "F and Sh"
+      },
+      {
+        "n": 3,
+        "pairA": "fry",
+        "pairB": "pry",
+        "group": "F and P"
+      },
+      {
+        "n": 4,
+        "pairA": "frill",
+        "pairB": "shrill",
+        "group": "F and Sh"
+      },
+      {
+        "n": 4,
+        "pairA": "fee",
+        "pairB": "pea",
+        "group": "F and P"
+      },
+      {
+        "n": 5,
+        "pairA": "fell",
+        "pairB": "shell",
+        "group": "F and Sh"
+      },
+      {
+        "n": 5,
+        "pairA": "fleas",
+        "pairB": "please",
+        "group": "F and P"
+      },
+      {
+        "n": 1,
+        "pairA": "cuff",
+        "pairB": "cup",
+        "group": "F and P (in end position)"
+      },
+      {
+        "n": 1,
+        "pairA": "feel",
+        "pairB": "zeal",
+        "group": "F and Z"
+      },
+      {
+        "n": 2,
+        "pairA": "half",
+        "pairB": "harp",
+        "group": "F and P (in end position)"
+      },
+      {
+        "n": 2,
+        "pairA": "fee's",
+        "pairB": "zee's",
+        "group": "F and Z"
+      },
+      {
+        "n": 3,
+        "pairA": "wharf",
+        "pairB": "warp",
+        "group": "F and P (in end position)"
+      },
+      {
+        "n": 3,
+        "pairA": "wife",
+        "pairB": "wise",
+        "group": "F and Z"
+      },
+      {
+        "n": 4,
+        "pairA": "tiff",
+        "pairB": "tip",
+        "group": "F and P (in end position)"
+      },
+      {
+        "n": 4,
+        "pairA": "beef",
+        "pairB": "bees",
+        "group": "F and Z"
+      },
+      {
+        "n": 5,
+        "pairA": "whiff",
+        "pairB": "whip",
+        "group": "F and P (in end position)"
+      },
+      {
+        "n": 5,
+        "pairA": "brief",
+        "pairB": "breeze",
+        "group": "F and Z"
+      },
+      {
+        "n": 1,
+        "pairA": "bat",
+        "pairB": "vat",
+        "group": "B and V"
+      },
+      {
+        "n": 1,
+        "pairA": "mail",
+        "pairB": "nail",
+        "group": "M and N"
+      },
+      {
+        "n": 2,
+        "pairA": "ban",
+        "pairB": "van",
+        "group": "B and V"
+      },
+      {
+        "n": 2,
+        "pairA": "mine",
+        "pairB": "nine",
+        "group": "M and N"
+      },
+      {
+        "n": 3,
+        "pairA": "bent",
+        "pairB": "vent",
+        "group": "B and V"
+      },
+      {
+        "n": 3,
+        "pairA": "sum",
+        "pairB": "sun",
+        "group": "M and N"
+      },
+      {
+        "n": 4,
+        "pairA": "bolt",
+        "pairB": "vault",
+        "group": "B and V"
+      },
+      {
+        "n": 4,
+        "pairA": "gum",
+        "pairB": "gun",
+        "group": "M and N"
+      },
+      {
+        "n": 5,
+        "pairA": "bail",
+        "pairB": "veil",
+        "group": "B and V"
+      },
+      {
+        "n": 6,
+        "pairA": "berry",
+        "pairB": "very",
+        "group": "B and V"
+      },
+      {
+        "n": 1,
+        "pairA": "bug",
+        "pairB": "bud",
+        "group": "D and G"
+      },
+      {
+        "n": 1,
+        "pairA": "dart",
+        "pairB": "tart",
+        "group": "D and T"
+      },
+      {
+        "n": 2,
+        "pairA": "grain",
+        "pairB": "drain",
+        "group": "D and G"
+      },
+      {
+        "n": 2,
+        "pairA": "den",
+        "pairB": "ten",
+        "group": "D and T"
+      },
+      {
+        "n": 3,
+        "pairA": "grip",
+        "pairB": "drip",
+        "group": "D and G"
+      },
+      {
+        "n": 3,
+        "pairA": "seed",
+        "pairB": "seat",
+        "group": "D and T"
+      },
+      {
+        "n": 4,
+        "pairA": "thug",
+        "pairB": "thud",
+        "group": "D and G"
+      },
+      {
+        "n": 4,
+        "pairA": "feed",
+        "pairB": "feet",
+        "group": "D and T"
+      },
+      {
+        "n": 5,
+        "pairA": "mug",
+        "pairB": "mud",
+        "group": "D and G"
+      },
+      {
+        "n": 5,
+        "pairA": "dream",
+        "pairB": "team",
+        "group": "D and T"
+      },
+      {
+        "n": 6,
+        "pairA": "gate",
+        "pairB": "date",
+        "group": "D and G"
+      },
+      {
+        "n": 6,
+        "pairA": "dim",
+        "pairB": "tim",
+        "group": "D and T"
+      },
+      {
+        "n": 1,
+        "pairA": "zip",
+        "pairB": "sip",
+        "group": "Z and S"
+      },
+      {
+        "n": 2,
+        "pairA": "zeal",
+        "pairB": "seal",
+        "group": "Z and S"
+      },
+      {
+        "n": 3,
+        "pairA": "zoo",
+        "pairB": "sue",
+        "group": "Z and S"
+      },
+      {
+        "n": 4,
+        "pairA": "buzz",
+        "pairB": "bus",
+        "group": "Z and S"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.10",
+    "section": "analytic",
+    "number": "3.10",
+    "title": "Phonemes - voiceless versus voiced consonants",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "rip",
+        "pairB": "rib"
+      },
+      {
+        "n": 18,
+        "pairA": "hard",
+        "pairB": "heart"
+      },
+      {
+        "n": 2,
+        "pairA": "cap",
+        "pairB": "cab"
+      },
+      {
+        "n": 19,
+        "pairA": "hiss",
+        "pairB": "his"
+      },
+      {
+        "n": 3,
+        "pairA": "mop",
+        "pairB": "mob"
+      },
+      {
+        "n": 20,
+        "pairA": "case",
+        "pairB": "cause"
+      },
+      {
+        "n": 4,
+        "pairA": "lap",
+        "pairB": "lab"
+      },
+      {
+        "n": 21,
+        "pairA": "Bruce",
+        "pairB": "bruise"
+      },
+      {
+        "n": 5,
+        "pairA": "rope",
+        "pairB": "robe"
+      },
+      {
+        "n": 22,
+        "pairA": "bus",
+        "pairB": "buzz"
+      },
+      {
+        "n": 6,
+        "pairA": "pup",
+        "pairB": "pub"
+      },
+      {
+        "n": 23,
+        "pairA": "curse",
+        "pairB": "curs"
+      },
+      {
+        "n": 7,
+        "pairA": "pick",
+        "pairB": "pig"
+      },
+      {
+        "n": 24,
+        "pairA": "pace",
+        "pairB": "pays"
+      },
+      {
+        "n": 8,
+        "pairA": "duck",
+        "pairB": "dug"
+      },
+      {
+        "n": 25,
+        "pairA": "ice",
+        "pairB": "eyes"
+      },
+      {
+        "n": 9,
+        "pairA": "lack",
+        "pairB": "lag"
+      },
+      {
+        "n": 26,
+        "pairA": "rice",
+        "pairB": "rise"
+      },
+      {
+        "n": 10,
+        "pairA": "lock",
+        "pairB": "log"
+      },
+      {
+        "n": 27,
+        "pairA": "thief",
+        "pairB": "thieve"
+      },
+      {
+        "n": 11,
+        "pairA": "frock",
+        "pairB": "frog"
+      },
+      {
+        "n": 28,
+        "pairA": "leaf",
+        "pairB": "leave"
+      },
+      {
+        "n": 12,
+        "pairA": "back",
+        "pairB": "bag"
+      },
+      {
+        "n": 29,
+        "pairA": "calf",
+        "pairB": "cave"
+      },
+      {
+        "n": 13,
+        "pairA": "beat",
+        "pairB": "bead"
+      },
+      {
+        "n": 30,
+        "pairA": "surf",
+        "pairB": "serve"
+      },
+      {
+        "n": 14,
+        "pairA": "bit",
+        "pairB": "bid"
+      },
+      {
+        "n": 31,
+        "pairA": "safe",
+        "pairB": "save"
+      },
+      {
+        "n": 15,
+        "pairA": "fat",
+        "pairB": "fad"
+      },
+      {
+        "n": 32,
+        "pairA": "life",
+        "pairB": "live"
+      },
+      {
+        "n": 16,
+        "pairA": "cod",
+        "pairB": "cot"
+      },
+      {
+        "n": 33,
+        "pairA": "half",
+        "pairB": "halve"
+      },
+      {
+        "n": 17,
+        "pairA": "card",
+        "pairB": "cart"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.11",
+    "section": "analytic",
+    "number": "3.11",
+    "title": "Phonemes - voicing versus voiceless words in carrier phrase",
+    "category": "Phonemes",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Look at the fleas on that sheep."
+          },
+          {
+            "label": "B",
+            "text": "Look at the fleece on that sheep."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He should have taken a card."
+          },
+          {
+            "label": "B",
+            "text": "He should have taken a cart."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I don't know what we'll do about that mop."
+          },
+          {
+            "label": "B",
+            "text": "I don't know what we'll do about that mob."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I'm worried about our horse's feet."
+          },
+          {
+            "label": "B",
+            "text": "I'm worried about our horse's feed."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The rope is over there on the floor."
+          },
+          {
+            "label": "B",
+            "text": "The robe is over there on the floor."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He's always thinking about that pup."
+          },
+          {
+            "label": "B",
+            "text": "He's always thinking about that pub."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The farmer bought a new pick."
+          },
+          {
+            "label": "B",
+            "text": "The farmer bought a new pig."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He put the parcels on his back."
+          },
+          {
+            "label": "B",
+            "text": "He put the parcels on his bag."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Have you seen the new dock?"
+          },
+          {
+            "label": "B",
+            "text": "Have you seen the new dog?"
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The girl was looking at the beautiful charm."
+          },
+          {
+            "label": "B",
+            "text": "The girl was looking at the beautiful chart."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He was looking at the card."
+          },
+          {
+            "label": "B",
+            "text": "He was looking at the cart."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The boy hit the little dog."
+          },
+          {
+            "label": "B",
+            "text": "The boy hid the little dog."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Is that a new coat?"
+          },
+          {
+            "label": "B",
+            "text": "Is that a new code?"
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Pick up that lock and follow me."
+          },
+          {
+            "label": "B",
+            "text": "Pick up that log and follow me."
+          }
+        ]
+      },
+      {
+        "n": 15,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We need some new seeds for the garden."
+          },
+          {
+            "label": "B",
+            "text": "We need some new seats for the garden."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.12",
+    "section": "analytic",
+    "number": "3.12",
+    "title": "Phonemes - voicing in initial position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "pig",
+        "pairB": "big"
+      },
+      {
+        "n": 21,
+        "pairA": "sip",
+        "pairB": "zip"
+      },
+      {
+        "n": 2,
+        "pairA": "park",
+        "pairB": "bark"
+      },
+      {
+        "n": 22,
+        "pairA": "sack",
+        "pairB": "zack"
+      },
+      {
+        "n": 3,
+        "pairA": "pet",
+        "pairB": "bet"
+      },
+      {
+        "n": 23,
+        "pairA": "sing",
+        "pairB": "zing"
+      },
+      {
+        "n": 4,
+        "pairA": "putt",
+        "pairB": "but"
+      },
+      {
+        "n": 24,
+        "pairA": "seal",
+        "pairB": "zeal"
+      },
+      {
+        "n": 5,
+        "pairA": "pie",
+        "pairB": "by"
+      },
+      {
+        "n": 25,
+        "pairA": "few",
+        "pairB": "view"
+      },
+      {
+        "n": 6,
+        "pairA": "pat",
+        "pairB": "bat"
+      },
+      {
+        "n": 26,
+        "pairA": "fault",
+        "pairB": "vault"
+      },
+      {
+        "n": 7,
+        "pairA": "toe",
+        "pairB": "dough"
+      },
+      {
+        "n": 27,
+        "pairA": "fat",
+        "pairB": "vat"
+      },
+      {
+        "n": 8,
+        "pairA": "tale",
+        "pairB": "dale"
+      },
+      {
+        "n": 28,
+        "pairA": "fast",
+        "pairB": "vast"
+      },
+      {
+        "n": 9,
+        "pairA": "tart",
+        "pairB": "dart"
+      },
+      {
+        "n": 29,
+        "pairA": "fuse",
+        "pairB": "views"
+      },
+      {
+        "n": 10,
+        "pairA": "tie",
+        "pairB": "die"
+      },
+      {
+        "n": 30,
+        "pairA": "fowl",
+        "pairB": "vowel"
+      },
+      {
+        "n": 11,
+        "pairA": "too",
+        "pairB": "do"
+      },
+      {
+        "n": 31,
+        "pairA": "chore",
+        "pairB": "door"
+      },
+      {
+        "n": 12,
+        "pairA": "tug",
+        "pairB": "dug"
+      },
+      {
+        "n": 32,
+        "pairA": "choke",
+        "pairB": "joke"
+      },
+      {
+        "n": 13,
+        "pairA": "coat",
+        "pairB": "goat"
+      },
+      {
+        "n": 33,
+        "pairA": "cheap",
+        "pairB": "jeep"
+      },
+      {
+        "n": 14,
+        "pairA": "came",
+        "pairB": "game"
+      },
+      {
+        "n": 34,
+        "pairA": "chug",
+        "pairB": "jug"
+      },
+      {
+        "n": 15,
+        "pairA": "cot",
+        "pairB": "got"
+      },
+      {
+        "n": 35,
+        "pairA": "chock",
+        "pairB": "jock"
+      },
+      {
+        "n": 16,
+        "pairA": "card",
+        "pairB": "guard"
+      },
+      {
+        "n": 36,
+        "pairA": "cheered",
+        "pairB": "jeered"
+      },
+      {
+        "n": 17,
+        "pairA": "come",
+        "pairB": "gum"
+      },
+      {
+        "n": 37,
+        "pairA": "chives",
+        "pairB": "jives"
+      },
+      {
+        "n": 18,
+        "pairA": "cap",
+        "pairB": "gap"
+      },
+      {
+        "n": 38,
+        "pairA": "char",
+        "pairB": "jar"
+      },
+      {
+        "n": 19,
+        "pairA": "sue",
+        "pairB": "zoo"
+      },
+      {
+        "n": 39,
+        "pairA": "chain",
+        "pairB": "Jane"
+      },
+      {
+        "n": 20,
+        "pairA": "sewn",
+        "pairB": "zone"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.13",
+    "section": "analytic",
+    "number": "3.13",
+    "title": "Phonemes - voiced versus voiceless words in a carrier phrase",
+    "category": "Phonemes",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The little girl had a toy pear."
+          },
+          {
+            "label": "B",
+            "text": "The little girl had a toy bear."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He dropped the food into the bubbling fat."
+          },
+          {
+            "label": "B",
+            "text": "He dropped the food into the bubbling vat."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The crowd cheered the actors."
+          },
+          {
+            "label": "B",
+            "text": "The crowd jeered the actors."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Is that your new coat?"
+          },
+          {
+            "label": "B",
+            "text": "Is that your new goat?"
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We need a new pin for this."
+          },
+          {
+            "label": "B",
+            "text": "We need a new bin for this."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He was worried about the pill."
+          },
+          {
+            "label": "B",
+            "text": "He was worried about the bill."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He has never had a pet."
+          },
+          {
+            "label": "B",
+            "text": "He has never had a bet."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The baker was worried about his dough."
+          },
+          {
+            "label": "B",
+            "text": "The baker was worried about his toe."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He threw a dart at him."
+          },
+          {
+            "label": "B",
+            "text": "He threw a tart at him."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I thought he was joking."
+          },
+          {
+            "label": "B",
+            "text": "I thought he was choking."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Do you think we should tie this fabric?"
+          },
+          {
+            "label": "B",
+            "text": "Do you think we should dye this fabric?"
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It was only a little pit."
+          },
+          {
+            "label": "B",
+            "text": "It was only a little bit."
+          }
+        ]
+      },
+      {
+        "n": 13,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We are going to have to get a new path."
+          },
+          {
+            "label": "B",
+            "text": "We are going to have to get a new bath."
+          }
+        ]
+      },
+      {
+        "n": 14,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He bought a painting of a beach."
+          },
+          {
+            "label": "B",
+            "text": "He bought a painting of a peach."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.14",
+    "section": "analytic",
+    "number": "3.14",
+    "title": "Phonemes - manner of articulation, voiceless stops versus nasals in initial and final position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "pea",
+        "pairB": "me"
+      },
+      {
+        "n": 2,
+        "pairA": "pop",
+        "pairB": "mop"
+      },
+      {
+        "n": 3,
+        "pairA": "pie",
+        "pairB": "my"
+      },
+      {
+        "n": 4,
+        "pairA": "peel",
+        "pairB": "meal"
+      },
+      {
+        "n": 5,
+        "pairA": "pet",
+        "pairB": "met"
+      },
+      {
+        "n": 6,
+        "pairA": "poor",
+        "pairB": "more"
+      },
+      {
+        "n": 7,
+        "pairA": "park",
+        "pairB": "mark"
+      },
+      {
+        "n": 8,
+        "pairA": "pay",
+        "pairB": "may"
+      },
+      {
+        "n": 9,
+        "pairA": "pat",
+        "pairB": "mat"
+      },
+      {
+        "n": 10,
+        "pairA": "pen",
+        "pairB": "men"
+      },
+      {
+        "n": 11,
+        "pairA": "fan",
+        "pairB": "fat"
+      },
+      {
+        "n": 12,
+        "pairA": "bone",
+        "pairB": "boat"
+      },
+      {
+        "n": 13,
+        "pairA": "cone",
+        "pairB": "coat"
+      },
+      {
+        "n": 14,
+        "pairA": "shun",
+        "pairB": "shut"
+      },
+      {
+        "n": 15,
+        "pairA": "bin",
+        "pairB": "bit"
+      },
+      {
+        "n": 16,
+        "pairA": "pen",
+        "pairB": "pet"
+      },
+      {
+        "n": 17,
+        "pairA": "seen",
+        "pairB": "seat"
+      },
+      {
+        "n": 18,
+        "pairA": "ban",
+        "pairB": "bat"
+      },
+      {
+        "n": 19,
+        "pairA": "bean",
+        "pairB": "beet"
+      },
+      {
+        "n": 20,
+        "pairA": "mean",
+        "pairB": "meet"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.15",
+    "section": "analytic",
+    "number": "3.15",
+    "title": "Phonemes - manner of articulation, voiced stops versus nasals in initial and final position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "match",
+        "pairB": "batch"
+      },
+      {
+        "n": 2,
+        "pairA": "man",
+        "pairB": "ban"
+      },
+      {
+        "n": 3,
+        "pairA": "morn",
+        "pairB": "born"
+      },
+      {
+        "n": 4,
+        "pairA": "mail",
+        "pairB": "bail"
+      },
+      {
+        "n": 5,
+        "pairA": "me",
+        "pairB": "be"
+      },
+      {
+        "n": 6,
+        "pairA": "need",
+        "pairB": "deed"
+      },
+      {
+        "n": 7,
+        "pairA": "neck",
+        "pairB": "deck"
+      },
+      {
+        "n": 8,
+        "pairA": "nice",
+        "pairB": "dice"
+      },
+      {
+        "n": 9,
+        "pairA": "nose",
+        "pairB": "doze"
+      },
+      {
+        "n": 10,
+        "pairA": "name",
+        "pairB": "dame"
+      },
+      {
+        "n": 11,
+        "pairA": "come",
+        "pairB": "cub"
+      },
+      {
+        "n": 12,
+        "pairA": "hum",
+        "pairB": "hub"
+      },
+      {
+        "n": 13,
+        "pairA": "rim",
+        "pairB": "rib"
+      },
+      {
+        "n": 14,
+        "pairA": "rum",
+        "pairB": "rub"
+      },
+      {
+        "n": 15,
+        "pairA": "dam",
+        "pairB": "dab"
+      },
+      {
+        "n": 16,
+        "pairA": "hen",
+        "pairB": "head"
+      },
+      {
+        "n": 17,
+        "pairA": "moon",
+        "pairB": "mood"
+      },
+      {
+        "n": 18,
+        "pairA": "bun",
+        "pairB": "bud"
+      },
+      {
+        "n": 19,
+        "pairA": "pan",
+        "pairB": "pad"
+      },
+      {
+        "n": 20,
+        "pairA": "corn",
+        "pairB": "cord"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.3",
+    "section": "analytic",
+    "number": "1.3",
+    "title": "Syllable counting - word length identification - 3-choice",
+    "category": "Syllable counting",
+    "format": "word_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "choices": [
+          "cheerful",
+          "eventual",
+          "time"
+        ]
+      },
+      {
+        "n": 2,
+        "choices": [
+          "game",
+          "happy",
+          "character"
+        ]
+      },
+      {
+        "n": 3,
+        "choices": [
+          "Christmas",
+          "hall",
+          "beautiful"
+        ]
+      },
+      {
+        "n": 4,
+        "choices": [
+          "charm",
+          "company",
+          "plastic"
+        ]
+      },
+      {
+        "n": 5,
+        "choices": [
+          "telephone",
+          "ping",
+          "sandman"
+        ]
+      },
+      {
+        "n": 6,
+        "choices": [
+          "sure",
+          "assurance",
+          "shipwreck"
+        ]
+      },
+      {
+        "n": 7,
+        "choices": [
+          "encyclopedia",
+          "yellow",
+          "love"
+        ]
+      },
+      {
+        "n": 8,
+        "choices": [
+          "water",
+          "awareness",
+          "wait"
+        ]
+      },
+      {
+        "n": 9,
+        "choices": [
+          "rainbow",
+          "blow",
+          "rehabilitation"
+        ]
+      },
+      {
+        "n": 10,
+        "choices": [
+          "rob",
+          "barber",
+          "basketball"
+        ]
+      },
+      {
+        "n": 11,
+        "choices": [
+          "chipmunk",
+          "chain",
+          "championship"
+        ]
+      },
+      {
+        "n": 12,
+        "choices": [
+          "office",
+          "ice",
+          "sensitive"
+        ]
+      },
+      {
+        "n": 13,
+        "choices": [
+          "no",
+          "notice",
+          "nomination"
+        ]
+      },
+      {
+        "n": 14,
+        "choices": [
+          "play",
+          "hippopotamus",
+          "apple"
+        ]
+      },
+      {
+        "n": 15,
+        "choices": [
+          "yesterday",
+          "toy",
+          "after"
+        ]
+      },
+      {
+        "n": 16,
+        "choices": [
+          "operation",
+          "bacon",
+          "can"
+        ]
+      },
+      {
+        "n": 17,
+        "choices": [
+          "wonder",
+          "top",
+          "understand"
+        ]
+      },
+      {
+        "n": 18,
+        "choices": [
+          "you",
+          "liberate",
+          "latter"
+        ]
+      },
+      {
+        "n": 19,
+        "choices": [
+          "men",
+          "hammer",
+          "eliminate"
+        ]
+      },
+      {
+        "n": 20,
+        "choices": [
+          "he",
+          "probably",
+          "pretty"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.16",
+    "section": "analytic",
+    "number": "3.16",
+    "title": "Phonemes - manner of articulation, fricatives versus nasals in initial and final position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "sum",
+        "pairB": "numb"
+      },
+      {
+        "n": 2,
+        "pairA": "sea",
+        "pairB": "knee"
+      },
+      {
+        "n": 3,
+        "pairA": "sap",
+        "pairB": "nap"
+      },
+      {
+        "n": 4,
+        "pairA": "sit",
+        "pairB": "knit"
+      },
+      {
+        "n": 5,
+        "pairA": "seed",
+        "pairB": "need"
+      },
+      {
+        "n": 6,
+        "pairA": "said",
+        "pairB": "Ned"
+      },
+      {
+        "n": 7,
+        "pairA": "sick",
+        "pairB": "nick"
+      },
+      {
+        "n": 8,
+        "pairA": "sack",
+        "pairB": "knack"
+      },
+      {
+        "n": 9,
+        "pairA": "sag",
+        "pairB": "nag"
+      },
+      {
+        "n": 10,
+        "pairA": "sash",
+        "pairB": "gnash"
+      },
+      {
+        "n": 11,
+        "pairA": "cease",
+        "pairB": "seen"
+      },
+      {
+        "n": 12,
+        "pairA": "kiss",
+        "pairB": "kin"
+      },
+      {
+        "n": 13,
+        "pairA": "nice",
+        "pairB": "nine"
+      },
+      {
+        "n": 14,
+        "pairA": "grace",
+        "pairB": "grain"
+      },
+      {
+        "n": 15,
+        "pairA": "fuss",
+        "pairB": "fun"
+      },
+      {
+        "n": 16,
+        "pairA": "moose",
+        "pairB": "moon"
+      },
+      {
+        "n": 17,
+        "pairA": "horse",
+        "pairB": "horn"
+      },
+      {
+        "n": 18,
+        "pairA": "mass",
+        "pairB": "man"
+      },
+      {
+        "n": 19,
+        "pairA": "case",
+        "pairB": "cane"
+      },
+      {
+        "n": 20,
+        "pairA": "dice",
+        "pairB": "dine"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.17",
+    "section": "analytic",
+    "number": "3.17",
+    "title": "Phonemes - manner of articulation, laterals versus nasals in initial and final position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "lip",
+        "pairB": "nip"
+      },
+      {
+        "n": 2,
+        "pairA": "law",
+        "pairB": "gnaw"
+      },
+      {
+        "n": 3,
+        "pairA": "lap",
+        "pairB": "nap"
+      },
+      {
+        "n": 4,
+        "pairA": "lit",
+        "pairB": "knit"
+      },
+      {
+        "n": 5,
+        "pairA": "let",
+        "pairB": "net"
+      },
+      {
+        "n": 6,
+        "pairA": "lot",
+        "pairB": "not"
+      },
+      {
+        "n": 7,
+        "pairA": "lick",
+        "pairB": "nick"
+      },
+      {
+        "n": 8,
+        "pairA": "lash",
+        "pairB": "gnash"
+      },
+      {
+        "n": 9,
+        "pairA": "led",
+        "pairB": "Ned"
+      },
+      {
+        "n": 10,
+        "pairA": "lead",
+        "pairB": "need"
+      },
+      {
+        "n": 11,
+        "pairA": "gain",
+        "pairB": "gale"
+      },
+      {
+        "n": 12,
+        "pairA": "pain",
+        "pairB": "pale"
+      },
+      {
+        "n": 13,
+        "pairA": "tin",
+        "pairB": "till"
+      },
+      {
+        "n": 14,
+        "pairA": "keen",
+        "pairB": "keel"
+      },
+      {
+        "n": 15,
+        "pairA": "pin",
+        "pairB": "pill"
+      },
+      {
+        "n": 16,
+        "pairA": "mean",
+        "pairB": "meal"
+      },
+      {
+        "n": 17,
+        "pairA": "fine",
+        "pairB": "file"
+      },
+      {
+        "n": 18,
+        "pairA": "coin",
+        "pairB": "coil"
+      },
+      {
+        "n": 19,
+        "pairA": "spin",
+        "pairB": "spill"
+      },
+      {
+        "n": 20,
+        "pairA": "skin",
+        "pairB": "skill"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.18",
+    "section": "analytic",
+    "number": "3.18",
+    "title": "Phonemes - manner of articulation, affricate versus fricative in initial position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "chew",
+        "pairB": "shoe"
+      },
+      {
+        "n": 2,
+        "pairA": "chin",
+        "pairB": "shin"
+      },
+      {
+        "n": 3,
+        "pairA": "chip",
+        "pairB": "ship"
+      },
+      {
+        "n": 4,
+        "pairA": "chewed",
+        "pairB": "shooed"
+      },
+      {
+        "n": 5,
+        "pairA": "chore",
+        "pairB": "shore"
+      },
+      {
+        "n": 6,
+        "pairA": "cheered",
+        "pairB": "sheared"
+      },
+      {
+        "n": 7,
+        "pairA": "cheap",
+        "pairB": "sheep"
+      },
+      {
+        "n": 8,
+        "pairA": "cheer",
+        "pairB": "shear"
+      },
+      {
+        "n": 9,
+        "pairA": "chose",
+        "pairB": "shows"
+      },
+      {
+        "n": 10,
+        "pairA": "chop",
+        "pairB": "shop"
+      },
+      {
+        "n": 11,
+        "pairA": "cheers",
+        "pairB": "shears"
+      },
+      {
+        "n": 12,
+        "pairA": "chair",
+        "pairB": "share"
+      },
+      {
+        "n": 13,
+        "pairA": "chores",
+        "pairB": "shores"
+      },
+      {
+        "n": 14,
+        "pairA": "cheat",
+        "pairB": "sheet"
+      },
+      {
+        "n": 15,
+        "pairA": "choose",
+        "pairB": "shoes"
+      },
+      {
+        "n": 16,
+        "pairA": "chairs",
+        "pairB": "shares"
+      },
+      {
+        "n": 17,
+        "pairA": "chucks",
+        "pairB": "shucks"
+      },
+      {
+        "n": 18,
+        "pairA": "chins",
+        "pairB": "shins"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.19",
+    "section": "analytic",
+    "number": "3.19",
+    "title": "Phonemes - manner of articulation, voiceless stop versus voiceless fricative in initial position",
+    "category": "Phonemes",
+    "format": "word_pair",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "pairA": "toe",
+        "pairB": "so"
+      },
+      {
+        "n": 2,
+        "pairA": "tick",
+        "pairB": "sick"
+      },
+      {
+        "n": 3,
+        "pairA": "toot",
+        "pairB": "suit"
+      },
+      {
+        "n": 4,
+        "pairA": "tack",
+        "pairB": "sack"
+      },
+      {
+        "n": 5,
+        "pairA": "tip",
+        "pairB": "sip"
+      },
+      {
+        "n": 6,
+        "pairA": "touch",
+        "pairB": "such"
+      },
+      {
+        "n": 7,
+        "pairA": "tie",
+        "pairB": "sigh"
+      },
+      {
+        "n": 8,
+        "pairA": "ton",
+        "pairB": "son"
+      },
+      {
+        "n": 9,
+        "pairA": "tight",
+        "pairB": "sight"
+      },
+      {
+        "n": 10,
+        "pairA": "till",
+        "pairB": "sill"
+      },
+      {
+        "n": 11,
+        "pairA": "tent",
+        "pairB": "sent"
+      },
+      {
+        "n": 12,
+        "pairA": "tame",
+        "pairB": "same"
+      },
+      {
+        "n": 13,
+        "pairA": "tilt",
+        "pairB": "silt"
+      },
+      {
+        "n": 14,
+        "pairA": "tea",
+        "pairB": "see"
+      },
+      {
+        "n": 15,
+        "pairA": "tin",
+        "pairB": "sin"
+      },
+      {
+        "n": 16,
+        "pairA": "team",
+        "pairB": "seem"
+      },
+      {
+        "n": 17,
+        "pairA": "tend",
+        "pairB": "send"
+      },
+      {
+        "n": 18,
+        "pairA": "tail",
+        "pairB": "sail"
+      },
+      {
+        "n": 19,
+        "pairA": "take",
+        "pairB": "sake"
+      },
+      {
+        "n": 20,
+        "pairA": "tap",
+        "pairB": "sap"
+      }
+    ]
+  },
+  {
+    "id": "ex-4.0",
+    "section": "analytic",
+    "number": "4.0",
+    "title": "High- and low- frequency discrimination",
+    "category": "Frequency discrimination",
+    "format": "sentence_choice",
+    "level": "discrimination",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Paul brought all the wood home."
+          },
+          {
+            "label": "B",
+            "text": "She drinks really sweet tea."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It's easy to see."
+          },
+          {
+            "label": "B",
+            "text": "My brother liked blue."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "She is his sister."
+          },
+          {
+            "label": "B",
+            "text": "The door blew open."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Mike has milk each day."
+          },
+          {
+            "label": "B",
+            "text": "He sits in his seat."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Bob brought the ball."
+          },
+          {
+            "label": "B",
+            "text": "Sis uses the scissors."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Knock on the door."
+          },
+          {
+            "label": "B",
+            "text": "She eats the cheese."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Catch the keys!"
+          },
+          {
+            "label": "B",
+            "text": "Mow the lawn!"
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "His feet itch."
+          },
+          {
+            "label": "B",
+            "text": "Move over."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It's easy."
+          },
+          {
+            "label": "B",
+            "text": "Oh, no."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "She's sick!"
+          },
+          {
+            "label": "B",
+            "text": "No more!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-4.1",
+    "section": "analytic",
+    "number": "4.1",
+    "title": "Frequency discrimination - phoneme pattern in sentences",
+    "category": "Frequency discrimination",
+    "format": "sentence_choice",
+    "level": "discrimination",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Sheep don't live in a barn."
+          },
+          {
+            "label": "B",
+            "text": "Bob had sixteen sheep."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Sit here on the floor."
+          },
+          {
+            "label": "B",
+            "text": "You should get six of these."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Move over till he sees it."
+          },
+          {
+            "label": "B",
+            "text": "Each street gets a new pavement."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The neighbor is eager to see Sydney."
+          },
+          {
+            "label": "B",
+            "text": "Six seats are available for us."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Paul bruised his leg."
+          },
+          {
+            "label": "B",
+            "text": "His sheets are soft."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "This chick wants a worm."
+          },
+          {
+            "label": "B",
+            "text": "The boat docks with ease."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Sweep the floor with a broom."
+          },
+          {
+            "label": "B",
+            "text": "Don't walk in the street."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Sit still and don't move."
+          },
+          {
+            "label": "B",
+            "text": "Turn over the chicken, please."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Joan wants tea and cheese."
+          },
+          {
+            "label": "B",
+            "text": "See me tomorrow afternoon."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We often see ice in the winter."
+          },
+          {
+            "label": "B",
+            "text": "It's easy to grow tomatoes."
+          }
+        ]
+      },
+      {
+        "n": 11,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "His seat is too low."
+          },
+          {
+            "label": "B",
+            "text": "Robert runs with ease."
+          }
+        ]
+      },
+      {
+        "n": 12,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The tide came in at six."
+          },
+          {
+            "label": "B",
+            "text": "This string should make a bow."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-4.2",
+    "section": "analytic",
+    "number": "4.2",
+    "title": "Frequency discrimination - sentence identification (closed-set same length sentences)",
+    "category": "Frequency discrimination",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "John Smith broke his left arm.",
+        "group": "Set A"
+      },
+      {
+        "n": 2,
+        "text": "Turn left at the next street.",
+        "group": "Set A"
+      },
+      {
+        "n": 3,
+        "text": "The king was a great man.",
+        "group": "Set A"
+      },
+      {
+        "n": 4,
+        "text": "What time does your watch say?",
+        "group": "Set A"
+      },
+      {
+        "n": 1,
+        "text": "Keep watching the road.",
+        "group": "Set B"
+      },
+      {
+        "n": 2,
+        "text": "I can't stay awake.",
+        "group": "Set B"
+      },
+      {
+        "n": 3,
+        "text": "Tell him to come here.",
+        "group": "Set B"
+      },
+      {
+        "n": 4,
+        "text": "Stop causing trouble.",
+        "group": "Set B"
+      },
+      {
+        "n": 5,
+        "text": "Turn on the heater.",
+        "group": "Set B"
+      },
+      {
+        "n": 1,
+        "text": "Why don't you buy some new clothes?",
+        "group": "Set C"
+      },
+      {
+        "n": 2,
+        "text": "Did you see that old movie?",
+        "group": "Set C"
+      },
+      {
+        "n": 6,
+        "text": "The rain fell all through the day.",
+        "group": "Set C"
+      },
+      {
+        "n": 4,
+        "text": "It's your turn to wash the car.",
+        "group": "Set C"
+      },
+      {
+        "n": 5,
+        "text": "I can't understand that man.",
+        "group": "Set C"
+      },
+      {
+        "n": 1,
+        "text": "Why don't you fix the bathroom window?",
+        "group": "Set D"
+      },
+      {
+        "n": 2,
+        "text": "Don't go out into the cold night air.",
+        "group": "Set D"
+      },
+      {
+        "n": 3,
+        "text": "They went out for dinner and a show.",
+        "group": "Set D"
+      },
+      {
+        "n": 4,
+        "text": "The car won't start because it's so cold.",
+        "group": "Set D"
+      },
+      {
+        "n": 5,
+        "text": "People are quite often tolerant.",
+        "group": "Set D"
+      },
+      {
+        "n": 6,
+        "text": "Would you prefer the walls to be blue?",
+        "group": "Set D"
+      },
+      {
+        "n": 7,
+        "text": "The bus was held up for ten minutes.",
+        "group": "Set D"
+      },
+      {
+        "n": 8,
+        "text": "That magician is very clever.",
+        "group": "Set D"
+      },
+      {
+        "n": 9,
+        "text": "Can you understand why she's crying?",
+        "group": "Set D"
+      },
+      {
+        "n": 10,
+        "text": "It's difficult to find parking there.",
+        "group": "Set D"
+      },
+      {
+        "n": 1,
+        "text": "The train was one hour late.",
+        "group": "Set E"
+      },
+      {
+        "n": 2,
+        "text": "Can I have some tea please?",
+        "group": "Set E"
+      },
+      {
+        "n": 3,
+        "text": "The cow stood by the gate.",
+        "group": "Set E"
+      },
+      {
+        "n": 4,
+        "text": "The dead tree blocked the road.",
+        "group": "Set E"
+      },
+      {
+        "n": 5,
+        "text": "Chess is quite a hard game.",
+        "group": "Set E"
+      },
+      {
+        "n": 6,
+        "text": "Put the cup on the shelf.",
+        "group": "Set E"
+      },
+      {
+        "n": 7,
+        "text": "Did she break the glass jar?",
+        "group": "Set E"
+      },
+      {
+        "n": 8,
+        "text": "What time does the film start?",
+        "group": "Set E"
+      },
+      {
+        "n": 9,
+        "text": "The shirt had a large stain.",
+        "group": "Set E"
+      },
+      {
+        "n": 10,
+        "text": "Feed the cats twice a day.",
+        "group": "Set E"
+      }
+    ]
+  },
+  {
+    "id": "ex-5.0",
+    "section": "analytic",
+    "number": "5.0",
+    "title": "Overlearned speech",
+    "category": "Overlearned phrases",
+    "format": "phrase",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "It's for you"
+      },
+      {
+        "n": 2,
+        "text": "Who was that?"
+      },
+      {
+        "n": 3,
+        "text": "Keep that in mind..."
+      },
+      {
+        "n": 4,
+        "text": "Up and down."
+      },
+      {
+        "n": 5,
+        "text": "I'm going to..."
+      },
+      {
+        "n": 6,
+        "text": "Come in."
+      },
+      {
+        "n": 7,
+        "text": "As a matter of fact..."
+      },
+      {
+        "n": 8,
+        "text": "On second thought..."
+      },
+      {
+        "n": 9,
+        "text": "By that time..."
+      },
+      {
+        "n": 10,
+        "text": "Not at all"
+      },
+      {
+        "n": 11,
+        "text": "So what?"
+      },
+      {
+        "n": 12,
+        "text": "Not now."
+      },
+      {
+        "n": 13,
+        "text": "Are we going?"
+      },
+      {
+        "n": 14,
+        "text": "But will they all..."
+      },
+      {
+        "n": 15,
+        "text": "I had it with me."
+      },
+      {
+        "n": 16,
+        "text": "There were some."
+      },
+      {
+        "n": 17,
+        "text": "Has he seen it?"
+      },
+      {
+        "n": 18,
+        "text": "Which is it?"
+      },
+      {
+        "n": 19,
+        "text": "Do you know?"
+      },
+      {
+        "n": 20,
+        "text": "Is that my pen?"
+      },
+      {
+        "n": 21,
+        "text": "If that were true..."
+      },
+      {
+        "n": 22,
+        "text": "He said to me..."
+      },
+      {
+        "n": 23,
+        "text": "What would you do?"
+      },
+      {
+        "n": 24,
+        "text": "Do you hear them?"
+      },
+      {
+        "n": 25,
+        "text": "I asked her."
+      },
+      {
+        "n": 26,
+        "text": "He wore it."
+      },
+      {
+        "n": 27,
+        "text": "Where is your car?"
+      },
+      {
+        "n": 28,
+        "text": "Do you have any more?"
+      },
+      {
+        "n": 29,
+        "text": "Now it's time to go."
+      },
+      {
+        "n": 30,
+        "text": "Things are looking up."
+      },
+      {
+        "n": 31,
+        "text": "Do you think so?"
+      },
+      {
+        "n": 32,
+        "text": "We went out."
+      },
+      {
+        "n": 33,
+        "text": "Is that right?"
+      },
+      {
+        "n": 34,
+        "text": "Later than you think."
+      },
+      {
+        "n": 35,
+        "text": "I only hope so"
+      },
+      {
+        "n": 36,
+        "text": "What did she say?"
+      },
+      {
+        "n": 37,
+        "text": "He made it."
+      },
+      {
+        "n": 38,
+        "text": "Is there any more?"
+      },
+      {
+        "n": 39,
+        "text": "Let's not get into that."
+      },
+      {
+        "n": 40,
+        "text": "Those men..."
+      },
+      {
+        "n": 41,
+        "text": "It must be."
+      },
+      {
+        "n": 42,
+        "text": "A lot of people"
+      },
+      {
+        "n": 43,
+        "text": "May I say this?"
+      },
+      {
+        "n": 44,
+        "text": "It's a man's voice."
+      },
+      {
+        "n": 45,
+        "text": "What about..."
+      },
+      {
+        "n": 46,
+        "text": "Look it over."
+      },
+      {
+        "n": 47,
+        "text": "There are some more."
+      },
+      {
+        "n": 48,
+        "text": "I like these two."
+      },
+      {
+        "n": 49,
+        "text": "Fine, thank you."
+      },
+      {
+        "n": 50,
+        "text": "Alright."
+      },
+      {
+        "n": 51,
+        "text": "As I said before..."
+      },
+      {
+        "n": 52,
+        "text": "I feel great"
+      },
+      {
+        "n": 53,
+        "text": "How could you?"
+      },
+      {
+        "n": 54,
+        "text": "Such a thing!"
+      },
+      {
+        "n": 55,
+        "text": "He was first."
+      },
+      {
+        "n": 56,
+        "text": "Only once."
+      },
+      {
+        "n": 57,
+        "text": "Only one time."
+      },
+      {
+        "n": 58,
+        "text": "Every little thing."
+      },
+      {
+        "n": 59,
+        "text": "Can you come?"
+      },
+      {
+        "n": 60,
+        "text": "Tell us about it."
+      },
+      {
+        "n": 61,
+        "text": "Shall we go?"
+      },
+      {
+        "n": 62,
+        "text": "What should I do?"
+      },
+      {
+        "n": 63,
+        "text": "Then I said..."
+      },
+      {
+        "n": 64,
+        "text": "The paper's here."
+      }
+    ]
+  },
+  {
+    "id": "ex-6.0",
+    "section": "analytic",
+    "number": "6.0",
+    "title": "Text following - Two jokes, joke 1",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - Two jokes, joke 1\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop. Make several stops.)\n\nTwo old men who lived in a village deep in the country decided one day to take a\n\ntrip to London. This meant they had to leave their village, get on a bus to the nearest town, and there catch the train for New York. It was all a big adventure for\n\nthem, as they had never done anything like it before.\n\nTo eat on the journey, they had bought some bananas. They'd never eaten\n\nbananas before either.\n\nThey got on the train and were marveling at the speed. One man decided to try\n\nhis banana, but just as he was taking a bite the train entered a tunnel.\n\n'Have you eaten your banana yet?' he called out to his friend.\n\n'No', replied his friend.\n\n'Well, don't', said the first man. 'I took one bite of mine and went blind.'"
+      }
+    ]
+  },
+  {
+    "id": "ex-6.1",
+    "section": "analytic",
+    "number": "6.1",
+    "title": "Text following - Two jokes, joke 2",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - Two jokes, joke 2\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop and should stop several times during the joke.)\n\nA motorist driving through the country stopped for a hitch-hiker who was holding the halter of a cow.\n\n'I can give you a lift,' he said, 'But I can't take your cow.'\n\n'Don't worry,' said the hitch-hiker. 'She'll follow us in her own time.'\n\nSo the hitch-hiker got in and the motorist started up. He drove at thirty miles an hour, and the cow trotted along behind him. He drove at forty miles an hour, and\n\nthe cow was still trotting along behind him. He drove at fifty miles an hour, yet the\n\ncow was somehow managing to keep pace with him. But he noticed in his mirror that the cow seemed to be tiring, as her tongue was hanging out of her mouth.\n\n'I'm worried about your cow,' said the motorist to his passenger, 'Her tongue is\n\nhanging out of her mouth to the right.'\n\n'Oh, that's all right,' said the hitch-hiker, 'That means she's signaling to pass on\n\nthe right!'"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.4",
+    "section": "analytic",
+    "number": "1.4",
+    "title": "Syllable counting - carrier phrase (monosyllabic versus polysyllabic)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He owns a car."
+          },
+          {
+            "label": "B",
+            "text": "He owns an automobile."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He thought it was fun."
+          },
+          {
+            "label": "B",
+            "text": "He thought it was serious."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "How tall is your mother?"
+          },
+          {
+            "label": "B",
+            "text": "How tall is your grandmother?"
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I walked on the floor."
+          },
+          {
+            "label": "B",
+            "text": "I walked on the carpet."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "There is not enough time."
+          },
+          {
+            "label": "B",
+            "text": "There is not enough peanut butter."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I want to go now."
+          },
+          {
+            "label": "B",
+            "text": "I want to go to work."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Have you ever seen an owl?"
+          },
+          {
+            "label": "B",
+            "text": "Have you ever seen an elephant?"
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Don't give up hope."
+          },
+          {
+            "label": "B",
+            "text": "Don't give up the chance."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Tell her to come home."
+          },
+          {
+            "label": "B",
+            "text": "Tell her to come to the movies."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I saw it in the bookstore."
+          },
+          {
+            "label": "B",
+            "text": "I saw it in the supermarket."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-6.2",
+    "section": "analytic",
+    "number": "6.2",
+    "title": "Text following - Australia",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - Australia\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop reading and should do so several times during the text).\n\nAustralia\n\nThe continent of Australia is about 7,000 miles southwest of California. It is both a continent and an island and is almost exactly the same size as the mainland\n\nUnited States. The Nullarbor is the second largest desert in the world and means 'no trees' in Latin. Because of this huge desert, most of the population live around\n\nthe coastal borders. There are seven states, including the island of Tasmania.\n\nOne of the most interesting features of this country is the animals. The most well-\n\nknown is the koala bear, of course. In fact, the koala is not really a bear because it has a pouch in which it carries its young. The koala lives in a special kind of\n\neucalyptus tree, because the koala will eat only the leaves from this tree.\n\nAnother animal is the wallaby. This is a miniature kangaroo. It has very big eyes\n\nand very long claws and is more friendly than a kangaroo. There are several kinds of kangaroos: gray ones, red ones, and brown ones. They have very large hind\n\nfeet and a long tapered tail that make it possible for them to leap great distances.\n\nThey can move faster than fifty miles per hour. In the north of Australia, kangaroos can be found in the wild very easily. However, wild Australian animals are not\n\nusually found wandering the streets of any major city.\n\nThere are many other interesting things in this land called 'Down Under'."
+      }
+    ]
+  },
+  {
+    "id": "ex-6.3",
+    "section": "analytic",
+    "number": "6.3",
+    "title": "Text following - Charles Lindberg",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - Charles Lindberg\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop and should do so several times during the passage.)\n\nCharles Lindberg\n\nCharles Lindberg was the first pilot to fly solo across the Atlantic ocean. He flew from the North American continent to Europe in a plane called 'The Spirit of St.\n\nLouis'. His goal was to win an award called the Orteig Prize which was worth $25,000. His biggest problem was fighting the desire to sleep. But he had a lot to\n\nkeep him busy. His plane had only a few instruments. He flew through bad\n\nweather, was very short on fuel and had to land at night in Paris.\n\nLindberg was the first of many record holders who flew transcontinental as a solo pilot. He made his flight between New York and Paris in 1927. This first non-stop\n\nflight to Europe took 33 hours and 30 minutes. Today it can be flown in less than\n\n3 hours, but usually takes 6-8 hours."
+      }
+    ]
+  },
+  {
+    "id": "ex-6.4",
+    "section": "analytic",
+    "number": "6.4",
+    "title": "Text following - A town called Reed",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - A town called Reed\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop and should do so several times during the passage.)\n\nA town called Reed\n\nReed was the name of the town where Ed was born. He had lived there all his life. Reed was in a valley. Ed would walk to the top of the ridge to look at the town.\n\nOne day he saw that the town church did not look the same as it had the day before or the week before or even the year before. This time it had a face.\n\nThe steps in the front were like a mouth, and the two towers were like ears. Windows in each tower were the eyes. He often had seen the church from the\n\nridge, but this time it was new, he thought. It made him laugh. The best thing about his new point of view was not that the church had a face, but that the mouth\n\n(that is, the stairs) was in the shape of a smile."
+      }
+    ]
+  },
+  {
+    "id": "ex-6.5",
+    "section": "analytic",
+    "number": "6.5",
+    "title": "Text following - The Saint Bernard",
+    "category": "Text following",
+    "format": "passage",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Text following - The Saint Bernard\n\nI will read the following passage. Follow the passage by pointing to each word as I speak it. When I stop, repeat the last word I said. (The Speaker decides where to stop and should do so several times during the passage.)\n\nThe Saint Bernard A large, strong dog was specially raised in the Swiss Alps in Europe. It grew to\n\nhave a thick brown and white coat. The dog was called a Saint Bernard. It was\n\nfirst trained by monks. They lived in a mountain shelter called The Lodge of Saint Bernard. The shelter was for hikers and skiers.\n\nThe dogs were trained to help patrol the snow-covered trails. They were trained\n\nto search for people lost in the mountains. They would drag or lead the people\n\nback to the shelter. There the people could be taken care of by the monks.\n\nThe monks soon learned that walking or lying cold in the snow caused people to become very thirsty. So they tied small kegs of water or alcohol around the necks\n\nof the Saint Bernard. In the case of the person being able to walk, a sip could be\n\ntaken to restore energy. If the lost person was not awake, the Saint Bernard would drag them to the lodge. If the person woke up during the journey, he or she\n\ncould take a sip from the keg while being taken to the lodge."
+      }
+    ]
+  },
+  {
+    "id": "ex-1.0",
+    "section": "synthetic",
+    "number": "1.0",
+    "title": "Fill in the sentences - fill in the gap",
+    "category": "Fill-in-the-blank",
+    "format": "fill_blank",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "If you don't stop fighting I'll call the ..........",
+        "alternatives": [
+          "police",
+          "teacher",
+          "cops"
+        ]
+      },
+      {
+        "n": 2,
+        "text": "I like milk in my ..........",
+        "alternatives": [
+          "coffee",
+          "tea"
+        ]
+      },
+      {
+        "n": 3,
+        "text": "Did you read the .......... this morning?",
+        "alternatives": [
+          "paper",
+          "newspaper",
+          "magazine"
+        ]
+      },
+      {
+        "n": 4,
+        "text": "I went to the movies last ..........",
+        "alternatives": [
+          "night",
+          "week",
+          "Saturday",
+          "weekend"
+        ]
+      },
+      {
+        "n": 5,
+        "text": "The crowd gave a loud ..........",
+        "alternatives": [
+          "cheer",
+          "cry",
+          "yell",
+          "scream"
+        ]
+      },
+      {
+        "n": 6,
+        "text": "The man cut down the ..........",
+        "alternatives": [
+          "tree",
+          "bush",
+          "fence"
+        ]
+      },
+      {
+        "n": 7,
+        "text": "We are going to the football .......... this afternoon.",
+        "alternatives": [
+          "match",
+          "game",
+          "stadium"
+        ]
+      },
+      {
+        "n": 8,
+        "text": "The boy opened the ...........",
+        "alternatives": [
+          "door",
+          "gate",
+          "present",
+          "window"
+        ]
+      },
+      {
+        "n": 9,
+        "text": "The butcher sold the ........... to the customer.",
+        "alternatives": [
+          "meat",
+          "sausages",
+          "steak"
+        ]
+      },
+      {
+        "n": 10,
+        "text": "She put the flowers in the ...........",
+        "alternatives": [
+          "vase",
+          "glass",
+          "water",
+          "garden"
+        ]
+      },
+      {
+        "n": 11,
+        "text": "I put the .......... on the letter.",
+        "alternatives": [
+          "stamp",
+          "address",
+          "date"
+        ]
+      },
+      {
+        "n": 12,
+        "text": "Open the .......... and let in some light.",
+        "alternatives": [
+          "curtains",
+          "blind",
+          "window"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-1.1",
+    "section": "synthetic",
+    "number": "1.1",
+    "title": "Fill in the sentences - pseudo open-set version",
+    "category": "Fill-in-the-blank",
+    "format": "fill_blank",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "If you don't stop fighting I'll call the .........."
+      },
+      {
+        "n": 2,
+        "text": "I like milk in my .........."
+      },
+      {
+        "n": 3,
+        "text": "Did you read the .......... this morning?"
+      },
+      {
+        "n": 4,
+        "text": "I went to the movies last .........."
+      },
+      {
+        "n": 5,
+        "text": "The crowd gave a loud .........."
+      },
+      {
+        "n": 6,
+        "text": "The man cut down the .........."
+      },
+      {
+        "n": 7,
+        "text": "We are going to the football .......... this afternoon."
+      },
+      {
+        "n": 8,
+        "text": "The boy opened the ..........."
+      },
+      {
+        "n": 9,
+        "text": "The butcher sold the ........... to the customer"
+      },
+      {
+        "n": 10,
+        "text": "She put the flowers in the ..........."
+      },
+      {
+        "n": 11,
+        "text": "I put the .......... on the letter."
+      },
+      {
+        "n": 12,
+        "text": "Open the .......... and let in some light."
+      }
+    ]
+  },
+  {
+    "id": "ex-2.0",
+    "section": "synthetic",
+    "number": "2.0",
+    "title": "Closed-set - visual identification task",
+    "category": "Visual closed-set",
+    "format": "closed_set",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "text": "It's a large storm in the tropics."
+      },
+      {
+        "n": 2,
+        "text": "It's something you use to lift up a car so that you can change the tires."
+      },
+      {
+        "n": 3,
+        "text": "It's long and thin and children color with it."
+      },
+      {
+        "n": 4,
+        "text": "It's something you may eat in hot weather."
+      },
+      {
+        "n": 5,
+        "text": "They have wheels and you wear them on your feet."
+      },
+      {
+        "n": 6,
+        "text": "It's big and hot and it's in the sky."
+      },
+      {
+        "n": 7,
+        "text": "This has numbers and you might use it to talk to someone."
+      },
+      {
+        "n": 8,
+        "text": "It can be large or small and children go there to learn."
+      },
+      {
+        "n": 9,
+        "text": "It makes honey but it can sting."
+      },
+      {
+        "n": 10,
+        "text": "Many people keep one of these as a pet."
+      },
+      {
+        "n": 11,
+        "text": "It's manufactured, full of water and you can swim in it."
+      },
+      {
+        "n": 12,
+        "text": "It grows on your head and you can cut it."
+      }
+    ]
+  },
+  {
+    "id": "ex-3.0",
+    "section": "synthetic",
+    "number": "3.0",
+    "title": "Topic of conversation - key topic and word clues",
+    "category": "Topic of conversation",
+    "format": "topic_clues",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "text": "What are you watching?"
+      },
+      {
+        "n": 2,
+        "text": "Turn on the news."
+      },
+      {
+        "n": 3,
+        "text": "I'm sick of all these commercials."
+      },
+      {
+        "n": 4,
+        "text": "There's a good movie on tonight."
+      },
+      {
+        "n": 5,
+        "text": "I like watching sports on TV."
+      },
+      {
+        "n": 6,
+        "text": "Who was the leading actor in that movie?"
+      },
+      {
+        "n": 7,
+        "text": "Do you have a video recorder?"
+      },
+      {
+        "n": 8,
+        "text": "Turn off the TV before you go to bed."
+      },
+      {
+        "n": 9,
+        "text": "I stayed up late to watch a movie."
+      },
+      {
+        "n": 1,
+        "text": "Have you read any good books lately?"
+      },
+      {
+        "n": 2,
+        "text": "I've nearly finished reading it."
+      },
+      {
+        "n": 3,
+        "text": "Who was the author of that book?"
+      },
+      {
+        "n": 4,
+        "text": "I always buy paperbacks."
+      },
+      {
+        "n": 5,
+        "text": "I am reading a novel at the moment."
+      },
+      {
+        "n": 6,
+        "text": "I can't remember that story."
+      },
+      {
+        "n": 1,
+        "text": "Where is my red shirt?"
+      },
+      {
+        "n": 2,
+        "text": "I bought a new pair of socks yesterday."
+      },
+      {
+        "n": 3,
+        "text": "It's very cold so bring a jacket."
+      },
+      {
+        "n": 4,
+        "text": "I took off my hat and gloves."
+      },
+      {
+        "n": 5,
+        "text": "I have some new shoes."
+      },
+      {
+        "n": 6,
+        "text": "There is a hole in my jacket because it's so old."
+      },
+      {
+        "n": 7,
+        "text": "I like old clothes."
+      },
+      {
+        "n": 8,
+        "text": "Did you see what she was wearing?"
+      },
+      {
+        "n": 9,
+        "text": "Have you seen the latest fashion?"
+      },
+      {
+        "n": 10,
+        "text": "I'm going shopping to buy some jeans."
+      },
+      {
+        "n": 11,
+        "text": "Do you think my shoes match my dress?"
+      },
+      {
+        "n": 12,
+        "text": "I bought some wool to knit a scarf."
+      },
+      {
+        "n": 13,
+        "text": "What are you wearing to the party?"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.7",
+    "section": "synthetic",
+    "number": "3.7",
+    "title": "Topic of conversation - unrelated sentences with clue words (set A)",
+    "category": "Topic of conversation",
+    "format": "lettered_clue_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "How are you?",
+        "cue": "Greeting",
+        "letter": "A"
+      },
+      {
+        "n": 2,
+        "text": "The weather is sometimes hard to predict.",
+        "cue": "Storm",
+        "letter": "B"
+      },
+      {
+        "n": 3,
+        "text": "Reading is a pleasant pastime.",
+        "cue": "Books",
+        "letter": "C"
+      },
+      {
+        "n": 4,
+        "text": "Apples are good for you.",
+        "cue": "Fruit",
+        "letter": "D"
+      },
+      {
+        "n": 5,
+        "text": "Prices are high these days.",
+        "cue": "Shop",
+        "letter": "E"
+      },
+      {
+        "n": 6,
+        "text": "The table has to be set for breakfast.",
+        "cue": "Meal",
+        "letter": "F"
+      },
+      {
+        "n": 7,
+        "text": "When I am tired, I go to sleep.",
+        "cue": "Bed",
+        "letter": "G"
+      },
+      {
+        "n": 8,
+        "text": "Are diamonds very expensive?",
+        "cue": "Jewelery",
+        "letter": "H"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.8",
+    "section": "synthetic",
+    "number": "3.8",
+    "title": "Topic of conversation - unrelated sentences with clue words (set B)",
+    "category": "Topic of conversation",
+    "format": "lettered_clue_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "She plays the piano and the violin.",
+        "cue": "Music",
+        "letter": "A"
+      },
+      {
+        "n": 2,
+        "text": "There was a thunderstorm last week.",
+        "cue": "Weather",
+        "letter": "B"
+      },
+      {
+        "n": 3,
+        "text": "There was a nest in the tree.",
+        "cue": "Bird",
+        "letter": "C"
+      },
+      {
+        "n": 4,
+        "text": "You should eat a big breakfast.",
+        "cue": "Food",
+        "letter": "D"
+      },
+      {
+        "n": 5,
+        "text": "Do you play tennis?",
+        "cue": "Sport",
+        "letter": "E"
+      },
+      {
+        "n": 6,
+        "text": "Dogs are always faithful.",
+        "cue": "Pet",
+        "letter": "F"
+      },
+      {
+        "n": 7,
+        "text": "The lake was very warm.",
+        "cue": "Water",
+        "letter": "G"
+      },
+      {
+        "n": 8,
+        "text": "Boys and girls must go to school.",
+        "cue": "Teacher",
+        "letter": "H"
+      },
+      {
+        "n": 9,
+        "text": "Tall buildings often ruin beautiful places.",
+        "cue": "Scenery",
+        "letter": "I"
+      },
+      {
+        "n": 10,
+        "text": "You can tell the time by looking at a wristwatch.",
+        "cue": "Clock",
+        "letter": "J"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.5",
+    "section": "analytic",
+    "number": "1.5",
+    "title": "Syllable counting - carrier phrase (monosyllabic and polysyllabic)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I need a new coat."
+          },
+          {
+            "label": "B",
+            "text": "I need a new umbrella."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "At the zoo, I saw an ape."
+          },
+          {
+            "label": "B",
+            "text": "At the zoo, I saw an elephant."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I studied math."
+          },
+          {
+            "label": "B",
+            "text": "I studied geography."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "We stopped at the gas station and bought gum."
+          },
+          {
+            "label": "B",
+            "text": "We stopped at the gas station and bought gasoline."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Show me your eye."
+          },
+          {
+            "label": "B",
+            "text": "Show me your apartment."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Bring me some cake."
+          },
+          {
+            "label": "B",
+            "text": "Bring me some lemonade."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I read the book."
+          },
+          {
+            "label": "B",
+            "text": "I read the encyclopedia."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I love to play ball."
+          },
+          {
+            "label": "B",
+            "text": "I love to play Monopoly."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Did you forget to buy the milk?"
+          },
+          {
+            "label": "B",
+            "text": "Did you forget to buy the spaghetti?"
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Where is the man?"
+          },
+          {
+            "label": "B",
+            "text": "Where is the manager?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-3.9",
+    "section": "synthetic",
+    "number": "3.9",
+    "title": "Topic of conversation - unrelated sentences with clue words (set C)",
+    "category": "Topic of conversation",
+    "format": "lettered_clue_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "There was a nest in the tree.",
+        "cue": "Bird",
+        "letter": "A"
+      },
+      {
+        "n": 2,
+        "text": "Everyone should see the doctor for a check-up.",
+        "cue": "Health",
+        "letter": "B"
+      },
+      {
+        "n": 3,
+        "text": "The park is big and shady and a good place",
+        "cue": "Trees",
+        "letter": "C"
+      },
+      {
+        "n": 4,
+        "text": "We like to go for a drive in the mountains.",
+        "cue": "Car",
+        "letter": "D"
+      },
+      {
+        "n": 5,
+        "text": "There are many animals on the farm.",
+        "cue": "Cow",
+        "letter": "E"
+      },
+      {
+        "n": 6,
+        "text": "This recipe was handed down to me but I don't",
+        "cue": "Original",
+        "letter": "F"
+      },
+      {
+        "n": 7,
+        "text": "It's best to be on time for an appointment.",
+        "cue": "Early",
+        "letter": "G"
+      },
+      {
+        "n": 8,
+        "text": "A bus went off the road.",
+        "cue": "Accident",
+        "letter": "H"
+      },
+      {
+        "n": 9,
+        "text": "We threw water on the burning logs.",
+        "cue": "Fire",
+        "letter": "I"
+      }
+    ]
+  },
+  {
+    "id": "ex-3.10",
+    "section": "synthetic",
+    "number": "3.10",
+    "title": "Topic of conversation - unrelated sentences with clue words (set D)",
+    "category": "Topic of conversation",
+    "format": "lettered_clue_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "My favorite color is yellow.",
+        "cue": "Paint",
+        "letter": "A"
+      },
+      {
+        "n": 2,
+        "text": "The price of food is always rising.",
+        "cue": "Inflation",
+        "letter": "B"
+      },
+      {
+        "n": 3,
+        "text": "You must bend your knees when you lift",
+        "cue": "Exercise",
+        "letter": "C"
+      },
+      {
+        "n": 4,
+        "text": "All the bells ring on Sunday.",
+        "cue": "Church",
+        "letter": "D"
+      },
+      {
+        "n": 5,
+        "text": "I like to eat lots of fresh fruit.",
+        "cue": "Food",
+        "letter": "E"
+      },
+      {
+        "n": 6,
+        "text": "When on a picnic, keep all food well covered.",
+        "cue": "Flies",
+        "letter": "F"
+      },
+      {
+        "n": 7,
+        "text": "Many people prefer a shower to a bath.",
+        "cue": "Wash",
+        "letter": "G"
+      },
+      {
+        "n": 8,
+        "text": "Bridge and poker are played with cards.",
+        "cue": "Game",
+        "letter": "H"
+      },
+      {
+        "n": 9,
+        "text": "Boys and girls have bikes and skates.",
+        "cue": "Toys",
+        "letter": "I"
+      },
+      {
+        "n": 10,
+        "text": "Receiving letters is more fun than writing them.",
+        "cue": "Mailbox",
+        "letter": "J"
+      }
+    ]
+  },
+  {
+    "id": "ex-4.0",
+    "section": "synthetic",
+    "number": "4.0",
+    "title": "Context cues - contextually cued sentences",
+    "category": "Context cues",
+    "format": "cued_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "What's your name?",
+        "cue": "Questions about you",
+        "setName": "Set A"
+      },
+      {
+        "n": 2,
+        "text": "How old are you?",
+        "cue": "Questions about you",
+        "setName": "Set A"
+      },
+      {
+        "n": 3,
+        "text": "Are you married or single?",
+        "cue": "Questions about you",
+        "setName": "Set A"
+      },
+      {
+        "n": 4,
+        "text": "How many children do you have?",
+        "cue": "Questions about you",
+        "setName": "Set A"
+      },
+      {
+        "n": 5,
+        "text": "Where do you live?",
+        "cue": "Questions about your home",
+        "setName": "Set A"
+      },
+      {
+        "n": 6,
+        "text": "Do you live in a house or an apartment?",
+        "cue": "Questions about your home",
+        "setName": "Set A"
+      },
+      {
+        "n": 7,
+        "text": "Do you have a big garden?",
+        "cue": "Questions about your home",
+        "setName": "Set A"
+      },
+      {
+        "n": 8,
+        "text": "Do you like watching television?",
+        "cue": "Questions about things that you like",
+        "setName": "Set A"
+      },
+      {
+        "n": 9,
+        "text": "What's your favorite color?",
+        "cue": "Questions about things that you like",
+        "setName": "Set A"
+      },
+      {
+        "n": 10,
+        "text": "Would you like a cup of tea or coffee?",
+        "cue": "Questions about things that you like",
+        "setName": "Set A"
+      },
+      {
+        "n": 11,
+        "text": "Dinner smells wonderful.",
+        "cue": "Dinner table phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 12,
+        "text": "Pass the salt and pepper, please.",
+        "cue": "Dinner table phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 13,
+        "text": "Would you like some more?",
+        "cue": "Dinner table phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 14,
+        "text": "What's for dessert?",
+        "cue": "Dinner table phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 15,
+        "text": "Good morning.",
+        "cue": "Early morning phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 16,
+        "text": "Did you sleep well?",
+        "cue": "Early morning phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 17,
+        "text": "What would you like for breakfast?",
+        "cue": "Early morning phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 18,
+        "text": "I'm tired; what time is it?",
+        "cue": "Late evening phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 19,
+        "text": "It's late; I think I'll go to bed.",
+        "cue": "Late evening phrases",
+        "setName": "Set B"
+      },
+      {
+        "n": 20,
+        "text": "Good night, see you in the morning.",
+        "cue": "Late evening phrases",
+        "setName": "Set B"
+      }
+    ]
+  },
+  {
+    "id": "ex-4.1",
+    "section": "synthetic",
+    "number": "4.1",
+    "title": "Context cues - common sentences",
+    "category": "Context cues",
+    "format": "cued_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Hello, (listener's name).",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 2,
+        "text": "How are you?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 3,
+        "text": "I'm very well, thank you.",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 4,
+        "text": "What time is it?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 5,
+        "text": "What did you say?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 6,
+        "text": "Good (night/afternoon/morning/evening).",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 7,
+        "text": "It's (hot/cold/raining) outside today.",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 8,
+        "text": "The time is (#) o'clock.",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 9,
+        "text": "The time is half-thirty(#).",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 10,
+        "text": "The time is quarter past/to (#).",
+        "cue": "Common sentences used everyday",
+        "setName": "Set A"
+      },
+      {
+        "n": 11,
+        "text": "How much is that?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 12,
+        "text": "Would you like a cup of (tea/coffee)?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 13,
+        "text": "When is your (birthday/anniversary)?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 14,
+        "text": "How many (children/brothers/sisters) do you have?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 15,
+        "text": "Do you drive a car?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 16,
+        "text": "How was the traffic today?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 17,
+        "text": "I am leaving now.",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 18,
+        "text": "I am going home.",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 19,
+        "text": "What would you like for lunch?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      },
+      {
+        "n": 20,
+        "text": "Where are you going?",
+        "cue": "Common sentences used everyday",
+        "setName": "Set B"
+      }
+    ]
+  },
+  {
+    "id": "ex-4.2",
+    "section": "synthetic",
+    "number": "4.2",
+    "title": "Context cues - common situations",
+    "category": "Context cues",
+    "format": "cued_sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Explain the task."
+      },
+      {
+        "n": 2,
+        "text": "Give the listener the clue for a set of sentences."
+      },
+      {
+        "n": 3,
+        "text": "Present the sentences slowly with normal intonation, confirming any correctly"
+      },
+      {
+        "n": 4,
+        "text": "Encourage the listener to use strategies to confirm or clarify the sentence, such"
+      },
+      {
+        "n": 5,
+        "text": "If, after three presentations, the listener has not understood the sentence,"
+      },
+      {
+        "n": 6,
+        "text": "When it is necessary to present the sentence using visual cues, allow the"
+      },
+      {
+        "n": 7,
+        "text": "Do you have an account at this branch?",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 8,
+        "text": "Would you like to open a new account?",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 9,
+        "text": "The teller at window number one will help you.",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 10,
+        "text": "Is this a deposit or a withdrawal?",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 11,
+        "text": "You forgot to sign this check.",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 12,
+        "text": "This check has not been cleared.",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 13,
+        "text": "Would you like to order a statement?",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 14,
+        "text": "Your account is overdrawn.",
+        "cue": "At the bank",
+        "setName": "Set A"
+      },
+      {
+        "n": 15,
+        "text": "How would you like your steak cooked?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 16,
+        "text": "You have a choice of soup or salad.",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 17,
+        "text": "Good evening. May I take your order?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 18,
+        "text": "Would you care to dine at this restaurant again?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 19,
+        "text": "Would you like to use a credit card, or pay cash?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 20,
+        "text": "Thank you. Do come again.",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 21,
+        "text": "Would you like a table for two?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 22,
+        "text": "Is there anything else I can get for you?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 23,
+        "text": "You have potatoes on your chin.",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 24,
+        "text": "Would you like pie, cake, or ice-cream for dessert?",
+        "cue": "At a restaurant",
+        "setName": "Set B"
+      },
+      {
+        "n": 25,
+        "text": "It's time for bed.",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 26,
+        "text": "Are you sleepy?",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 27,
+        "text": "Your bath is ready.",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 28,
+        "text": "Have you brushed your teeth?",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 29,
+        "text": "Sleep well!",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 30,
+        "text": "Shall I close the door?",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 31,
+        "text": "Shall I turn off the light?",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 32,
+        "text": "Would you like a drink of water?",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 33,
+        "text": "Sweet dreams!",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 34,
+        "text": "Good night. See you in the morning!",
+        "cue": "At bedtime",
+        "setName": "Set C"
+      },
+      {
+        "n": 35,
+        "text": "This sand is hot.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 36,
+        "text": "The sun is bright.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 37,
+        "text": "Do you want to swim now?",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 38,
+        "text": "Here is your beach towel.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 39,
+        "text": "I think I am sunburned.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 40,
+        "text": "Who is thirsty?",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 41,
+        "text": "The waves are very big today.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 42,
+        "text": "My bathing suit is wet.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 43,
+        "text": "The beach is packed with people.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 44,
+        "text": "Please hand me my beach bag.",
+        "cue": "Going to the beach",
+        "setName": "Set D"
+      },
+      {
+        "n": 45,
+        "text": "Hello, how are you?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 46,
+        "text": "Do you have a match?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 47,
+        "text": "I think the bus is late again.",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 48,
+        "text": "Watch out for that puddle.",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 49,
+        "text": "The buses are never on time.",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 50,
+        "text": "Does this bus go into the city?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 51,
+        "text": "Here comes the bus.",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 52,
+        "text": "What time does the bus leave?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 53,
+        "text": "Did I miss the bus to the university?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 54,
+        "text": "Are you saving this seat?",
+        "cue": "At the bus stop",
+        "setName": "Set E"
+      },
+      {
+        "n": 55,
+        "text": "Well, what seems to be the problem?",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 56,
+        "text": "Let me look at your tongue.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 57,
+        "text": "I'll give you some medicine.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 58,
+        "text": "How long have you been sick?",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 59,
+        "text": "Does that hurt?",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 60,
+        "text": "The doctor will see you now.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 61,
+        "text": "How's your family?",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 62,
+        "text": "Take a deep breath.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 63,
+        "text": "See the receptionist for another appointment.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      },
+      {
+        "n": 64,
+        "text": "Take two capsules before each meal.",
+        "cue": "At the doctor's office",
+        "setName": "Set F"
+      }
+    ]
+  },
+  {
+    "id": "ex-5.0",
+    "section": "synthetic",
+    "number": "5.0",
+    "title": "Information transfer - complete the grid",
+    "category": "Information transfer",
+    "format": "task",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 3,
+        "text": "Before you begin the exercise, photocopy the partially completed grid on the"
+      },
+      {
+        "n": 4,
+        "text": "Give the listener the following instructions without visual cues, explaining what"
+      },
+      {
+        "n": 5,
+        "text": "Encourage the listener to seek clarification when they are unsure."
+      },
+      {
+        "n": 6,
+        "text": "Give the listener feedback."
+      },
+      {
+        "n": 7,
+        "text": "At the end of the exercise compare the two grids, and discuss ways in which any"
+      }
+    ]
+  },
+  {
+    "id": "ex-5.2",
+    "section": "synthetic",
+    "number": "5.2",
+    "title": "Information transfer - complete the drawing",
+    "category": "Information transfer",
+    "format": "task",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 6,
+        "text": "Provide feedback as required."
+      }
+    ]
+  },
+  {
+    "id": "ex-5.3",
+    "section": "synthetic",
+    "number": "5.3",
+    "title": "Information transfer - describe, perceive and draw",
+    "category": "Information transfer",
+    "format": "task",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 4,
+        "text": "Once they have completed the exercise, show them the correct pattern and"
+      }
+    ]
+  },
+  {
+    "id": "ex-6.0",
+    "section": "synthetic",
+    "number": "6.0",
+    "title": "Open-set fill in the sentence",
+    "category": "Fill-in-the-blank",
+    "format": "fill_blank",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Elephants cannot jump."
+      },
+      {
+        "n": 2,
+        "text": "Queen Elizabeth I of England went completely bald at an early age."
+      },
+      {
+        "n": 3,
+        "text": "Until 1957, it was illegal to go swimming in Wales on a Sunday."
+      },
+      {
+        "n": 4,
+        "text": "Typewriters were first developed to help the blind."
+      },
+      {
+        "n": 5,
+        "text": "For the first six or seven months of our lives, we can do something that we are never able to do again; swallow and breathe at the same time."
+      },
+      {
+        "n": 6,
+        "text": "In order to be the last name in the local telephone directory, a Chicago man changed his name to Zeke Zzzypt."
+      },
+      {
+        "n": 7,
+        "text": "Sir Winston Churchill was a well-known Shakespearean actor before he became a politician."
+      },
+      {
+        "n": 8,
+        "text": "The yo-yo was originally a Filipino jungle weapon."
+      },
+      {
+        "n": 9,
+        "text": "Goldfish will often turn white if left in a darkened room."
+      },
+      {
+        "n": 10,
+        "text": "When Ian Fleming wrote his first James Bond book, his 007 hero was called Rupert de Vere."
+      },
+      {
+        "n": 11,
+        "text": "King Louis XIV of France was the first person, male or female, to wear high heels."
+      },
+      {
+        "n": 12,
+        "text": "The Germans used to keep frogs as live barometers because they croak when the pressure drops."
+      },
+      {
+        "n": 13,
+        "text": "Indian ink actually comes from China."
+      },
+      {
+        "n": 14,
+        "text": "To conserve metal, the Oscars given out in the Academy Awards during World War II were made of wood."
+      },
+      {
+        "n": 15,
+        "text": "The word 'tip' is an abbreviation of 'to insure promptness.'"
+      },
+      {
+        "n": 16,
+        "text": "A form of golf was first invented by the Chinese nearly 2,000 years ago."
+      },
+      {
+        "n": 17,
+        "text": "It is impossible to sneeze and keep your eyes open at the same time."
+      },
+      {
+        "n": 18,
+        "text": "Bumping foreheads with a handshake is the traditional greeting in Tibet."
+      },
+      {
+        "n": 19,
+        "text": "The corkscrew was first invented to pull out teeth."
+      },
+      {
+        "n": 20,
+        "text": "When George I came to the throne of England he could not speak a word of English. ----PAGE----"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.6",
+    "section": "analytic",
+    "number": "1.6",
+    "title": "Syllable counting - carrier phrase (monosyllabic and bisyllabic)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I watched them play cards."
+          },
+          {
+            "label": "B",
+            "text": "I watched them play football."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Did you eat the egg?"
+          },
+          {
+            "label": "B",
+            "text": "Did you eat the sandwich?"
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Don't run."
+          },
+          {
+            "label": "B",
+            "text": "Don't forget."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I have a friend."
+          },
+          {
+            "label": "B",
+            "text": "I have a neighbor."
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "My socks are green."
+          },
+          {
+            "label": "B",
+            "text": "My socks are yellow."
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I don't think he is sick."
+          },
+          {
+            "label": "B",
+            "text": "I don't think he is welcome."
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I think he's fine."
+          },
+          {
+            "label": "B",
+            "text": "I think he's crazy."
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The month is May."
+          },
+          {
+            "label": "B",
+            "text": "The month is August."
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "He felt old."
+          },
+          {
+            "label": "B",
+            "text": "He felt happy."
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Put it in the hall."
+          },
+          {
+            "label": "B",
+            "text": "Put it in the bedroom."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-7.0",
+    "section": "synthetic",
+    "number": "7.0",
+    "title": "Single-scripted conversation",
+    "category": "Scripted conversation",
+    "format": "conversation",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Are you from the city or the country?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 2,
+        "text": "How long did you live there?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 3,
+        "text": "Was it flat or hilly?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 4,
+        "text": "Did it have a market?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 5,
+        "text": "How many people lived there?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 6,
+        "text": "What was the weather like there?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 7,
+        "text": "Was there a church?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 8,
+        "text": "Were there many stores?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 9,
+        "text": "What were the houses made of?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 10,
+        "text": "How far did you live from the sea?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 11,
+        "text": "What kinds of public transportation were available?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 12,
+        "text": "What kind of entertainment was there?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 13,
+        "text": "What did you like best about it?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 14,
+        "text": "What could you see when you looked from your bedroom window?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 15,
+        "text": "Was there any special feature?",
+        "group": "A Questions about the place where you were born48"
+      },
+      {
+        "n": 1,
+        "text": "What's your last name?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 2,
+        "text": "What are your first and middle names?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 3,
+        "text": "How old are you?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 4,
+        "text": "What's your date of birth?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 5,
+        "text": "Where were you born?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 6,
+        "text": "Are you married or single?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 7,
+        "text": "When were you married?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 8,
+        "text": "What's your job?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 9,
+        "text": "How much do you weigh?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 10,
+        "text": "How tall are you?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 11,
+        "text": "What's the color of your eyes?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 12,
+        "text": "What's your doctor's name?",
+        "group": "B Questions about you"
+      },
+      {
+        "n": 1,
+        "text": "What is your father's first name?",
+        "group": "C Questions about relatives"
+      },
+      {
+        "n": 2,
+        "text": "What was your mother's maiden name?",
+        "group": "C Questions about relatives"
+      },
+      {
+        "n": 3,
+        "text": "How many brothers do you have?",
+        "group": "C Questions about relatives"
+      },
+      {
+        "n": 4,
+        "text": "How many sisters do you have?",
+        "group": "C Questions about relatives"
+      },
+      {
+        "n": 5,
+        "text": "How many children do you have?",
+        "group": "C Questions about relatives"
+      },
+      {
+        "n": 1,
+        "text": "Which suburb do you live in?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 2,
+        "text": "What's the name of your street?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 3,
+        "text": "Do you live in a house or an apartment?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 4,
+        "text": "What's the number of your house/apartment?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 5,
+        "text": "What's your telephone number?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 6,
+        "text": "How many bedrooms does your house/apartment have?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 7,
+        "text": "Do you have a gas or an electric stove?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 8,
+        "text": "Where do you go shopping?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 9,
+        "text": "How do you get to the mall?",
+        "group": "D Questions about your home"
+      },
+      {
+        "n": 10,
+        "text": "Do you have milk delivered?",
+        "group": "D Questions about your home"
+      }
+    ]
+  },
+  {
+    "id": "ex-8.0",
+    "section": "synthetic",
+    "number": "8.0",
+    "title": "Seeking information - role-play exercises",
+    "category": "Role-play",
+    "format": "roleplay",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 2,
+        "text": "Using the suggested prompts below as a starting point, play the part of the"
+      },
+      {
+        "n": 3,
+        "text": "Encourage the listener to use clarification strategies when they are unsure of"
+      },
+      {
+        "n": 1,
+        "text": "Where would you like to go?"
+      },
+      {
+        "n": 2,
+        "text": "When would you like to go?"
+      },
+      {
+        "n": 3,
+        "text": "What time of the day would you like to travel?"
+      },
+      {
+        "n": 4,
+        "text": "How many people will be travelling with you?"
+      },
+      {
+        "n": 5,
+        "text": "Would you like a one-way or a return ticket?"
+      },
+      {
+        "n": 6,
+        "text": "Will you be returning on the same day?"
+      },
+      {
+        "n": 7,
+        "text": "How would you like to pay for the ticket?"
+      },
+      {
+        "n": 1,
+        "text": "Was your sound processor fitted at this clinic?"
+      },
+      {
+        "n": 2,
+        "text": "What model is your sound processor?"
+      },
+      {
+        "n": 3,
+        "text": "Is your sound processor under warranty?"
+      },
+      {
+        "n": 4,
+        "text": "How long have you had this sound processor?"
+      },
+      {
+        "n": 5,
+        "text": "What length of coil cable would you like?"
+      },
+      {
+        "n": 6,
+        "text": "Why do you need to replace the cable?"
+      },
+      {
+        "n": 7,
+        "text": "Do you need any other spare parts?"
+      },
+      {
+        "n": 1,
+        "text": "When did the refrigerator break down?"
+      },
+      {
+        "n": 2,
+        "text": "How old is the refrigerator?"
+      },
+      {
+        "n": 3,
+        "text": "What is the make or manufacturer?"
+      },
+      {
+        "n": 4,
+        "text": "Is it still under warranty?"
+      },
+      {
+        "n": 5,
+        "text": "Has it broken down before?"
+      },
+      {
+        "n": 6,
+        "text": "Does it have a separate freezer?"
+      },
+      {
+        "n": 7,
+        "text": "We can come today at one o'clock - will someone be home?"
+      }
+    ]
+  },
+  {
+    "id": "ex-8.1",
+    "section": "synthetic",
+    "number": "8.1",
+    "title": "Seeking information - wayout weekend role-play",
+    "category": "Role-play",
+    "format": "roleplay",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 2,
+        "text": "Using the suggested prompts below as a starting point, play the part of the"
+      },
+      {
+        "n": 3,
+        "text": "Encourage the listener to use clarification strategies when they are unsure of"
+      }
+    ]
+  },
+  {
+    "id": "ex-8.2",
+    "section": "synthetic",
+    "number": "8.2",
+    "title": "Seeking information - vacation weekend role-play",
+    "category": "Role-play",
+    "format": "roleplay",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 2,
+        "text": "Using the suggested prompts below as a starting point, play the part of the"
+      },
+      {
+        "n": 3,
+        "text": "Encourage the listener to use clarification strategies when they are unsure of"
+      },
+      {
+        "n": 47,
+        "text": "Adapted from Watcyn-Jones, 1984"
+      },
+      {
+        "n": 48,
+        "text": "Based on Watcyn-Jones, 1984."
+      }
+    ]
+  },
+  {
+    "id": "ex-9.0",
+    "section": "synthetic",
+    "number": "9.0",
+    "title": "Open-set sentences - no clue words",
+    "category": "Open-set sentences",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "I put my money in the bank.",
+        "group": "Set A"
+      },
+      {
+        "n": 2,
+        "text": "He's sick, so call the doctor.",
+        "group": "Set A"
+      },
+      {
+        "n": 3,
+        "text": "They fought like cats and dogs.",
+        "group": "Set A"
+      },
+      {
+        "n": 4,
+        "text": "We ate lunch at 12 o'clock.",
+        "group": "Set A"
+      },
+      {
+        "n": 5,
+        "text": "Put your shoes on your feet.",
+        "group": "Set A"
+      },
+      {
+        "n": 6,
+        "text": "Sit down in that chair.",
+        "group": "Set A"
+      },
+      {
+        "n": 7,
+        "text": "If you're sleepy, go to bed.",
+        "group": "Set A"
+      },
+      {
+        "n": 8,
+        "text": "Yellow and blue make green.",
+        "group": "Set A"
+      },
+      {
+        "n": 9,
+        "text": "Put icing on the cake.",
+        "group": "Set A"
+      },
+      {
+        "n": 10,
+        "text": "Birds fly high in the sky.",
+        "group": "Set A"
+      },
+      {
+        "n": 1,
+        "text": "Teenagers love to talk on the telephone.",
+        "group": "Set B"
+      },
+      {
+        "n": 2,
+        "text": "He drove the car into the garage.",
+        "group": "Set B"
+      },
+      {
+        "n": 3,
+        "text": "I don't have enough money to buy that.",
+        "group": "Set B"
+      },
+      {
+        "n": 4,
+        "text": "The kitchen needs a table and some chairs. 8",
+        "group": "Set B"
+      },
+      {
+        "n": 5,
+        "text": "Wear a hat and coat when it's cold.",
+        "group": "Set B"
+      },
+      {
+        "n": 1,
+        "text": "The rain kept falling all day.",
+        "group": "Set C"
+      },
+      {
+        "n": 2,
+        "text": "He drove away in his car.",
+        "group": "Set C"
+      },
+      {
+        "n": 3,
+        "text": "They packed up their clothes in a suitcase.",
+        "group": "Set C"
+      },
+      {
+        "n": 4,
+        "text": "It will be a long time before I am ready.",
+        "group": "Set C"
+      },
+      {
+        "n": 5,
+        "text": "I read an interesting book last week.",
+        "group": "Set C"
+      },
+      {
+        "n": 6,
+        "text": "Let's go to the beach this summer.",
+        "group": "Set C"
+      },
+      {
+        "n": 7,
+        "text": "We planted a tree in the garden.",
+        "group": "Set C"
+      },
+      {
+        "n": 8,
+        "text": "He put on his coat and hat because it was very cold. 12",
+        "group": "Set C"
+      },
+      {
+        "n": 9,
+        "text": "We are going shopping at the supermarket.",
+        "group": "Set C"
+      },
+      {
+        "n": 10,
+        "text": "She drank a glass of milk before going to bed.  10",
+        "group": "Set C"
+      },
+      {
+        "n": 11,
+        "text": "My children make a lot of noise.",
+        "group": "Set C"
+      },
+      {
+        "n": 12,
+        "text": "They borrowed some money from the bank to buy a car. 11",
+        "group": "Set C"
+      },
+      {
+        "n": 13,
+        "text": "We had lunch at a restaurant yesterday.",
+        "group": "Set C"
+      },
+      {
+        "n": 14,
+        "text": "She is going overseas next year.",
+        "group": "Set C"
+      },
+      {
+        "n": 15,
+        "text": "It was still dark when I woke up this morning.  10",
+        "group": "Set C"
+      }
+    ]
+  },
+  {
+    "id": "ex-10.0",
+    "section": "synthetic",
+    "number": "10.0",
+    "title": "Easy interactive stories",
+    "category": "Interactive stories",
+    "format": "story",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Easy interactive stories\n\nThis exercise provides a short paragraph on a common topic, followed by related questions. The topic is not provided to the listener, as they must discern it from listening to the paragraph.\n\nRead the paragraph to the listener without visual cues, then ask them the questions about it.\n\nThe task can be adapted to a lower skill level by presenting the paragraph with visual cues, and presenting the questions in the auditory-only condition.\n\nSet A. Breakfast\n\nBreakfast is probably the most important meal of the day. It gives us energy to go through the morning. Most people eat breakfast at about seven o'clock in the morning. I like cereal, toast and juice for breakfast. On Sundays, it's nice to go out to a restaurant for breakfast.\n\nQuestions\n\n1 What was I talking about? 2 What time do most people eat breakfast?\n\n3 What time do you eat breakfast? 4 Do you like eggs for breakfast? 5 What do you like best for breakfast?\n\n6 Do you ever go to a restaurant for breakfast?\n\nSet B. Prices\n\nPrices are going sky high. Everything is getting so expensive. Food costs more, clothes are more expensive, and the cost of housing is getting higher every year. The more money people make, the more prices go up.\n\nQuestions 1 What was I talking about?\n\n2 What three things are more expensive? 3 Has your food bill gone up?\n\n4 How much does a loaf of bread cost these days? 5 Do you think prices are too high?\n\n----PAGE----\n\nSet C. News Some people say that television news has affected the sale of newspapers. By the time the newspapers are on the streets, the story has already been on T.V. But, there is usually not enough time on T.V. to report all the details of the news. A newspaper is better for that.\n\nQuestions\n\n1 What was I talking about? 2 Do you prefer T.V. or a paper for the news?\n\n3 Do you get the morning or afternoon paper? 4 What T.V. channel do you watch, for the news?\n\n5 What is the name of your local newspaper?\n\nSet D. Vacations People work all year for a few weeks' vacation. They may go to the beach, go fishing, go to the mountains or go to visit friends. Some people stay at home to relax. Regardless of what they do on holiday, people usually work hard at not\n\nworking.\n\nQuestions 1 What was I talking about?\n\n2 Where do people spend their vacation? 3 Do you go somewhere or do you stay at home?\n\n4 Do you fly, drive or use some other means of transportation? 5 How long do you usually have for a holiday?"
+      }
+    ]
+  },
+  {
+    "id": "ex-10.1",
+    "section": "synthetic",
+    "number": "10.1",
+    "title": "Intermediate interactive stories",
+    "category": "Interactive stories",
+    "format": "story",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Intermediate interactive stories\n\nRead the story out loud to the listener. Then ask the questions that relate to each of the stories.\n\nStory one. The disappointed cat. One day, a little bird sat in a tree and looked around. He wanted something to eat\n\nand saw a piece of bread on the ground. He flew down and began to eat it. An old black cat saw the bird and crept up behind him. She almost caught him, but the little bird heard her and flew back into the tree. The cat was disappointed. She lay down on the steps and went to sleep. Then the little bird flew down again and ate the bread.\n\nQuestions 1 How big was the bird? 2 What did the bird see on the ground?\n\n3 Did the cat catch the bird? 4 What color was the cat? 5 Where did the cat fall asleep?\n\n6 Did the bird get to eat the bread?\n\nStory two. Roller skates. Last summer, John asked his father for a pair of roller skates. John's father told him to save his money. He gave John a piggy bank for the coins he saved. For two months, John saved hard. When he opened his piggy bank, he only had ten dollars.\n\nHe was very disappointed because he needed another twenty dollars. His father told him he would pay him twenty dollars if he did some jobs. John mowed the lawn, cleaned up the garden and washed the car. He worked hard and when he had finished, his father gave him the money. John went to the shop next morning and bought some skates.\n\nQuestions 1 What did John want to buy?\n\n2 How much money was in the piggy bank? 3 How much did his father say he would give John for doing some jobs? 4 Did John want the roller skates last spring or last summer?\n\nTraining.\n\n----PAGE----\n\n5 When did John go to the shop to buy the roller skates? 6 How did John feel when he realized he didn't have enough money? 7 What three jobs did John do for his father?\n\nStory three. Jungle pictures.\n\nNot long ago, some people went far into the jungle in Africa to take pictures of the wild animals that live there. They built a house and covered it with leaves and the branches of trees.\n\nWhen it was finished, they waited patiently for the animals. They succeeded in taking many very interesting photographs of giraffes, zebras, elephants, lions and a great hippopotamus.\n\nQuestions\n\n1 Where was the jungle? 2 What did they do with the leaves and branches? 3 What did they do in the house? 4 Tell me what they didn't see - giraffes, flamingos or lions? 5 How many hippopotamuses did they see? 6 How long ago did they go into the jungle?"
+      }
+    ]
+  },
+  {
+    "id": "ex-10.2",
+    "section": "synthetic",
+    "number": "10.2",
+    "title": "Advanced interactive stories",
+    "category": "Interactive stories",
+    "format": "story",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Advanced interactive stories\n\nRead the story out loud to the listener. Then ask the questions that relate to the story.\n\nStory one: Bali\n\nBali is a beautiful tropical island. The villages in Bali have many festivals throughout the year. The people perform traditional puppet shows and dances. There are many temples around the island. The women work very hard in the rice paddies. There are monkeys in the jungles. The food there is very hot and spicy. Smoke bellows from the volcanoes. The views are fantastic. Bali is a fabulous place for a holiday.\n\nQuestions 1 What are three things you might see if you went to Bali?\n\n2 What type of food might you find? 3 Imagine the scenery and describe it.\n\nStory two: Stonehenge\n\nStonehenge is an ancient landmark near Salisbury, England. It is the remains of two large circles assembled from large 'blue stone' rocks. These stones were originally surrounded by ditches, probably for protection. A few arches, pillars and slabs are the ruins of what is now thought to have been a remarkably accurate measuring device for the cycles of the moon and sun. According to scientists, the stones were dragged and ferried from Prescelly Mountain, 250 miles from the site. Recent estimates date the construction to 2000-1800 B.C. At least 82 stones were transported by manpower alone. Each stone weighed tons and required about 800 men to pull it. It is thought to have taken decades to construct Stonehenge.\n\nThere are many theories as to the purpose of Stonehenge. It was certainly a site for religious ceremonies. Many years after Stonehenge was built, a religious group called 'Druids' worshipped there. These people left artifacts that indicate they made human sacrifices by burning. Present day Druids perform religious ceremonies at Stonehenge, but they concentrate on sun worship, without bloodshed.\n\nQuestions\n\n1 Where is Stonehenge found? 2 How old is Stonehenge? 3 How was it built? 4 Where did the material come from?\n\n----PAGE----\n\n5 What might Stonehenge have been used for? 6 What did Druids do at Stonehenge? 7 Who uses it today?\n\nStory three: Garlic\n\nThe simple bulb of garlic, as we know it, is certainly nothing special. However, garlic has a long and fascinating past. The Babylonians and ancient Greeks called it the 'stinking rose' and believed it had peculiar powers. People rubbed it on their bodies, buried it with their dead and wore it round their necks. The Egyptians went so far as to pray to garlic. They maintained that it possessed\n\nthe secret of physical strength. When garlic supplies ran short for the workers building the Great Pyramid, they reportedly went on strike. Big servings of garlic were also fed to soldiers for strength in battle and to athletes for better performance. It was also believed that garlic had many therapeutic values. Remedies have been recorded for snakebite, measles, colds, and cholera, to name but a few. A more bizarre practice was to string it around the neck to repel vampires.\n\nWhile garlic is certainly not a cure for all sickness, it is a powerful antiseptic. It has also been used with good results as a pesticide. At the present time, the real value of garlic is in cooking. For some time, though, it was frowned upon as something smelly that only people from the Mediterranean ate. This view is changing, and no chef, who takes pride in cooking, would be without it.\n\nSince most people worry about bad breath, it should be remembered that this only occurs with raw garlic. It is perfectly safe to eat when cooked. A final reassurance comes from the Japanese, who are presently working on a strain of odorless garlic. This breakthrough should win over many who refrained from eating garlic previously because of fear of bad breath.\n\nQuestions 1 What was garlic called in the time of the Babylonians?\n\n2 Name two ways that garlic was used in the past. 3 Why were soldiers and athletes fed so much garlic? 4 What were the garlic remedies supposed to cure?\n\n5 What do we use garlic for in modern times? 6 What is the major shortcoming of garlic? 7 What is in the process of happening to garlic to make it better to eat?"
+      }
+    ]
+  },
+  {
+    "id": "ex-11.0",
+    "section": "synthetic",
+    "number": "11.0",
+    "title": "Two-scripted conversation - shopping role-play",
+    "category": "Scripted conversation",
+    "format": "conversation",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Give the listener a shopping list and script (see pages 170-171)."
+      },
+      {
+        "n": 2,
+        "text": "While the conversation follows a set form, use your initiative to improvise,"
+      },
+      {
+        "n": 3,
+        "text": "Encourage the listener to request clarification if they are unsure of the meaning."
+      }
+    ]
+  },
+  {
+    "id": "ex-1.0",
+    "section": "sentence_test",
+    "number": "1.0",
+    "title": "The effects of prior linguistic context on the perception of 'next turn' sentences106",
+    "category": "Linguistic context",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Rel. Why do you put up with the neighbors' noise?"
+      },
+      {
+        "n": 2,
+        "text": "Rel. Why haven't your parents left on their trip?"
+      },
+      {
+        "n": 3,
+        "text": "Rel. Why are you going to the post office?"
+      },
+      {
+        "n": 4,
+        "text": "Rel. Why did your son leave his job?"
+      },
+      {
+        "n": 5,
+        "text": "Rel. Why are you concerned about your daughter?"
+      },
+      {
+        "n": 6,
+        "text": "Rel. Why is your brother so careful with his money?"
+      },
+      {
+        "n": 7,
+        "text": "Rel. Why is your father angry with the doctor?"
+      },
+      {
+        "n": 8,
+        "text": "Rel. Why do you travel by taxi so often?"
+      },
+      {
+        "n": 9,
+        "text": "Rel. Why do you need new shorts?"
+      },
+      {
+        "n": 10,
+        "text": "Rel. Why does your aunt want to buy a puppy?"
+      },
+      {
+        "n": 11,
+        "text": "Rel. Why is that child standing on the chair?"
+      },
+      {
+        "n": 12,
+        "text": "Rel. Why were your friends ready to leave before breakfast?"
+      },
+      {
+        "n": 13,
+        "text": "Rel. Why haven't you finished painting the bedroom?"
+      },
+      {
+        "n": 14,
+        "text": "Rel. Why do you have the lamp on?"
+      },
+      {
+        "n": 15,
+        "text": "Rel. Why did your mother go to the bank?"
+      },
+      {
+        "n": 16,
+        "text": "Rel. Why are you suddenly interested in sculpture?"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.7",
+    "section": "analytic",
+    "number": "1.7",
+    "title": "Syllable counting - sentence length identification (monosyllables)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Why do you have to go?"
+          },
+          {
+            "label": "B",
+            "text": "What is it?"
+          },
+          {
+            "label": "C",
+            "text": "Can you help me?"
+          },
+          {
+            "label": "D",
+            "text": "You will find the keys on the bench."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Keep out of my way."
+          },
+          {
+            "label": "B",
+            "text": "I don't know."
+          },
+          {
+            "label": "C",
+            "text": "You can take the train to the new park."
+          },
+          {
+            "label": "D",
+            "text": "I will run down to the store."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Go back."
+          },
+          {
+            "label": "B",
+            "text": "That's not the way to go."
+          },
+          {
+            "label": "C",
+            "text": "Don't leave me here."
+          },
+          {
+            "label": "D",
+            "text": "She did not see him on the road."
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Tell me."
+          },
+          {
+            "label": "B",
+            "text": "He wants to go back to the house."
+          },
+          {
+            "label": "C",
+            "text": "They took it home."
+          },
+          {
+            "label": "D",
+            "text": "Where did you go last week?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-1.1",
+    "section": "sentence_test",
+    "number": "1.1",
+    "title": "The effects of prior linguistic context on the perception of 'next turn' sentences",
+    "category": "Linguistic context",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 2,
+        "text": "Rel. Why did you lay carpet in the hall?"
+      },
+      {
+        "n": 3,
+        "text": "Rel. Why is your brother so tired and hungry?"
+      },
+      {
+        "n": 4,
+        "text": "Rel. Why are your parents selling their house?"
+      },
+      {
+        "n": 5,
+        "text": "Rel. Why weren't the children home when I called?"
+      },
+      {
+        "n": 6,
+        "text": "Rel. Why are you walking around in bare feet?"
+      },
+      {
+        "n": 7,
+        "text": "Rel. Why do your parents visit so often?"
+      },
+      {
+        "n": 8,
+        "text": "Rel. Why didn't those people get wet in the rain?"
+      },
+      {
+        "n": 9,
+        "text": "Rel. Why did your plane arrive so late?"
+      },
+      {
+        "n": 10,
+        "text": "Rel. Why is the water level of the lake low?"
+      },
+      {
+        "n": 11,
+        "text": "Rel. Why does your dog always stay outside?"
+      },
+      {
+        "n": 12,
+        "text": "Rel. Why did you move to the new apartment?"
+      },
+      {
+        "n": 13,
+        "text": "Rel. Why did your brother stop watching television?"
+      },
+      {
+        "n": 14,
+        "text": "Rel. Why have you brought a new car?"
+      },
+      {
+        "n": 15,
+        "text": "Rel. Why are you taking Spanish lessons?"
+      },
+      {
+        "n": 16,
+        "text": "Rel. Why did you cancel your skiing trip"
+      }
+    ]
+  },
+  {
+    "id": "ex-2.0",
+    "section": "sentence_test",
+    "number": "2.0",
+    "title": "Sent-ident106",
+    "category": "Sentence identification",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "The man drove the bus around the corner."
+      },
+      {
+        "n": 2,
+        "text": "The children sang a song with their teacher."
+      },
+      {
+        "n": 3,
+        "text": "Her father put the milk on the table."
+      },
+      {
+        "n": 4,
+        "text": "The nurse found her glasses behind the desk."
+      },
+      {
+        "n": 5,
+        "text": "The boy threw his pencils into a box."
+      },
+      {
+        "n": 6,
+        "text": "The girl made a red dress for her mother."
+      },
+      {
+        "n": 7,
+        "text": "The farmer ate lunch under a big tree."
+      },
+      {
+        "n": 8,
+        "text": "My friend hung the picture over his bed."
+      },
+      {
+        "n": 9,
+        "text": "The old woman gave some bread to the ducks."
+      },
+      {
+        "n": 10,
+        "text": "The cook washed all the apples in the sink."
+      }
+    ]
+  },
+  {
+    "id": "ex-3.0",
+    "section": "sentence_test",
+    "number": "3.0",
+    "title": "Sentence predictability",
+    "category": "Sentence predictability",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "He was so angry, he slammed the ........"
+      },
+      {
+        "n": 2,
+        "text": "My car has another flat ........"
+      },
+      {
+        "n": 3,
+        "text": "Please wipe your ........ on the mat."
+      },
+      {
+        "n": 4,
+        "text": "Don't forget to water the ........"
+      },
+      {
+        "n": 5,
+        "text": "The little girl clapped her ........"
+      },
+      {
+        "n": 6,
+        "text": "Dig the ........ over here, by this bush."
+      },
+      {
+        "n": 7,
+        "text": "He baked a ........ cake for her birthday."
+      },
+      {
+        "n": 8,
+        "text": "Would you like another cup of ........?"
+      },
+      {
+        "n": 1,
+        "text": "My dog refuses to eat ........"
+      },
+      {
+        "n": 2,
+        "text": "We've just moved from South ........"
+      },
+      {
+        "n": 3,
+        "text": "She and her husband have ........ children."
+      },
+      {
+        "n": 4,
+        "text": "The ........ flew away when we got close."
+      },
+      {
+        "n": 5,
+        "text": "He gave the ........ bicycle to the boy."
+      },
+      {
+        "n": 6,
+        "text": "This radio has a broken ........"
+      },
+      {
+        "n": 7,
+        "text": "We fed some bread to the ........"
+      },
+      {
+        "n": 8,
+        "text": "We saw ........ in the barn."
+      },
+      {
+        "n": 1,
+        "text": "We often talked about the ........"
+      },
+      {
+        "n": 2,
+        "text": "After dinner, she showed me the ........."
+      },
+      {
+        "n": 3,
+        "text": "I just bought a ........"
+      },
+      {
+        "n": 4,
+        "text": "He didn't know about the ........."
+      },
+      {
+        "n": 5,
+        "text": "Please don't ask me about the ........."
+      },
+      {
+        "n": 6,
+        "text": "I've never heard of a ........"
+      },
+      {
+        "n": 7,
+        "text": "Do you have a .........?"
+      },
+      {
+        "n": 8,
+        "text": "We couldn't remember the name of the ........."
+      }
+    ]
+  },
+  {
+    "id": "ex-4.0",
+    "section": "sentence_test",
+    "number": "4.0",
+    "title": "Asque",
+    "category": "Question pairs",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Do you know how to play chess?"
+      },
+      {
+        "n": 2,
+        "text": "Are you a vegetarian?"
+      },
+      {
+        "n": 3,
+        "text": "Have you been to a wedding recently?"
+      },
+      {
+        "n": 4,
+        "text": "Are you a good singer?"
+      },
+      {
+        "n": 5,
+        "text": "Do you like to eat green olives?"
+      },
+      {
+        "n": 1,
+        "text": "Should I pack an apple or a banana in your lunch?"
+      },
+      {
+        "n": 2,
+        "text": "Did you fix the roof or does it still leak?"
+      },
+      {
+        "n": 3,
+        "text": "Will you answer the phone or should I get it?"
+      },
+      {
+        "n": 4,
+        "text": "Is your appointment today or tomorrow?"
+      },
+      {
+        "n": 5,
+        "text": "Would you prefer chicken or fish for dinner?"
+      },
+      {
+        "n": 1,
+        "text": "How many coins do you have in your pocket?"
+      },
+      {
+        "n": 2,
+        "text": "What time are we meeting at the office tomorrow?"
+      },
+      {
+        "n": 3,
+        "text": "Which television channel do you usually watch?"
+      },
+      {
+        "n": 4,
+        "text": "How old is the big tree in your backyard?"
+      },
+      {
+        "n": 5,
+        "text": "Where's the pencil sharpener?"
+      },
+      {
+        "n": 1,
+        "text": "How can public transportation be improved?"
+      },
+      {
+        "n": 2,
+        "text": "Why is this your favorite city?"
+      },
+      {
+        "n": 3,
+        "text": "How do you feel about camping in the mountains?"
+      },
+      {
+        "n": 4,
+        "text": "Why do so many people procrastinate?"
+      },
+      {
+        "n": 5,
+        "text": "How did they repair the air-conditioner?"
+      },
+      {
+        "n": 1,
+        "text": "My mother saves old Christmas cards."
+      },
+      {
+        "n": 2,
+        "text": "This chair isn't very comfortable."
+      },
+      {
+        "n": 3,
+        "text": "I always wear gloves when I work in the garden."
+      },
+      {
+        "n": 4,
+        "text": "Some babies cry all the time."
+      },
+      {
+        "n": 5,
+        "text": "My cat just had kittens."
+      }
+    ]
+  },
+  {
+    "id": "ex-5.0",
+    "section": "sentence_test",
+    "number": "5.0",
+    "title": "Quest?ar",
+    "category": "Question pairs",
+    "format": "sentence",
+    "level": "comprehension",
+    "items": [
+      {
+        "n": 1,
+        "text": "Why did you go there?"
+      },
+      {
+        "n": 2,
+        "text": "When did you go?"
+      },
+      {
+        "n": 3,
+        "text": "How many people went with you?"
+      },
+      {
+        "n": 4,
+        "text": "Who were they? (give names)"
+      },
+      {
+        "n": 5,
+        "text": "What did you take with you?"
+      },
+      {
+        "n": 6,
+        "text": "Where is (the place that you went)?"
+      },
+      {
+        "n": 7,
+        "text": "How did you get there?"
+      },
+      {
+        "n": 8,
+        "text": "What did you see on the way?"
+      },
+      {
+        "n": 9,
+        "text": "What time did you get there?"
+      },
+      {
+        "n": 10,
+        "text": "What did you do first?"
+      },
+      {
+        "n": 11,
+        "text": "What did you see?"
+      },
+      {
+        "n": 12,
+        "text": "How many? What color?"
+      },
+      {
+        "n": 13,
+        "text": "What happened at (the place where you went)?"
+      },
+      {
+        "n": 14,
+        "text": "What else did you do?"
+      },
+      {
+        "n": 15,
+        "text": "What were the other people doing at (the place where you went)?"
+      },
+      {
+        "n": 16,
+        "text": "What was the most interesting thing that you saw?"
+      },
+      {
+        "n": 17,
+        "text": "What was the most interesting thing that you did?"
+      },
+      {
+        "n": 18,
+        "text": "What did you buy?"
+      },
+      {
+        "n": 19,
+        "text": "What kind? What flavor? What color?"
+      },
+      {
+        "n": 20,
+        "text": "How much did it cost?"
+      },
+      {
+        "n": 21,
+        "text": "Did anything unusual happen? What?"
+      },
+      {
+        "n": 22,
+        "text": "How long did you stay?"
+      },
+      {
+        "n": 23,
+        "text": "What did you do just before you came home?"
+      },
+      {
+        "n": 24,
+        "text": "When did you leave?"
+      },
+      {
+        "n": 25,
+        "text": "How did you get home?"
+      },
+      {
+        "n": 26,
+        "text": "What happened on the way home?"
+      },
+      {
+        "n": 27,
+        "text": "What time did you get home?"
+      },
+      {
+        "n": 28,
+        "text": "How did you feel then?"
+      },
+      {
+        "n": 29,
+        "text": "When are you going back?"
+      },
+      {
+        "n": 30,
+        "text": "Do you think that I should go sometime? Why?"
+      }
+    ]
+  },
+  {
+    "id": "ex-1.8",
+    "section": "analytic",
+    "number": "1.8",
+    "title": "Syllable counting - sentence length identification (monosyllables and bisyllables)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I couldn't believe it was you."
+          },
+          {
+            "label": "B",
+            "text": "Don't forget."
+          },
+          {
+            "label": "C",
+            "text": "It's my birthday on Monday."
+          },
+          {
+            "label": "D",
+            "text": "Tell me again."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Take it easy."
+          },
+          {
+            "label": "B",
+            "text": "Can you figure it out?"
+          },
+          {
+            "label": "C",
+            "text": "The Earth revolves around the sun."
+          },
+          {
+            "label": "D",
+            "text": "Oh, no."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "It's Greek to me."
+          },
+          {
+            "label": "B",
+            "text": "He waited for the bus."
+          },
+          {
+            "label": "C",
+            "text": "Try to relax."
+          },
+          {
+            "label": "D",
+            "text": "What did you get for Christmas?"
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Cartoons are funny pictures."
+          },
+          {
+            "label": "B",
+            "text": "The pilot flew the plane."
+          },
+          {
+            "label": "C",
+            "text": "Let's take a break."
+          },
+          {
+            "label": "D",
+            "text": "Where is Jeff?"
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I like to swim in the pool."
+          },
+          {
+            "label": "B",
+            "text": "We had a snowstorm."
+          },
+          {
+            "label": "C",
+            "text": "I'll be right there."
+          },
+          {
+            "label": "D",
+            "text": "Please don't go."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ex-1.9",
+    "section": "analytic",
+    "number": "1.9",
+    "title": "Syllable counting - sentence length identification (monosyllables, bisyllables and polysyllables)",
+    "category": "Syllable counting",
+    "format": "sentence_choice",
+    "level": "identification",
+    "items": [
+      {
+        "n": 1,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "Don't ever give up.      4 A   Why is she underneath the table?"
+          },
+          {
+            "label": "B",
+            "text": "I forgot to close the refrigerator. B It's my birthday on Monday."
+          },
+          {
+            "label": "C",
+            "text": "My friend plays the piano. C   Good evening."
+          },
+          {
+            "label": "D",
+            "text": "There must be time.        D   Leave it all to me."
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "The party was fun.       5 A   The carpet is difficult to keep clean."
+          },
+          {
+            "label": "B",
+            "text": "I feel like a new person.  B   See you later."
+          },
+          {
+            "label": "C",
+            "text": "Summer days are usually hot. C It does not seem to be possible."
+          },
+          {
+            "label": "D",
+            "text": "Give me some tea.          D   Lunch is at one o'clock."
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "letteredChoices": [
+          {
+            "label": "A",
+            "text": "I can't understand you.  6 A   I feel fine."
+          },
+          {
+            "label": "B",
+            "text": "The floor is difficult to clean. B Can you figure it out?"
+          },
+          {
+            "label": "C",
+            "text": "Does it seem possible?     C   They built a snowman."
+          },
+          {
+            "label": "D",
+            "text": "I had an incredible vacation. D Would you like a glass of cold"
+          }
+        ]
+      }
+    ]
+  }
+]
