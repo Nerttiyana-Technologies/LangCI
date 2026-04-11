@@ -11,7 +11,7 @@ Initial version of LangCI application
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/ElectrodeMapping.png" alt="ElectrodeMapping" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/FatigueJournal.png" alt="FatigueJournal" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/MinimalPairs.png" alt="MinimalPairs" style="width:50%; height:50%;">
-<img src="https://github.com/isureshsubramanian/LangCI/blob/main/MusicPerception" alt="MusicPerception" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/MusicPerception.png" alt="MusicPerception" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/SoundTherapy.png" alt="Sound Therapy" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/SoundTraining.png" alt="Sound Training" style="width:50%; height:50%;">
 
