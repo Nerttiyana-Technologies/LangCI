@@ -94,6 +94,17 @@ final class MoreViewController: UIViewController {
             action: #selector(openAVT)
         ))
 
+        // Music Perception — large featured card
+        contentStack.addArrangedSubview(buildFeaturedCard(
+            title: "Music Perception",
+            subtitle: "Train rhythm, instrument recognition & melody — enjoy music through your CI",
+            icon: "music.quarternote.3",
+            gradientColors: [UIColor.lcAmber.withAlphaComponent(0.15),
+                             UIColor.lcPurple.withAlphaComponent(0.10)],
+            tint: .lcAmber,
+            action: #selector(openMusicPerception)
+        ))
+
         // ── My CI Journey ───────────────────────────────────────
 
         contentStack.addArrangedSubview(buildSectionLabel("MY CI JOURNEY"))
@@ -376,6 +387,10 @@ final class MoreViewController: UIViewController {
 
     @objc private func openAVT() {
         navigationController?.pushViewController(AVTViewController(), animated: true)
+    }
+
+    @objc private func openMusicPerception() {
+        navigationController?.pushViewController(MusicPerceptionHomeViewController(), animated: true)
     }
 
     @objc private func openCIHub() {

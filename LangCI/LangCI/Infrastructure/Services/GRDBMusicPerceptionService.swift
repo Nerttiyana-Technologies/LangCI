@@ -170,6 +170,54 @@ final class GRDBMusicPerceptionService: MusicPerceptionService {
                     emoji: "🪈",
                     type: .instrument,
                     distractors: ["Piano", "Violin", "Trumpet"]
+                ),
+                MusicItem(
+                    name: "Tabla",
+                    audioFile: "instrument_tabla.mp3",
+                    description: "Indian hand drum — sharp, percussive, two drums played together",
+                    emoji: "🪘",
+                    type: .instrument,
+                    distractors: ["Piano", "Guitar", "Mridangam"]
+                ),
+                MusicItem(
+                    name: "Veena",
+                    audioFile: "instrument_veena.mp3",
+                    description: "Indian plucked string — resonant, drone-like sustain with ornamental slides",
+                    emoji: "🎸",
+                    type: .instrument,
+                    distractors: ["Guitar", "Violin", "Sitar"]
+                ),
+                MusicItem(
+                    name: "Sitar",
+                    audioFile: "instrument_sitar.mp3",
+                    description: "Indian long-necked lute — buzzing resonance with sympathetic strings",
+                    emoji: "🎸",
+                    type: .instrument,
+                    distractors: ["Veena", "Guitar", "Violin"]
+                ),
+                MusicItem(
+                    name: "Mridangam",
+                    audioFile: "instrument_mridangam.mp3",
+                    description: "South Indian double-headed drum — deep bass on one side, sharp treble on the other",
+                    emoji: "🪘",
+                    type: .instrument,
+                    distractors: ["Tabla", "Piano", "Trumpet"]
+                ),
+                MusicItem(
+                    name: "Harmonium",
+                    audioFile: "instrument_harmonium.mp3",
+                    description: "Bellows-driven keyboard — warm, sustained, organ-like tone",
+                    emoji: "🎹",
+                    type: .instrument,
+                    distractors: ["Piano", "Flute", "Violin"]
+                ),
+                MusicItem(
+                    name: "Nadaswaram",
+                    audioFile: "instrument_nadaswaram.mp3",
+                    description: "South Indian wind instrument — powerful, piercing, temple-associated sound",
+                    emoji: "🎺",
+                    type: .instrument,
+                    distractors: ["Trumpet", "Flute", "Harmonium"]
                 )
             ]
 
