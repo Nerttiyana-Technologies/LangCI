@@ -29,6 +29,23 @@ final class GRDBRecordingService: NSObject, RecordingService {
 
     func startRecording() async throws {
         let session = AVAudioSession.sharedInstance()
+
+        // Request microphone permission before configuring the audio session.
+        // Without this, AVAudioRecorder initialisation crashes on first launch
+        // because the user has not yet granted microphone access.
+        let granted = await withCheckedContinuation { continuation in
+            session.requestRecordPermission { allowed in
+                continuation.resume(returning: allowed)
+            }
+        }
+        guard granted else {
+            throw NSError(
+                domain: "com.sapthagiri.langci",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey:
+                    "Microphone access is required to record. Please enable it in Settings → Privacy & Security → Microphone."])
+        }
+
         try session.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
         try session.setActive(true)
 

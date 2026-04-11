@@ -15,6 +15,7 @@ protocol ReadingAloudService {
     func saveSession(_ session: ReadingSession) async throws -> ReadingSession
     func deleteSession(id: Int) async throws
     func getRecentSessions(limit: Int) async throws -> [ReadingSession]
+    func getAllSessions() async throws -> [ReadingSession]
     func getSessionsForPassage(_ passageId: Int) async throws -> [ReadingSession]
 
     // MARK: - Stats

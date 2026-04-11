@@ -63,13 +63,17 @@ final class HeroHeaderView: UIView {
         hStack.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(hStack)
+
+        let iconH = iconImageView.heightAnchor.constraint(equalToConstant: 52)
+        iconH.priority = .defaultHigh  // avoid conflict with safe-area inset
+
         NSLayoutConstraint.activate([
             hStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LC.cardPadding),
             hStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -LC.cardPadding),
-            hStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
-            hStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            hStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 8),
+            hStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             iconImageView.widthAnchor.constraint(equalToConstant: 52),
-            iconImageView.heightAnchor.constraint(equalToConstant: 52)
+            iconH
         ])
     }
 
@@ -431,10 +435,12 @@ final class LCStatRow: UIStackView {
     init(items: [Item]) {
         super.init(frame: .zero)
         axis = .horizontal
-        distribution = .fillEqually
+        distribution = .fill
         alignment = .center
         spacing = 0
         translatesAutoresizingMaskIntoConstraints = false
+
+        var columns: [UIStackView] = []
 
         for (index, item) in items.enumerated() {
             let valueLabel = UILabel()
@@ -442,29 +448,37 @@ final class LCStatRow: UIStackView {
             valueLabel.font = UIFont.lcCardValue()
             valueLabel.textColor = item.tint
             valueLabel.textAlignment = .center
+            valueLabel.adjustsFontSizeToFitWidth = true
+            valueLabel.minimumScaleFactor = 0.7
 
             let nameLabel = UILabel()
             nameLabel.text = item.label.uppercased()
             nameLabel.font = UIFont.lcCardLabel()
             nameLabel.textColor = .secondaryLabel
             nameLabel.textAlignment = .center
+            nameLabel.adjustsFontSizeToFitWidth = true
+            nameLabel.minimumScaleFactor = 0.7
 
             let col = UIStackView(arrangedSubviews: [valueLabel, nameLabel])
             col.axis = .vertical
             col.spacing = 2
             col.alignment = .center
+            columns.append(col)
 
-            if index == 0 {
-                addArrangedSubview(col)
-            } else {
+            if index > 0 {
                 let divider = UIView()
                 divider.backgroundColor = .separator
                 divider.translatesAutoresizingMaskIntoConstraints = false
                 divider.widthAnchor.constraint(equalToConstant: 1).isActive = true
                 divider.heightAnchor.constraint(equalToConstant: 28).isActive = true
                 addArrangedSubview(divider)
-                addArrangedSubview(col)
             }
+            addArrangedSubview(col)
+        }
+
+        // Make all columns equal width (dividers keep their fixed 1pt width)
+        for col in columns.dropFirst() {
+            col.widthAnchor.constraint(equalTo: columns[0].widthAnchor).isActive = true
         }
     }
     required init(coder: NSCoder) { fatalError() }

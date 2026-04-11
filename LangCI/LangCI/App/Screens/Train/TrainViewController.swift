@@ -265,10 +265,10 @@ final class TrainViewController: UIViewController {
             return
         }
         do {
-            let words = try await ServiceLocator.shared.trainingService.getDueWords(
-                dialectId: dialect.id, limit: 200)
+            let count = try await ServiceLocator.shared.trainingService.getTrainableWordCount(
+                dialectId: dialect.id)
             await MainActor.run {
-                self.dueWordsCount = words.count
+                self.dueWordsCount = count
                 self.updateStatsRow()
                 self.updateStartButtonState()
             }

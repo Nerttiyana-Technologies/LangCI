@@ -24,9 +24,16 @@ final class GRDBTrainingService: TrainingService {
     ) async throws -> TrainingSession {
         let now = Date()
 
-        // Pick words: due for review first, then new words
+        // Pick words: due for review first, then new (untrained) words
         let dueWords = try await getDueWords(dialectId: dialectId, limit: wordLimit)
-        let wordIds  = Array(dueWords.prefix(wordLimit).map { $0.wordEntryId })
+        var wordIds  = Array(dueWords.prefix(wordLimit).map { $0.wordEntryId })
+
+        // Fallback: if no due review words, pull fresh word_entry IDs that
+        // the user hasn't trained yet. Matched by the dialect's language_id
+        // instead of the (often empty) word_dialect_map table.
+        if wordIds.isEmpty {
+            wordIds = try await getNewWordIds(dialectId: dialectId, limit: wordLimit)
+        }
 
         return try await db.write { database -> TrainingSession in
             try database.execute(sql: """
@@ -178,15 +185,69 @@ final class GRDBTrainingService: TrainingService {
     func getDueWords(dialectId: Int, limit: Int) async throws -> [SessionWord] {
         let now = Date().timeIntervalSince1970
         return try await db.read { database in
+            // Resolve the dialect's language so we can match words by
+            // language_id directly. The word_dialect_map table may be empty
+            // (it was never populated by the seed migration), so we bypass
+            // it and use language_id instead.
+            let languageId = try Int.fetchOne(database, sql:
+                "SELECT language_id FROM dialect WHERE id = ?",
+                arguments: [dialectId]) ?? 0
+
             let rows = try Row.fetchAll(database, sql: """
                 SELECT sw.* FROM session_word sw
                 JOIN word_entry w ON w.id = sw.word_entry_id
-                JOIN word_dialect_map m ON m.word_entry_id = w.id
-                WHERE m.dialect_id = ? AND sw.next_review_date <= ?
+                WHERE w.language_id = ? AND sw.next_review_date <= ?
                 ORDER BY sw.next_review_date ASC
                 LIMIT ?
-            """, arguments: [dialectId, now, limit])
+            """, arguments: [languageId, now, limit])
             return try rows.map { try SessionWord(row: $0) }
+        }
+    }
+
+    // MARK: - New (untrained) words
+
+    /// Returns word_entry IDs that have never appeared in session_word,
+    /// matched by the dialect's language_id.
+    private func getNewWordIds(dialectId: Int, limit: Int) async throws -> [Int] {
+        try await db.read { database in
+            let languageId = try Int.fetchOne(database, sql:
+                "SELECT language_id FROM dialect WHERE id = ?",
+                arguments: [dialectId]) ?? 0
+
+            return try Int.fetchAll(database, sql: """
+                SELECT w.id FROM word_entry w
+                WHERE w.language_id = ?
+                  AND w.id NOT IN (SELECT DISTINCT word_entry_id FROM session_word)
+                ORDER BY w.id ASC
+                LIMIT ?
+            """, arguments: [languageId, limit])
+        }
+    }
+
+    // MARK: - Trainable word count (for UI)
+
+    func getTrainableWordCount(dialectId: Int) async throws -> Int {
+        let now = Date().timeIntervalSince1970
+        return try await db.read { database in
+            let languageId = try Int.fetchOne(database, sql:
+                "SELECT language_id FROM dialect WHERE id = ?",
+                arguments: [dialectId]) ?? 0
+
+            // Count due review words
+            let dueCount = try Int.fetchOne(database, sql: """
+                SELECT COUNT(*) FROM session_word sw
+                JOIN word_entry w ON w.id = sw.word_entry_id
+                WHERE w.language_id = ? AND sw.next_review_date <= ?
+            """, arguments: [languageId, now]) ?? 0
+
+            // Count new (untrained) words
+            let newCount = try Int.fetchOne(database, sql: """
+                SELECT COUNT(*) FROM word_entry w
+                WHERE w.language_id = ?
+                  AND w.id NOT IN (SELECT DISTINCT word_entry_id FROM session_word)
+            """, arguments: [languageId]) ?? 0
+
+            return dueCount + newCount
         }
     }
 

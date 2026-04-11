@@ -31,6 +31,9 @@ final class ServiceLocator {
     private(set) var avtService: AVTService!
     private(set) var confusionPairService: ConfusionPairService!
     private(set) var readingAloudService: ReadingAloudService!
+    private(set) var soundTherapyService: SoundTherapyService!
+    private(set) var environmentalSoundService: EnvironmentalSoundService!
+    private(set) var voiceRecordingService: VoiceRecordingService!
 
     // MARK: - Configuration
 
@@ -55,5 +58,8 @@ final class ServiceLocator {
         avtService           = GRDBAvtService(db: db)
         confusionPairService = GRDBConfusionPairService(db: db)
         readingAloudService  = GRDBReadingAloudService(db: db)
+        soundTherapyService  = GRDBSoundTherapyService(db: db)
+        environmentalSoundService = GRDBEnvironmentalSoundService(db: db)
+        voiceRecordingService     = GRDBVoiceRecordingService(db: db)
     }
 }

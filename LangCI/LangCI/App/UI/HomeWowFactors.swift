@@ -71,7 +71,7 @@ final class AnimatedGradientHeroView: UIView {
 
     private func build() {
         translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 22
+        // Corner radius is set by the parent (0 for edge-to-edge, 22 for card style)
         clipsToBounds = true
         layer.masksToBounds = true
 
@@ -105,20 +105,23 @@ final class AnimatedGradientHeroView: UIView {
         addSubview(subtitleLabel)
         addSubview(iconView)
 
+        // Text sits inside the safe area so it clears the status bar.
+        // When this view is used edge-to-edge (pinned to view.topAnchor),
+        // safeAreaLayoutGuide.topAnchor accounts for the notch/status bar.
         NSLayoutConstraint.activate([
             greetingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            greetingLabel.topAnchor.constraint(equalTo: topAnchor, constant: 22),
+            greetingLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             greetingLabel.trailingAnchor.constraint(lessThanOrEqualTo: iconView.leadingAnchor, constant: -8),
 
             subtitleLabel.leadingAnchor.constraint(equalTo: greetingLabel.leadingAnchor),
             subtitleLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 4),
             subtitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: iconView.leadingAnchor, constant: -8),
-            subtitleLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -20),
+            subtitleLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
 
             iconView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            iconView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            iconView.widthAnchor.constraint(equalToConstant: 56),
-            iconView.heightAnchor.constraint(equalToConstant: 56)
+            iconView.centerYAnchor.constraint(equalTo: greetingLabel.centerYAnchor, constant: 10),
+            iconView.widthAnchor.constraint(equalToConstant: 48),
+            iconView.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 

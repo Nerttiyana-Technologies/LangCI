@@ -39,17 +39,22 @@ final class HomeViewController: UIViewController {
     private let sessionsCard = StatCardView(icon: "books.vertical.fill", value: "0", label: "Sessions", tint: .lcBlue)
     private let badgesCard = StatCardView(icon: "medal.fill", value: "0", label: "Badges", tint: .lcGold)
 
-    // Quick Actions
+    // Quick Actions (icon grid)
     private let actionsRow = UIStackView()
     private let secondaryActionsRow = UIStackView()
-    private let startTrainingButton = LCButton(title: "Start Training", color: .lcGreen)
-    private let ling6Button = LCButton(title: "Ling 6 Test", color: .lcTeal)
-    private let confusionDrillButton = LCButton(title: "Confusion Drill", color: .lcPurple)
 
-    // Recent Activity
-    private let activityHeaderView = SectionHeaderView(title: "Recent Activity")
+    // Sound Therapy card
+    private let soundTherapyCard = LCCard()
+    // Environmental Sound card
+    private let envSoundCard = LCCard()
+
+    // Recent Activity (collapsible)
+    private let activityHeaderButton = UIButton(type: .system)
+    private let activityChevron = UIImageView()
+    private let activityHeaderContainer = UIView()
     private let activityTable = UITableView(frame: .zero, style: .plain)
     private var activityHeightConstraint: NSLayoutConstraint!
+    private var isActivityExpanded = true
 
     // State
     private var recentSessions: [TrainingSession] = []
@@ -65,7 +70,15 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Hide the navigation bar — the custom hero gradient replaces it
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         loadHomeData()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Restore for pushed VCs that need a nav bar
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     // MARK: - UI Setup
@@ -73,64 +86,86 @@ final class HomeViewController: UIViewController {
     private func buildUI() {
         view.backgroundColor = .lcBackground
 
-        // Configure scroll view
+        // ---- Hero gradient pinned behind status bar (edge-to-edge) ----
+        // The gradient extends from the very top of the screen through the
+        // safe area and a bit beyond, so the greeting text sits inside the
+        // safe area while the colour bleeds behind the status bar.
+        heroHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        heroHeaderView.layer.cornerRadius = 0          // edge-to-edge, no rounding
+        heroHeaderView.clipsToBounds = true
+        view.addSubview(heroHeaderView)
+
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        heroHeaderView.addSubview(loadingIndicator)
+
+        // ---- Scroll view starts just below the hero ----
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
 
-        // Configure container stack
+        // Container stack (all cards)
         containerStack.axis = .vertical
         containerStack.spacing = LC.sectionSpacing
         containerStack.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(containerStack)
 
-        // 1. Hero Header — animated gradient greeting
-        containerStack.addArrangedSubview(heroHeaderView)
-
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-        heroHeaderView.addSubview(loadingIndicator)
-        NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: heroHeaderView.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: heroHeaderView.centerYAnchor)
-        ])
-
-        // 2. Today's practice CTA
+        // 1. Today's practice CTA (now the first item in the scroll)
         practiceCTA.addTarget(self, action: #selector(didTapStartTraining), for: .touchUpInside)
         containerStack.addArrangedSubview(practiceCTA)
 
-        // 3. Level & Points Card (with daily-goal ring)
+        // 2. Level & Points Card (with daily-goal ring)
         buildLevelCard()
         containerStack.addArrangedSubview(levelCard)
 
-        // 4. Stats Row
+        // 3. Stats Row
         buildStatsRow()
         containerStack.addArrangedSubview(statsRow)
 
-        // 5. Quick Actions
+        // 4. Quick Actions
         buildQuickActions()
         containerStack.addArrangedSubview(actionsRow)
         containerStack.addArrangedSubview(secondaryActionsRow)
 
-        // 6. Recent Activity
-        containerStack.addArrangedSubview(activityHeaderView)
+        // 5. Sound Therapy card (above recent activity)
+        buildSoundTherapyCard()
+        containerStack.addArrangedSubview(soundTherapyCard)
+
+        // 5b. Environmental Sound Training card
+        buildEnvSoundCard()
+        containerStack.addArrangedSubview(envSoundCard)
+
+        // 6. Recent Activity (collapsible)
+        buildActivityHeader()
+        containerStack.addArrangedSubview(activityHeaderContainer)
         containerStack.addArrangedSubview(activityTable)
 
-        // Layout constraints
+        // ---- Layout constraints ----
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            // Hero: pinned to top, leading, trailing edges of the screen.
+            // Bottom sits just below the safe area top + greeting height.
+            heroHeaderView.topAnchor.constraint(equalTo: view.topAnchor),
+            heroHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            heroHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // Height = safe-area-top (status bar) + greeting content (~90pt)
+            heroHeaderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
+
+            loadingIndicator.centerXAnchor.constraint(equalTo: heroHeaderView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: heroHeaderView.centerYAnchor),
+
+            // Scroll view starts right below the hero
+            scrollView.topAnchor.constraint(equalTo: heroHeaderView.bottomAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            containerStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: LC.cardPadding),
+            containerStack.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: LC.sectionSpacing),
             containerStack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -LC.cardPadding),
             containerStack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: LC.cardPadding),
             containerStack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -LC.cardPadding),
             containerStack.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * LC.cardPadding),
 
-            heroHeaderView.heightAnchor.constraint(equalToConstant: 140),
             practiceCTA.heightAnchor.constraint(equalToConstant: 110)
         ])
 
@@ -238,34 +273,260 @@ final class HomeViewController: UIViewController {
     }
 
     private func buildQuickActions() {
+        // Row 1: Train + Ling 6
         actionsRow.axis = .horizontal
         actionsRow.distribution = .fillEqually
         actionsRow.spacing = 12
         actionsRow.translatesAutoresizingMaskIntoConstraints = false
 
-        startTrainingButton.addTarget(self, action: #selector(didTapStartTraining), for: .touchUpInside)
-        ling6Button.addTarget(self, action: #selector(didTapLing6), for: .touchUpInside)
+        actionsRow.addArrangedSubview(
+            makeActionTile(icon: "brain.head.profile", title: "Train",
+                           color: .lcGreen, action: #selector(didTapStartTraining)))
+        actionsRow.addArrangedSubview(
+            makeActionTile(icon: "ear.and.waveform", title: "Ling 6",
+                           color: .lcTeal, action: #selector(didTapLing6)))
 
-        actionsRow.addArrangedSubview(startTrainingButton)
-        actionsRow.addArrangedSubview(ling6Button)
-
-        NSLayoutConstraint.activate([
-            startTrainingButton.heightAnchor.constraint(equalToConstant: 50),
-            ling6Button.heightAnchor.constraint(equalToConstant: 50)
-        ])
-
-        // Secondary row: personal drills
+        // Row 2: Confusion Drill + Read Newspaper
         secondaryActionsRow.axis = .horizontal
         secondaryActionsRow.distribution = .fillEqually
         secondaryActionsRow.spacing = 12
         secondaryActionsRow.translatesAutoresizingMaskIntoConstraints = false
 
-        confusionDrillButton.addTarget(self, action: #selector(didTapConfusionDrill), for: .touchUpInside)
-        secondaryActionsRow.addArrangedSubview(confusionDrillButton)
+        secondaryActionsRow.addArrangedSubview(
+            makeActionTile(icon: "arrow.triangle.swap", title: "Confusion",
+                           color: .lcPurple, action: #selector(didTapConfusionDrill)))
+        secondaryActionsRow.addArrangedSubview(
+            makeActionTile(icon: "newspaper.fill", title: "Read",
+                           color: .lcOrange, action: #selector(didTapReadNewspaper)))
+    }
+
+    private func makeActionTile(icon: String, title: String,
+                                 color: UIColor, action: Selector) -> UIControl {
+        let tile = ActionTileView(icon: icon, title: title, color: color)
+        tile.addTarget(self, action: action, for: .touchUpInside)
+        return tile
+    }
+
+    // MARK: - Sound Therapy Card
+
+    private func buildSoundTherapyCard() {
+        soundTherapyCard.isUserInteractionEnabled = true
+        soundTherapyCard.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapSoundTherapy))
+        )
+
+        // Gradient accent
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.lcPurple.withAlphaComponent(0.12).cgColor,
+                                UIColor.lcTeal.withAlphaComponent(0.08).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.cornerRadius = LC.cornerRadius
+        soundTherapyCard.layer.insertSublayer(gradientLayer, at: 0)
+        soundTherapyCard.clipsToBounds = true
+
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 14
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Icon
+        let iconBg = UIView()
+        iconBg.backgroundColor = UIColor.lcPurple.withAlphaComponent(0.15)
+        iconBg.layer.cornerRadius = 22
+        iconBg.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        iconBg.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+        let icon = UIImageView(image: UIImage(systemName: "ear.fill"))
+        icon.tintColor = .lcPurple
+        icon.contentMode = .scaleAspectFit
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.addSubview(icon)
+        NSLayoutConstraint.activate([
+            icon.centerXAnchor.constraint(equalTo: iconBg.centerXAnchor),
+            icon.centerYAnchor.constraint(equalTo: iconBg.centerYAnchor),
+            icon.widthAnchor.constraint(equalToConstant: 22),
+            icon.heightAnchor.constraint(equalToConstant: 22),
+        ])
+
+        // Text
+        let textStack = UIStackView()
+        textStack.axis = .vertical
+        textStack.spacing = 2
+
+        let titleLbl = UILabel()
+        titleLbl.text = "Sound Therapy"
+        titleLbl.font = .systemFont(ofSize: 16, weight: .bold)
+        titleLbl.textColor = .label
+
+        let subtitleLbl = UILabel()
+        subtitleLbl.text = "Train your ears with sh, mm, ush sounds"
+        subtitleLbl.font = UIFont.lcCaption()
+        subtitleLbl.textColor = .secondaryLabel
+
+        textStack.addArrangedSubview(titleLbl)
+        textStack.addArrangedSubview(subtitleLbl)
+
+        // Chevron
+        let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevron.tintColor = .tertiaryLabel
+        chevron.contentMode = .scaleAspectFit
+        chevron.widthAnchor.constraint(equalToConstant: 14).isActive = true
+
+        stack.addArrangedSubview(iconBg)
+        stack.addArrangedSubview(textStack)
+        stack.addArrangedSubview(chevron)
+
+        soundTherapyCard.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: soundTherapyCard.topAnchor, constant: 14),
+            stack.bottomAnchor.constraint(equalTo: soundTherapyCard.bottomAnchor, constant: -14),
+            stack.leadingAnchor.constraint(equalTo: soundTherapyCard.leadingAnchor, constant: 14),
+            stack.trailingAnchor.constraint(equalTo: soundTherapyCard.trailingAnchor, constant: -12),
+        ])
+
+        // Resize gradient on layout
+        DispatchQueue.main.async { gradientLayer.frame = self.soundTherapyCard.bounds }
+    }
+
+    @objc private func didTapSoundTherapy() {
+        let vc = SoundTherapyHomeViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    // MARK: - Environmental Sound Card
+
+    private func buildEnvSoundCard() {
+        envSoundCard.isUserInteractionEnabled = true
+        envSoundCard.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(didTapEnvSound))
+        )
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.lcGreen.withAlphaComponent(0.12).cgColor,
+                                UIColor.lcAmber.withAlphaComponent(0.08).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.cornerRadius = LC.cornerRadius
+        envSoundCard.layer.insertSublayer(gradientLayer, at: 0)
+        envSoundCard.clipsToBounds = true
+
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 14
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Icon
+        let iconBg = UIView()
+        iconBg.backgroundColor = UIColor.lcGreen.withAlphaComponent(0.15)
+        iconBg.layer.cornerRadius = 22
+        iconBg.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        iconBg.heightAnchor.constraint(equalToConstant: 44).isActive = true
+
+        let icon = UIImageView(image: UIImage(systemName: "waveform.badge.magnifyingglass"))
+        icon.tintColor = .lcGreen
+        icon.contentMode = .scaleAspectFit
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.addSubview(icon)
+        NSLayoutConstraint.activate([
+            icon.centerXAnchor.constraint(equalTo: iconBg.centerXAnchor),
+            icon.centerYAnchor.constraint(equalTo: iconBg.centerYAnchor),
+            icon.widthAnchor.constraint(equalToConstant: 22),
+            icon.heightAnchor.constraint(equalToConstant: 22),
+        ])
+
+        // Text
+        let textStack = UIStackView()
+        textStack.axis = .vertical
+        textStack.spacing = 2
+
+        let titleLbl = UILabel()
+        titleLbl.text = "Environmental Sounds"
+        titleLbl.font = .systemFont(ofSize: 16, weight: .bold)
+        titleLbl.textColor = .label
+
+        let subtitleLbl = UILabel()
+        subtitleLbl.text = "Identify everyday sounds — alarms, birds, traffic"
+        subtitleLbl.font = UIFont.lcCaption()
+        subtitleLbl.textColor = .secondaryLabel
+
+        textStack.addArrangedSubview(titleLbl)
+        textStack.addArrangedSubview(subtitleLbl)
+
+        // Chevron
+        let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevron.tintColor = .tertiaryLabel
+        chevron.contentMode = .scaleAspectFit
+        chevron.widthAnchor.constraint(equalToConstant: 14).isActive = true
+
+        stack.addArrangedSubview(iconBg)
+        stack.addArrangedSubview(textStack)
+        stack.addArrangedSubview(chevron)
+
+        envSoundCard.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: envSoundCard.topAnchor, constant: 14),
+            stack.bottomAnchor.constraint(equalTo: envSoundCard.bottomAnchor, constant: -14),
+            stack.leadingAnchor.constraint(equalTo: envSoundCard.leadingAnchor, constant: 14),
+            stack.trailingAnchor.constraint(equalTo: envSoundCard.trailingAnchor, constant: -12),
+        ])
+
+        DispatchQueue.main.async { gradientLayer.frame = self.envSoundCard.bounds }
+    }
+
+    @objc private func didTapEnvSound() {
+        let vc = EnvironmentalSoundHomeViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func buildActivityHeader() {
+        activityHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        let titleLabel = UILabel()
+        titleLabel.text = "RECENT ACTIVITY"
+        titleLabel.font = UIFont.lcSectionTitle()
+        titleLabel.textColor = .secondaryLabel
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        activityChevron.image = UIImage(systemName: "chevron.down")
+        activityChevron.tintColor = .secondaryLabel
+        activityChevron.contentMode = .scaleAspectFit
+        activityChevron.translatesAutoresizingMaskIntoConstraints = false
+
+        activityHeaderContainer.addSubview(titleLabel)
+        activityHeaderContainer.addSubview(activityChevron)
 
         NSLayoutConstraint.activate([
-            confusionDrillButton.heightAnchor.constraint(equalToConstant: 50)
+            titleLabel.leadingAnchor.constraint(equalTo: activityHeaderContainer.leadingAnchor, constant: LC.cardPadding),
+            titleLabel.topAnchor.constraint(equalTo: activityHeaderContainer.topAnchor, constant: 8),
+            titleLabel.bottomAnchor.constraint(equalTo: activityHeaderContainer.bottomAnchor, constant: -4),
+
+            activityChevron.trailingAnchor.constraint(equalTo: activityHeaderContainer.trailingAnchor, constant: -LC.cardPadding),
+            activityChevron.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            activityChevron.widthAnchor.constraint(equalToConstant: 16),
+            activityChevron.heightAnchor.constraint(equalToConstant: 16)
         ])
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didToggleActivity))
+        activityHeaderContainer.addGestureRecognizer(tap)
+        activityHeaderContainer.isUserInteractionEnabled = true
+    }
+
+    @objc private func didToggleActivity() {
+        isActivityExpanded.toggle()
+
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+            self.activityTable.isHidden = !self.isActivityExpanded
+            self.activityTable.alpha = self.isActivityExpanded ? 1 : 0
+            self.activityChevron.transform = self.isActivityExpanded
+                ? .identity
+                : CGAffineTransform(rotationAngle: -.pi / 2)
+            self.containerStack.layoutIfNeeded()
+        }
     }
 
     private func setupTableView() {
@@ -452,6 +713,11 @@ final class HomeViewController: UIViewController {
         let drill = ConfusionDrillViewController()
         navigationController?.pushViewController(drill, animated: true)
     }
+
+    @objc private func didTapReadNewspaper() {
+        let quickRead = QuickReadViewController()
+        navigationController?.pushViewController(quickRead, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -595,6 +861,65 @@ final class ActivitySessionCell: UITableViewCell {
             return .lcOrange
         case .minimalPairs:
             return .lcTeal
+        }
+    }
+}
+
+// MARK: - ActionTileView
+
+/// Compact icon + label tile for quick actions on the Home screen.
+final class ActionTileView: UIControl {
+
+    init(icon: String, title: String, color: UIColor) {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .lcCard
+        layer.cornerRadius = LC.cornerRadius
+        lcApplyShadow()
+
+        let iconView = UIImageView(image: UIImage(systemName: icon))
+        iconView.tintColor = color
+        iconView.contentMode = .scaleAspectFit
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.isUserInteractionEnabled = false
+
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.textColor = .label
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
+        label.isUserInteractionEnabled = false
+
+        let stack = UIStackView(arrangedSubviews: [iconView, label])
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.spacing = 6
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.isUserInteractionEnabled = false
+        addSubview(stack)
+
+        NSLayoutConstraint.activate([
+            iconView.widthAnchor.constraint(equalToConstant: 28),
+            iconView.heightAnchor.constraint(equalToConstant: 28),
+            stack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stack.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 8),
+            stack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -8),
+            heightAnchor.constraint(equalToConstant: 76)
+        ])
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.12) {
+                self.transform = self.isHighlighted
+                    ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+                self.alpha = self.isHighlighted ? 0.7 : 1
+            }
         }
     }
 }

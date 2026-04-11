@@ -1,36 +1,51 @@
 // ReadingAloudDrillViewController.swift
 // LangCI
 //
-// Shows the passage text, records the user reading it aloud, and computes
-// WPM + loudness stats. Uses AVAudioRecorder with metering enabled for
-// dBFS loudness sampling.
+// Shows the passage text, records the user reading it aloud with real-time
+// voice metrics: pitch (Hz), loudness (dB), and words-per-minute (WPM)
+// via live speech recognition.
 //
 // Flow:
 //   1. Passage text shown in scrollable card
-//   2. User taps "Start Reading" — red record button, timer runs, live
-//      loudness meter bar animates
-//   3. User taps "Done" — recording stops, stats computed, saved to GRDB
-//   4. Results card appears showing WPM, duration, loudness, bands
+//   2. User taps "Start Reading" — three circular gauges animate live as
+//      they read, timer runs, word count increments via speech recognition
+//   3. User taps "Done" — recording stops, final stats computed, saved
+//   4. Results card appears showing summary + coaching hint
 
 import UIKit
 import AVFoundation
 
-final class ReadingAloudDrillViewController: UIViewController {
+final class ReadingAloudDrillViewController: UIViewController, VoiceMetricsDelegate {
 
     // MARK: - Input
 
     private let passage: ReadingPassage
 
-    // MARK: - Audio
+    // MARK: - Engine
 
-    private var audioRecorder: AVAudioRecorder?
+    private var metricsEngine: VoiceMetricsEngine?
     private var recordingURL: URL?
-    private var meterTimer: Timer?
-    private var displayTimer: Timer?
     private var startTime: Date?
 
-    // Running loudness samples (dBFS)
-    private var loudnessSamples: [Float] = []
+    // Running loudness samples for final average
+    private var loudnessSamples: [Double] = []
+    private var peakLoudness: Double = -160
+
+    /// Set when engine falls back to syllable estimation — triggers Whisper post-session
+    private var needsWhisperPostSession = false
+
+    // MARK: - Display timer
+
+    private var displayTimer: Timer?
+
+    // MARK: - Language
+
+    private let languageOptions: [(label: String, locale: Locale)] = [
+        ("தமிழ் Tamil", Locale(identifier: "ta-IN")),
+        ("English", Locale(identifier: "en-US"))
+    ]
+    private let languageControl = UISegmentedControl()
+    private var selectedLocale: Locale { languageOptions[languageControl.selectedSegmentIndex].locale }
 
     // MARK: - UI
 
@@ -43,13 +58,34 @@ final class ReadingAloudDrillViewController: UIViewController {
     private let passageMetaLabel = UILabel()
     private let passageBodyLabel = UILabel()
 
+    // Metrics card (the three gauges)
+    private let metricsCard = LCCard()
+    private let gaugeStack = UIStackView()
+    private let pitchGauge = CircularGaugeView(config: .init(
+        title: "Pitch", unit: "Hz",
+        minValue: 60, maxValue: 400,
+        color: .lcTeal,
+        warningThreshold: nil,
+        format: "%.0f"))
+    private let loudnessGauge = CircularGaugeView(config: .init(
+        title: "Loudness", unit: "dB",
+        minValue: -60, maxValue: 0,
+        color: .lcBlue,
+        warningThreshold: -10,  // very loud
+        format: "%.0f"))
+    private let wpmGauge = CircularGaugeView(config: .init(
+        title: "Speed", unit: "WPM",
+        minValue: 0, maxValue: 250,
+        color: .lcPurple,
+        warningThreshold: 180,  // too fast
+        format: "%.0f"))
+
+    // Real-time word count label
+    private let wordCountLabel = UILabel()
+
     // Control card
     private let controlCard = LCCard()
     private let timerLabel = UILabel()
-    private let meterBarContainer = UIView()
-    private let meterBarFill = UIView()
-    private var meterBarFillWidthConstraint: NSLayoutConstraint?
-    private let meterLabel = UILabel()
     private let startButton = LCButton(title: "Start Reading", color: .lcBlue)
     private let stopButton = LCButton(title: "Done", color: .lcRed)
 
@@ -88,8 +124,9 @@ final class ReadingAloudDrillViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        stopMeterTimers()
-        audioRecorder?.stop()
+        displayTimer?.invalidate()
+        displayTimer = nil
+        metricsEngine?.stop()
     }
 
     // MARK: - Setup
@@ -126,8 +163,19 @@ final class ReadingAloudDrillViewController: UIViewController {
             contentStack.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
+        // Language picker for speech recognition
+        for (i, option) in languageOptions.enumerated() {
+            languageControl.insertSegment(withTitle: option.label, at: i, animated: false)
+        }
+        languageControl.selectedSegmentIndex = 0
+        contentStack.addArrangedSubview(languageControl)
+
         buildPassageCard()
         contentStack.addArrangedSubview(passageCard)
+
+        buildMetricsCard()
+        contentStack.addArrangedSubview(metricsCard)
+        metricsCard.isHidden = true
 
         buildControlCard()
         contentStack.addArrangedSubview(controlCard)
@@ -168,29 +216,47 @@ final class ReadingAloudDrillViewController: UIViewController {
         ])
     }
 
+    private func buildMetricsCard() {
+        // Three gauges side by side
+        gaugeStack.axis = .horizontal
+        gaugeStack.distribution = .fillEqually
+        gaugeStack.spacing = 8
+        gaugeStack.translatesAutoresizingMaskIntoConstraints = false
+
+        for gauge in [pitchGauge, loudnessGauge, wpmGauge] {
+            gauge.translatesAutoresizingMaskIntoConstraints = false
+            gauge.heightAnchor.constraint(equalTo: gauge.widthAnchor).isActive = true
+            gaugeStack.addArrangedSubview(gauge)
+        }
+
+        // Word count label below gauges
+        wordCountLabel.text = "Words detected: 0"
+        wordCountLabel.font = UIFont.lcBodyBold()
+        wordCountLabel.textColor = .secondaryLabel
+        wordCountLabel.textAlignment = .center
+        wordCountLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        metricsCard.addSubview(gaugeStack)
+        metricsCard.addSubview(wordCountLabel)
+
+        NSLayoutConstraint.activate([
+            gaugeStack.topAnchor.constraint(equalTo: metricsCard.topAnchor, constant: LC.cardPadding),
+            gaugeStack.leadingAnchor.constraint(equalTo: metricsCard.leadingAnchor, constant: LC.cardPadding),
+            gaugeStack.trailingAnchor.constraint(equalTo: metricsCard.trailingAnchor, constant: -LC.cardPadding),
+
+            wordCountLabel.topAnchor.constraint(equalTo: gaugeStack.bottomAnchor, constant: 8),
+            wordCountLabel.leadingAnchor.constraint(equalTo: metricsCard.leadingAnchor, constant: LC.cardPadding),
+            wordCountLabel.trailingAnchor.constraint(equalTo: metricsCard.trailingAnchor, constant: -LC.cardPadding),
+            wordCountLabel.bottomAnchor.constraint(equalTo: metricsCard.bottomAnchor, constant: -LC.cardPadding)
+        ])
+    }
+
     private func buildControlCard() {
         timerLabel.text = "0:00"
         timerLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 48, weight: .bold)
         timerLabel.textColor = .label
         timerLabel.textAlignment = .center
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Loudness meter bar
-        meterBarContainer.backgroundColor = .systemFill
-        meterBarContainer.layer.cornerRadius = 6
-        meterBarContainer.clipsToBounds = true
-        meterBarContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        meterBarFill.backgroundColor = .lcBlue
-        meterBarFill.layer.cornerRadius = 6
-        meterBarFill.translatesAutoresizingMaskIntoConstraints = false
-        meterBarContainer.addSubview(meterBarFill)
-
-        meterLabel.text = "Tap Start when you're ready to read."
-        meterLabel.font = UIFont.lcCaption()
-        meterLabel.textColor = .secondaryLabel
-        meterLabel.textAlignment = .center
-        meterLabel.translatesAutoresizingMaskIntoConstraints = false
 
         startButton.addTarget(self, action: #selector(didTapStart), for: .touchUpInside)
         startButton.translatesAutoresizingMaskIntoConstraints = false
@@ -199,39 +265,20 @@ final class ReadingAloudDrillViewController: UIViewController {
         stopButton.translatesAutoresizingMaskIntoConstraints = false
 
         controlCard.addSubview(timerLabel)
-        controlCard.addSubview(meterBarContainer)
-        controlCard.addSubview(meterLabel)
         controlCard.addSubview(startButton)
         controlCard.addSubview(stopButton)
-
-        let fillWidth = meterBarFill.widthAnchor.constraint(equalToConstant: 0)
-        meterBarFillWidthConstraint = fillWidth
 
         NSLayoutConstraint.activate([
             timerLabel.topAnchor.constraint(equalTo: controlCard.topAnchor, constant: LC.cardPadding),
             timerLabel.leadingAnchor.constraint(equalTo: controlCard.leadingAnchor),
             timerLabel.trailingAnchor.constraint(equalTo: controlCard.trailingAnchor),
 
-            meterBarContainer.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 14),
-            meterBarContainer.leadingAnchor.constraint(equalTo: controlCard.leadingAnchor, constant: LC.cardPadding),
-            meterBarContainer.trailingAnchor.constraint(equalTo: controlCard.trailingAnchor, constant: -LC.cardPadding),
-            meterBarContainer.heightAnchor.constraint(equalToConstant: 12),
-
-            meterBarFill.topAnchor.constraint(equalTo: meterBarContainer.topAnchor),
-            meterBarFill.bottomAnchor.constraint(equalTo: meterBarContainer.bottomAnchor),
-            meterBarFill.leadingAnchor.constraint(equalTo: meterBarContainer.leadingAnchor),
-            fillWidth,
-
-            meterLabel.topAnchor.constraint(equalTo: meterBarContainer.bottomAnchor, constant: 10),
-            meterLabel.leadingAnchor.constraint(equalTo: controlCard.leadingAnchor, constant: LC.cardPadding),
-            meterLabel.trailingAnchor.constraint(equalTo: controlCard.trailingAnchor, constant: -LC.cardPadding),
-
-            startButton.topAnchor.constraint(equalTo: meterLabel.bottomAnchor, constant: 16),
+            startButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 16),
             startButton.leadingAnchor.constraint(equalTo: controlCard.leadingAnchor, constant: LC.cardPadding),
             startButton.trailingAnchor.constraint(equalTo: controlCard.trailingAnchor, constant: -LC.cardPadding),
             startButton.heightAnchor.constraint(equalToConstant: 52),
 
-            stopButton.topAnchor.constraint(equalTo: meterLabel.bottomAnchor, constant: 16),
+            stopButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 16),
             stopButton.leadingAnchor.constraint(equalTo: controlCard.leadingAnchor, constant: LC.cardPadding),
             stopButton.trailingAnchor.constraint(equalTo: controlCard.trailingAnchor, constant: -LC.cardPadding),
             stopButton.heightAnchor.constraint(equalToConstant: 52),
@@ -262,21 +309,18 @@ final class ReadingAloudDrillViewController: UIViewController {
             stopButton.isHidden = true
             startButton.isEnabled = true
             timerLabel.text = "0:00"
-            meterLabel.text = "Tap Start when you're ready to read."
-            setMeterFill(level: 0)
+            metricsCard.isHidden = true
         case .recording:
             startButton.isHidden = true
             stopButton.isHidden = false
-            meterLabel.text = "Recording… read at a comfortable pace."
+            metricsCard.isHidden = false
         case .saving:
             stopButton.isEnabled = false
-            meterLabel.text = "Saving…"
         case .done:
             startButton.isHidden = false
             stopButton.isHidden = true
             startButton.setTitle("Read Again", for: .normal)
-            meterLabel.text = "Nice reading! Try again to see if you improve."
-            setMeterFill(level: 0)
+            metricsCard.isHidden = false  // keep gauges visible with final values
         }
     }
 
@@ -287,17 +331,29 @@ final class ReadingAloudDrillViewController: UIViewController {
         // Reset for a fresh take
         resultsCard.isHidden = true
         loudnessSamples.removeAll()
+        peakLoudness = -160
+        pitchGauge.reset()
+        loudnessGauge.reset()
+        wpmGauge.reset()
+        wordCountLabel.text = "Words detected: 0"
+
+        needsWhisperPostSession = false
+        let engine = VoiceMetricsEngine(locale: selectedLocale)
+        engine.delegate = self
+        metricsEngine = engine
+
         Task {
             do {
-                try await startRecording()
+                let url = try await engine.start()
                 await MainActor.run {
+                    self.recordingURL = url
                     self.startTime = Date()
                     self.state = .recording
-                    self.startMeterTimers()
+                    self.startDisplayTimer()
                 }
             } catch {
                 await MainActor.run {
-                    self.lcShowToast("Couldn't start recording",
+                    self.lcShowToast("Couldn't start recording: \(error.localizedDescription)",
                                      icon: "exclamationmark.triangle.fill",
                                      tint: .lcRed)
                 }
@@ -307,29 +363,31 @@ final class ReadingAloudDrillViewController: UIViewController {
 
     @objc private func didTapStop() {
         lcHaptic(.light)
-        stopMeterTimers()
+        displayTimer?.invalidate()
+        displayTimer = nil
         state = .saving
 
+        let engine = metricsEngine
+        let finalWordCount = engine?.wordCount ?? 0
+        let finalWPM = engine?.currentWPM ?? 0
+        let finalPitch = engine?.currentPitch ?? 0
+        engine?.stop()
+
         let duration = Date().timeIntervalSince(startTime ?? Date())
-        let recorder = audioRecorder
-        recorder?.stop()
 
         // Compute loudness stats
         let nonMinimum = loudnessSamples.filter { $0 > -160 }
         let avgDb: Double
-        let peakDb: Double
         if nonMinimum.isEmpty {
             avgDb = -160
-            peakDb = -160
         } else {
-            avgDb = Double(nonMinimum.reduce(0, +)) / Double(nonMinimum.count)
-            peakDb = Double(nonMinimum.max() ?? -160)
+            avgDb = nonMinimum.reduce(0, +) / Double(nonMinimum.count)
         }
 
-        let wordCount = passage.wordCount
-        let wpm: Double = duration > 0
-            ? (Double(wordCount) / duration) * 60.0
-            : 0
+        // Use recognised word count if available, else fall back to passage word count
+        let wordCount = finalWordCount > 0 ? finalWordCount : passage.wordCount
+        let wpm: Double = finalWPM > 0 ? finalWPM
+            : (duration > 0 ? (Double(wordCount) / duration) * 60.0 : 0)
 
         let session = ReadingSession(
             passageId: passage.id == 0 ? nil : passage.id,
@@ -339,23 +397,31 @@ final class ReadingAloudDrillViewController: UIViewController {
             durationSeconds: duration,
             wordsPerMinute: wpm,
             avgLoudnessDb: avgDb,
-            peakLoudnessDb: peakDb,
+            peakLoudnessDb: peakLoudness,
             audioFilePath: recordingURL?.path,
             notes: nil,
+            avgPitchHz: finalPitch,
             recordedAt: Date()
         )
 
         Task {
             do {
                 let saved = try await ServiceLocator.shared.readingAloudService.saveSession(session)
-                // Mark the "first reading aloud" milestone if the user
-                // doesn't already have one. Fire-and-forget.
                 try? await ServiceLocator.shared.milestoneService.autoDetectFirsts()
                 await MainActor.run {
                     self.lcHapticSuccess()
                     self.state = .done
-                    self.showResults(for: saved)
+                    self.showResults(for: saved, avgPitch: finalPitch)
                     self.stopButton.isEnabled = true
+
+                    // If speech recognition was unavailable, try Whisper
+                    if self.needsWhisperPostSession,
+                       let url = self.recordingURL,
+                       WhisperTranscriptionService.shared.hasAPIKey {
+                        self.runWhisperPostSession(
+                            session: saved, audioURL: url,
+                            avgPitch: finalPitch)
+                    }
                 }
             } catch {
                 await MainActor.run {
@@ -369,90 +435,111 @@ final class ReadingAloudDrillViewController: UIViewController {
         }
     }
 
-    // MARK: - Recording
+    /// Sends recorded audio to Whisper, then updates the results card
+    /// and re-saves the session with accurate word count / WPM.
+    private func runWhisperPostSession(session: ReadingSession, audioURL: URL,
+                                        avgPitch: Double) {
+        let analysingLabel = UILabel()
+        analysingLabel.text = "⏳ Analysing speech with Whisper…"
+        analysingLabel.font = UIFont.lcCaption()
+        analysingLabel.textColor = .lcTeal
+        analysingLabel.tag = 999
+        resultsContent.addArrangedSubview(analysingLabel)
 
-    private func startRecording() async throws {
-        let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, mode: .measurement, options: .defaultToSpeaker)
-        try session.setActive(true)
+        let lang = selectedLocale.language.languageCode?.identifier
+            ?? selectedLocale.identifier.components(separatedBy: "-").first
 
-        let dir = try recordingsDirectory()
-        let url = dir.appendingPathComponent("reading_\(UUID().uuidString).m4a")
-        recordingURL = url
+        // NOTE: Do NOT pass a prompt hint — Whisper hallucinates it into
+        // the output for low-resource languages like Tamil.
 
-        let settings: [String: Any] = [
-            AVFormatIDKey:             Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey:           44_100,
-            AVNumberOfChannelsKey:     1,
-            AVEncoderAudioQualityKey:  AVAudioQuality.high.rawValue
-        ]
-        audioRecorder = try AVAudioRecorder(url: url, settings: settings)
-        audioRecorder?.isMeteringEnabled = true
-        audioRecorder?.record()
+        Task {
+            do {
+                let result = try await WhisperTranscriptionService.shared
+                    .transcribe(fileURL: audioURL, language: lang)
+
+                guard result.wordCount > 0 else {
+                    await MainActor.run {
+                        self.resultsContent.viewWithTag(999)?.removeFromSuperview()
+                    }
+                    return
+                }
+
+                let whisperWPM = session.durationSeconds > 2
+                    ? (Double(result.wordCount) / session.durationSeconds) * 60.0 : 0
+
+                // Update the saved session in the database
+                var updated = session
+                updated.wordCount = result.wordCount
+                updated.wordsPerMinute = whisperWPM
+                _ = try? await ServiceLocator.shared.readingAloudService.saveSession(updated)
+
+                await MainActor.run {
+                    self.resultsContent.viewWithTag(999)?.removeFromSuperview()
+                    self.showResults(for: updated, avgPitch: avgPitch)
+
+                    let whisperNote = UILabel()
+                    whisperNote.text = "✓ WPM refined by Whisper (\(result.wordCount) words detected)"
+                    whisperNote.font = UIFont.lcCaption()
+                    whisperNote.textColor = .lcTeal
+                    whisperNote.numberOfLines = 0
+                    self.resultsContent.addArrangedSubview(whisperNote)
+                }
+            } catch {
+                await MainActor.run {
+                    self.resultsContent.viewWithTag(999)?.removeFromSuperview()
+
+                    let errLabel = UILabel()
+                    errLabel.text = "Whisper: \(error.localizedDescription)"
+                    errLabel.font = UIFont.lcCaption()
+                    errLabel.textColor = .systemOrange
+                    errLabel.numberOfLines = 0
+                    self.resultsContent.addArrangedSubview(errLabel)
+                }
+            }
+        }
     }
 
-    private func recordingsDirectory() throws -> URL {
-        let fm = FileManager.default
-        let base = try fm.url(for: .documentDirectory,
-                              in: .userDomainMask,
-                              appropriateFor: nil,
-                              create: true)
-        let dir = base.appendingPathComponent("reading")
-        if !fm.fileExists(atPath: dir.path) {
-            try fm.createDirectory(at: dir, withIntermediateDirectories: true)
+    // MARK: - VoiceMetricsDelegate
+
+    func voiceMetrics(didUpdate pitch: Double, loudness: Double, wordCount: Int, wpm: Double) {
+        // Store samples for final average
+        loudnessSamples.append(loudness)
+        if loudness > peakLoudness { peakLoudness = loudness }
+
+        // Update gauges
+        if pitch > 0 {
+            pitchGauge.setValue(pitch)
         }
-        return dir
+        loudnessGauge.setValue(loudness)
+        if wpm > 0 {
+            wpmGauge.setValue(wpm)
+        }
+        wordCountLabel.text = "Words detected: \(wordCount)"
     }
 
-    // MARK: - Meter / display timers
-
-    private func startMeterTimers() {
-        // Sample meter ~10x/s
-        meterTimer?.invalidate()
-        meterTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
-            self?.sampleMeter()
+    func voiceMetricsUsingSyllableEstimation() {
+        needsWhisperPostSession = true
+        if WhisperTranscriptionService.shared.hasAPIKey {
+            wordCountLabel.text = "Words (estimated · Whisper will refine)"
+        } else {
+            wordCountLabel.text = "Words (estimated from voice)"
         }
-        RunLoop.current.add(meterTimer!, forMode: .common)
+    }
 
-        // Update timer label 1x/s
+    func voiceMetricsRecognitionUnavailable(reason: String) {
+        wordCountLabel.text = "Word detection unavailable for this language"
+        lcShowToast("WPM tracking unavailable — pitch & loudness still active",
+                     icon: "info.circle.fill", tint: .systemOrange)
+    }
+
+    // MARK: - Display timer
+
+    private func startDisplayTimer() {
         displayTimer?.invalidate()
         displayTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
             self?.updateTimerLabel()
         }
         RunLoop.current.add(displayTimer!, forMode: .common)
-    }
-
-    private func stopMeterTimers() {
-        meterTimer?.invalidate()
-        meterTimer = nil
-        displayTimer?.invalidate()
-        displayTimer = nil
-    }
-
-    private func sampleMeter() {
-        guard let recorder = audioRecorder else { return }
-        recorder.updateMeters()
-        let db = recorder.averagePower(forChannel: 0)
-        loudnessSamples.append(db)
-        // Normalise -60 dBFS → 0 … 0 dBFS → 1
-        let normalized = max(0, min(1, (Double(db) + 60) / 60))
-        setMeterFill(level: CGFloat(normalized))
-    }
-
-    private func setMeterFill(level: CGFloat) {
-        let containerWidth = meterBarContainer.bounds.width
-        meterBarFillWidthConstraint?.constant = containerWidth * level
-        UIView.animate(withDuration: 0.08) {
-            self.meterBarContainer.layoutIfNeeded()
-        }
-        // Colour hint based on level
-        if level < 0.33 {
-            meterBarFill.backgroundColor = .lcAmber
-        } else if level < 0.75 {
-            meterBarFill.backgroundColor = .lcGreen
-        } else {
-            meterBarFill.backgroundColor = .lcBlue
-        }
     }
 
     private func updateTimerLabel() {
@@ -465,7 +552,7 @@ final class ReadingAloudDrillViewController: UIViewController {
 
     // MARK: - Results card
 
-    private func showResults(for session: ReadingSession) {
+    private func showResults(for session: ReadingSession, avgPitch: Double = 0) {
         resultsContent.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
         let header = UILabel()
@@ -477,11 +564,14 @@ final class ReadingAloudDrillViewController: UIViewController {
         let wpmText   = String(format: "%.0f", session.wordsPerMinute)
         let dbText    = String(format: "%.0f", session.avgLoudnessDb)
         let duration  = formatDuration(session.durationSeconds)
+        let pitch     = session.avgPitchHz > 0 ? session.avgPitchHz : avgPitch
+        let pitchText = pitch > 0 ? String(format: "%.0f Hz", pitch) : "—"
 
         let statRow = LCStatRow(items: [
-            .init(label: "WPM",       value: wpmText,  tint: .lcPurple),
-            .init(label: "Avg dBFS",  value: dbText,   tint: .lcTeal),
-            .init(label: "Duration",  value: duration, tint: .lcBlue)
+            .init(label: "WPM",       value: wpmText,   tint: .lcPurple),
+            .init(label: "Avg dB",    value: dbText,    tint: .lcBlue),
+            .init(label: "Pitch",     value: pitchText, tint: .lcTeal),
+            .init(label: "Duration",  value: duration,  tint: .systemGray)
         ])
         resultsContent.addArrangedSubview(statRow)
 
@@ -492,6 +582,19 @@ final class ReadingAloudDrillViewController: UIViewController {
         bandLabel.textColor = .label
         bandLabel.numberOfLines = 0
         resultsContent.addArrangedSubview(bandLabel)
+
+        // Word count comparison
+        let wordLabel = UILabel()
+        let detected = metricsEngine?.wordCount ?? 0
+        if detected > 0 {
+            wordLabel.text = "Words detected: \(detected) of \(passage.wordCount) in passage"
+        } else {
+            wordLabel.text = "\(passage.wordCount) words in passage"
+        }
+        wordLabel.font = UIFont.lcCaption()
+        wordLabel.textColor = .secondaryLabel
+        wordLabel.numberOfLines = 0
+        resultsContent.addArrangedSubview(wordLabel)
 
         let hintLabel = UILabel()
         hintLabel.text = coachingHint(for: session)

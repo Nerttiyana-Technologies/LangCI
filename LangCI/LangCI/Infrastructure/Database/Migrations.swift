@@ -530,6 +530,214 @@ enum Migrations {
             try seedCoreCochlearWords(db)
         }
 
+        // ─── v5 — Add pitch column to reading_session ─────────────────────
+        //
+        // The voice-metrics feature now tracks fundamental frequency (Hz)
+        // during Reading Aloud drills. We need a dedicated numeric column
+        // so pitch data is queryable for trends and progress dashboards.
+        migrator.registerMigration("v5_reading_session_pitch") { db in
+            try db.execute(sql: """
+                ALTER TABLE reading_session
+                ADD COLUMN avg_pitch_hz REAL NOT NULL DEFAULT 0
+            """)
+        }
+
+        // ─── v6 — Sound Therapy module ───────────────────────────────────────
+        migrator.registerMigration("v6_sound_therapy") { db in
+
+            // sound_progress — per-sound cumulative progress
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS sound_progress (
+                    id                      INTEGER PRIMARY KEY AUTOINCREMENT,
+                    sound                   TEXT    NOT NULL UNIQUE,
+                    category                TEXT    NOT NULL DEFAULT '',
+                    current_level           INTEGER NOT NULL DEFAULT 0,
+                    total_sessions          INTEGER NOT NULL DEFAULT 0,
+                    total_correct           INTEGER NOT NULL DEFAULT 0,
+                    total_attempts          INTEGER NOT NULL DEFAULT 0,
+                    best_accuracy           REAL    NOT NULL DEFAULT 0,
+                    last_practiced_at       REAL,
+                    is_unlocked             INTEGER NOT NULL DEFAULT 0,
+                    female_voice_accuracy   REAL    NOT NULL DEFAULT 0,
+                    male_voice_accuracy     REAL    NOT NULL DEFAULT 0
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_sound_progress_sound ON sound_progress(sound)")
+
+            // sound_therapy_session — individual practice sessions
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS sound_therapy_session (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    exercise_type   TEXT    NOT NULL DEFAULT '',
+                    target_sound    TEXT    NOT NULL DEFAULT '',
+                    voice_gender    INTEGER NOT NULL DEFAULT 0,
+                    exercise_level  INTEGER NOT NULL DEFAULT 0,
+                    started_at      REAL    NOT NULL,
+                    completed_at    REAL,
+                    total_items     INTEGER NOT NULL DEFAULT 0,
+                    correct_items   INTEGER NOT NULL DEFAULT 0,
+                    is_adaptive     INTEGER NOT NULL DEFAULT 1
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_st_session_sound ON sound_therapy_session(target_sound)")
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_st_session_date ON sound_therapy_session(started_at)")
+
+            // Seed initial unlocked sounds — the user's known weak sounds
+            let now = Date().timeIntervalSince1970
+            for sound in ["sh", "s", "m", "n", "ush", "mm", "f", "th"] {
+                let cat = SoundTherapyContent.sound(named: sound)?.category.rawValue ?? "fricatives"
+                try db.execute(sql: """
+                    INSERT OR IGNORE INTO sound_progress
+                        (sound, category, current_level, total_sessions, total_correct,
+                         total_attempts, best_accuracy, last_practiced_at, is_unlocked,
+                         female_voice_accuracy, male_voice_accuracy)
+                    VALUES (?, ?, 0, 0, 0, 0, 0, ?, 1, 0, 0)
+                """, arguments: [sound, cat, now])
+            }
+        }
+
+        // ─── v7 — Environmental Sound Training ───────────────────────────
+        migrator.registerMigration("v7_environmental_sound") { db in
+
+            // environmental_sound_progress — per-sound cumulative progress
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS environmental_sound_progress (
+                    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    sound_id            TEXT    NOT NULL UNIQUE,
+                    environment         TEXT    NOT NULL DEFAULT '',
+                    current_level       INTEGER NOT NULL DEFAULT 0,
+                    total_attempts      INTEGER NOT NULL DEFAULT 0,
+                    correct_attempts    INTEGER NOT NULL DEFAULT 0,
+                    is_unlocked         INTEGER NOT NULL DEFAULT 1,
+                    last_practiced_at   REAL
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_env_sound_id ON environmental_sound_progress(sound_id)")
+
+            // environmental_sound_session — individual practice sessions
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS environmental_sound_session (
+                    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    environment         TEXT    NOT NULL DEFAULT '',
+                    listening_level     INTEGER NOT NULL DEFAULT 0,
+                    started_at          REAL    NOT NULL,
+                    completed_at        REAL,
+                    total_items         INTEGER NOT NULL DEFAULT 0,
+                    correct_items       INTEGER NOT NULL DEFAULT 0,
+                    days_post_activation INTEGER NOT NULL DEFAULT 0
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_env_session_date ON environmental_sound_session(started_at)")
+
+            // Seed all environmental sounds as unlocked
+            let now = Date().timeIntervalSince1970
+            for sound in EnvironmentalSoundContent.allSounds {
+                try db.execute(sql: """
+                    INSERT OR IGNORE INTO environmental_sound_progress
+                        (sound_id, environment, current_level, total_attempts,
+                         correct_attempts, is_unlocked, last_practiced_at)
+                    VALUES (?, ?, 0, 0, 0, 1, ?)
+                """, arguments: [sound.id, sound.environment.rawValue, now])
+            }
+        }
+
+        // ─── v8 — Custom sounds + weekly packs ─────────────────────────
+        migrator.registerMigration("v8_custom_sounds_and_packs") { db in
+
+            // custom_environmental_sound — user-created sounds
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS custom_environmental_sound (
+                    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    sound_id            TEXT    NOT NULL UNIQUE,
+                    name                TEXT    NOT NULL,
+                    environment         TEXT    NOT NULL DEFAULT 'home',
+                    description         TEXT    NOT NULL DEFAULT '',
+                    speech_description  TEXT    NOT NULL DEFAULT '',
+                    ci_difficulty       INTEGER NOT NULL DEFAULT 2,
+                    is_active           INTEGER NOT NULL DEFAULT 1,
+                    created_at          REAL    NOT NULL,
+                    updated_at          REAL    NOT NULL
+                )
+            """)
+
+            // sound_edit_override — edits to built-in sounds (name, description, TTS)
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS sound_edit_override (
+                    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    sound_id            TEXT    NOT NULL UNIQUE,
+                    name                TEXT,
+                    description         TEXT,
+                    speech_description  TEXT,
+                    ci_difficulty       INTEGER,
+                    updated_at          REAL    NOT NULL
+                )
+            """)
+
+            // weekly_pack_progress — tracks which weekly packs are unlocked
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS weekly_pack_progress (
+                    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                    pack_id     TEXT    NOT NULL UNIQUE,
+                    is_unlocked INTEGER NOT NULL DEFAULT 0,
+                    unlocked_at REAL,
+                    completed   INTEGER NOT NULL DEFAULT 0
+                )
+            """)
+
+            // Seed weekly packs: Week 1 unlocked by default
+            let now = Date().timeIntervalSince1970
+            let packs = ["week1", "week2", "week3", "week4", "safety"]
+            for (i, pack) in packs.enumerated() {
+                let unlocked = (i == 0 || pack == "safety") ? 1 : 0
+                try db.execute(sql: """
+                    INSERT OR IGNORE INTO weekly_pack_progress
+                        (pack_id, is_unlocked, unlocked_at, completed)
+                    VALUES (?, ?, ?, 0)
+                """, arguments: [pack, unlocked, unlocked == 1 ? now : nil])
+            }
+        }
+
+        // ─── v9 — Voice recordings (real voices for training) ──────────────
+        migrator.registerMigration("v9_voice_recordings") { db in
+
+            // People whose voices have been recorded (wife, audiologist, etc.)
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS recorded_person (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name            TEXT    NOT NULL,
+                    relationship    TEXT    NOT NULL DEFAULT '',
+                    color           TEXT    NOT NULL DEFAULT 'lcPurple',
+                    icon            TEXT    NOT NULL DEFAULT 'person.fill',
+                    is_active       INTEGER NOT NULL DEFAULT 1,
+                    created_at      REAL    NOT NULL,
+                    updated_at      REAL    NOT NULL
+                )
+            """)
+
+            // Individual voice recordings linked to a person and optionally a sound
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS voice_recording (
+                    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+                    person_id           INTEGER NOT NULL REFERENCES recorded_person(id) ON DELETE CASCADE,
+                    sound_id            TEXT,
+                    label               TEXT    NOT NULL,
+                    file_name           TEXT    NOT NULL,
+                    duration_seconds    REAL    NOT NULL DEFAULT 0,
+                    created_at          REAL    NOT NULL
+                )
+            """)
+
+            try db.execute(sql: """
+                CREATE INDEX IF NOT EXISTS idx_voice_recording_person
+                ON voice_recording(person_id)
+            """)
+
+            try db.execute(sql: """
+                CREATE INDEX IF NOT EXISTS idx_voice_recording_sound
+                ON voice_recording(sound_id)
+            """)
+        }
+
         try migrator.migrate(dbQueue)
     }
 

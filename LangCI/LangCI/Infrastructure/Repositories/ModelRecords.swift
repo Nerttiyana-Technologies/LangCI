@@ -477,6 +477,7 @@ extension ReadingSession: FetchableRecord {
         peakLoudnessDb  = row["peak_loudness_db"] ?? 0
         audioFilePath   = row["audio_file_path"]
         notes           = row["notes"]
+        avgPitchHz      = row["avg_pitch_hz"] ?? 0
         recordedAt      = row.dateOrNow("recorded_at")
     }
 }

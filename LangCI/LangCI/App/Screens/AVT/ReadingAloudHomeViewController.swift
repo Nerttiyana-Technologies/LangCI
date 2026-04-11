@@ -68,6 +68,14 @@ final class ReadingAloudHomeViewController: UIViewController {
         title = "Reading Aloud"
         navigationItem.largeTitleDisplayMode = .always
         view.backgroundColor = .lcBackground
+
+        let progressButton = UIBarButtonItem(
+            image: UIImage(systemName: "chart.line.uptrend.xyaxis"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapProgress))
+        progressButton.accessibilityLabel = "View Progress"
+        navigationItem.rightBarButtonItem = progressButton
     }
 
     private func buildUI() {
@@ -154,15 +162,15 @@ final class ReadingAloudHomeViewController: UIViewController {
         }
         summaryEmptyLabel.isHidden = true
 
-        let wpmText  = String(format: "%.0f", s.avgWordsPerMinute)
-        let dbText   = String(format: "%.0f", s.avgLoudnessDb)
-        let bestText = String(format: "%.0f", s.bestWpm)
+        let wpmText   = String(format: "%.0f", s.avgWordsPerMinute)
+        let dbText    = String(format: "%.0f", s.avgLoudnessDb)
+        let pitchText = s.avgPitchHz > 0 ? String(format: "%.0f Hz", s.avgPitchHz) : "—"
 
         let row = LCStatRow(items: [
-            .init(label: "Sessions", value: "\(s.sessionCount)",   tint: .lcBlue),
-            .init(label: "Avg WPM",  value: wpmText,               tint: .lcPurple),
-            .init(label: "Avg dBFS", value: dbText,                tint: .lcTeal),
-            .init(label: "Best WPM", value: bestText,              tint: .lcGreen)
+            .init(label: "Done",   value: "\(s.sessionCount)", tint: .lcBlue),
+            .init(label: "WPM",    value: wpmText,             tint: .lcPurple),
+            .init(label: "dB",     value: dbText,              tint: .lcTeal),
+            .init(label: "Pitch",  value: pitchText,           tint: .lcGreen)
         ])
         row.translatesAutoresizingMaskIntoConstraints = false
         summaryCard.addSubview(row)
@@ -234,7 +242,7 @@ final class ReadingAloudHomeViewController: UIViewController {
         for (index, passage) in customPassages.enumerated() {
             let row = PassageRowView(passage: passage,
                                      onTap: { [weak self] in self?.presentDrill(for: passage) },
-                                     onDelete: { [weak self] in self?.confirmDelete(passage) })
+                                     onLongPress: { [weak self] in self?.showPassageActions(passage) })
             customStack.addArrangedSubview(row)
             if index < customPassages.count - 1 {
                 customStack.addArrangedSubview(indentedDivider())
@@ -342,6 +350,12 @@ final class ReadingAloudHomeViewController: UIViewController {
 
     // MARK: - Actions
 
+    @objc private func didTapProgress() {
+        lcHaptic(.light)
+        let progress = ReadingProgressViewController()
+        navigationController?.pushViewController(progress, animated: true)
+    }
+
     @objc private func didTapPaste() {
         lcHaptic(.light)
         let paste = PassagePasteViewController { [weak self] passage in
@@ -374,6 +388,52 @@ final class ReadingAloudHomeViewController: UIViewController {
     private func presentDrill(for passage: ReadingPassage) {
         let drill = ReadingAloudDrillViewController(passage: passage)
         navigationController?.pushViewController(drill, animated: true)
+    }
+
+    private func showPassageActions(_ passage: ReadingPassage) {
+        let sheet = UIAlertController(
+            title: passage.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        sheet.addAction(UIAlertAction(title: "Edit Passage", style: .default) { [weak self] _ in
+            self?.presentEdit(for: passage)
+        })
+        sheet.addAction(UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+            self?.confirmDelete(passage)
+        })
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(sheet, animated: true)
+    }
+
+    private func presentEdit(for passage: ReadingPassage) {
+        let editor = PassagePasteViewController(editing: passage) { [weak self] updated in
+            guard let self = self else { return }
+            Task {
+                do {
+                    let saved = try await ServiceLocator.shared.readingAloudService.savePassage(updated)
+                    await MainActor.run {
+                        self.lcHapticSuccess()
+                        self.lcShowToast("Passage updated",
+                                         icon: "checkmark.circle.fill",
+                                         tint: .lcGreen)
+                        self.loadData()
+                    }
+                } catch {
+                    await MainActor.run {
+                        self.lcShowToast("Save failed",
+                                         icon: "exclamationmark.triangle.fill",
+                                         tint: .lcRed)
+                    }
+                }
+            }
+        }
+        let nav = UINavigationController(rootViewController: editor)
+        nav.modalPresentationStyle = .formSheet
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        present(nav, animated: true)
     }
 
     private func confirmDelete(_ passage: ReadingPassage) {
@@ -410,14 +470,14 @@ final class ReadingAloudHomeViewController: UIViewController {
 final class PassageRowView: UIControl {
 
     private let onTap: () -> Void
-    private let onDelete: (() -> Void)?
+    private let onLongPress: (() -> Void)?
 
     init(passage: ReadingPassage,
          onTap: @escaping () -> Void,
-         onDelete: (() -> Void)? = nil)
+         onLongPress: (() -> Void)? = nil)
     {
         self.onTap = onTap
-        self.onDelete = onDelete
+        self.onLongPress = onLongPress
         super.init(frame: .zero)
         buildUI(with: passage)
         addTarget(self, action: #selector(didTap), for: .touchUpInside)
@@ -473,8 +533,8 @@ final class PassageRowView: UIControl {
             heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
 
-        // Long press → delete, if allowed
-        if onDelete != nil {
+        // Long press → edit/delete action sheet
+        if onLongPress != nil {
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
             longPress.minimumPressDuration = 0.5
             addGestureRecognizer(longPress)
@@ -484,7 +544,7 @@ final class PassageRowView: UIControl {
     @objc private func didTap() { onTap() }
 
     @objc private func didLongPress(_ gr: UILongPressGestureRecognizer) {
-        if gr.state == .began { onDelete?() }
+        if gr.state == .began { onLongPress?() }
     }
 
     override var isHighlighted: Bool {

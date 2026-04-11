@@ -89,8 +89,9 @@ final class GRDBReadingAloudService: ReadingAloudService {
                     INSERT INTO reading_session
                         (passage_id, passage_title, passage_body, word_count,
                          duration_seconds, words_per_minute, avg_loudness_db,
-                         peak_loudness_db, audio_file_path, notes, recorded_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                         peak_loudness_db, audio_file_path, notes, avg_pitch_hz,
+                         recorded_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, arguments: [
                     session.passageId,
                     session.passageTitle,
@@ -102,6 +103,7 @@ final class GRDBReadingAloudService: ReadingAloudService {
                     session.peakLoudnessDb,
                     session.audioFilePath,
                     session.notes,
+                    session.avgPitchHz,
                     session.recordedAt.timeIntervalSince1970
                 ])
                 saved.id = Int(database.lastInsertedRowID)
@@ -111,7 +113,8 @@ final class GRDBReadingAloudService: ReadingAloudService {
                     SET passage_id = ?, passage_title = ?, passage_body = ?,
                         word_count = ?, duration_seconds = ?, words_per_minute = ?,
                         avg_loudness_db = ?, peak_loudness_db = ?,
-                        audio_file_path = ?, notes = ?, recorded_at = ?
+                        audio_file_path = ?, notes = ?, avg_pitch_hz = ?,
+                        recorded_at = ?
                     WHERE id = ?
                 """, arguments: [
                     session.passageId,
@@ -124,6 +127,7 @@ final class GRDBReadingAloudService: ReadingAloudService {
                     session.peakLoudnessDb,
                     session.audioFilePath,
                     session.notes,
+                    session.avgPitchHz,
                     session.recordedAt.timeIntervalSince1970,
                     session.id
                 ])
@@ -146,6 +150,16 @@ final class GRDBReadingAloudService: ReadingAloudService {
                 ORDER BY recorded_at DESC
                 LIMIT ?
             """, arguments: [limit])
+            return try rows.map { try ReadingSession(row: $0) }
+        }
+    }
+
+    func getAllSessions() async throws -> [ReadingSession] {
+        try await db.read { database in
+            let rows = try Row.fetchAll(database, sql: """
+                SELECT * FROM reading_session
+                ORDER BY recorded_at DESC
+            """)
             return try rows.map { try ReadingSession(row: $0) }
         }
     }
@@ -177,6 +191,7 @@ final class GRDBReadingAloudService: ReadingAloudService {
                         COUNT(*) AS cnt,
                         AVG(words_per_minute) AS avg_wpm,
                         AVG(avg_loudness_db) AS avg_db,
+                        AVG(avg_pitch_hz) AS avg_pitch,
                         MAX(words_per_minute) AS best_wpm,
                         MAX(recorded_at) AS last_at
                     FROM reading_session
@@ -189,6 +204,7 @@ final class GRDBReadingAloudService: ReadingAloudService {
                         COUNT(*) AS cnt,
                         AVG(words_per_minute) AS avg_wpm,
                         AVG(avg_loudness_db) AS avg_db,
+                        AVG(avg_pitch_hz) AS avg_pitch,
                         MAX(words_per_minute) AS best_wpm,
                         MAX(recorded_at) AS last_at
                     FROM reading_session
@@ -197,13 +213,15 @@ final class GRDBReadingAloudService: ReadingAloudService {
             }
             guard let row = try Row.fetchOne(database, sql: sql, arguments: args) else {
                 return ReadingStatsDto(sessionCount: 0, avgWordsPerMinute: 0,
-                                       avgLoudnessDb: 0, bestWpm: 0, lastRecordedAt: nil)
+                                       avgLoudnessDb: 0, avgPitchHz: 0,
+                                       bestWpm: 0, lastRecordedAt: nil)
             }
             let lastAt: Double? = row["last_at"]
             return ReadingStatsDto(
                 sessionCount:      row["cnt"] ?? 0,
                 avgWordsPerMinute: row["avg_wpm"] ?? 0,
                 avgLoudnessDb:     row["avg_db"] ?? 0,
+                avgPitchHz:        row["avg_pitch"] ?? 0,
                 bestWpm:           row["best_wpm"] ?? 0,
                 lastRecordedAt:    lastAt.map { Date(timeIntervalSince1970: $0) }
             )

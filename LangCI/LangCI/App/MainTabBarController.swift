@@ -24,14 +24,8 @@ final class MainTabBarController: UITabBarController {
                     title: "Library", image: "books.vertical",     selectedImage: "books.vertical.fill",   tag: 2),
             makeTab(root: RecordViewController(),
                     title: "Record",  image: "mic",                selectedImage: "mic.fill",              tag: 3),
-            makeTab(root: ReportsViewController(),
-                    title: "Reports", image: "chart.bar",          selectedImage: "chart.bar.fill",        tag: 4),
-            makeTab(root: CIHubViewController(),
-                    title: "CI Hub",  image: "waveform.path.ecg",  selectedImage: "waveform.path.ecg",     tag: 5),
-            makeTab(root: SettingsViewController(),
-                    title: "Settings",image: "gearshape",          selectedImage: "gearshape.fill",        tag: 6),
-            makeTab(root: AVTViewController(),
-                    title: "AVT",     image: "ear.and.waveform",   selectedImage: "ear.and.waveform",      tag: 7)
+            makeTab(root: MoreViewController(),
+                    title: "More",    image: "ellipsis.circle",    selectedImage: "ellipsis.circle.fill",  tag: 4),
         ]
     }
 
@@ -60,7 +54,18 @@ final class MainTabBarController: UITabBarController {
     }
 
     @objc private func handleStartTraining() { selectedIndex = 1 }
-    @objc private func handleStartLing6()    { selectedIndex = 5 }
+    @objc private func handleStartLing6() {
+        // CI Hub is now inside the More tab — navigate into it
+        selectedIndex = 4
+        if let moreNav = viewControllers?[4] as? UINavigationController,
+           let more = moreNav.viewControllers.first as? MoreViewController {
+            moreNav.popToRootViewController(animated: false)
+            // Push CIHub after a brief delay so the More tab is visible
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                moreNav.pushViewController(CIHubViewController(), animated: true)
+            }
+        }
+    }
 
     // MARK: - Styling
 

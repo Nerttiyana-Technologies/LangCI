@@ -27,4 +27,9 @@ protocol TrainingService {
 
     /// Words whose nextReviewDate <= today, ordered by priority (SM-2 algorithm).
     func getDueWords(dialectId: Int, limit: Int) async throws -> [SessionWord]
+
+    /// Total words available for training: due review words + new (untrained)
+    /// words. Used by the Train screen to decide whether the Start button
+    /// should be enabled.
+    func getTrainableWordCount(dialectId: Int) async throws -> Int
 }

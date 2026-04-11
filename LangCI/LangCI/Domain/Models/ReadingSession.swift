@@ -22,6 +22,8 @@ struct ReadingSession: Identifiable, Codable {
     var peakLoudnessDb: Double
     var audioFilePath: String?
     var notes: String?
+    /// Average fundamental frequency (Hz) of the user's voice during the session.
+    var avgPitchHz: Double
     var recordedAt: Date
 
     init(id: Int = 0,
@@ -35,6 +37,7 @@ struct ReadingSession: Identifiable, Codable {
          peakLoudnessDb: Double,
          audioFilePath: String? = nil,
          notes: String? = nil,
+         avgPitchHz: Double = 0,
          recordedAt: Date = Date())
     {
         self.id = id
@@ -48,6 +51,7 @@ struct ReadingSession: Identifiable, Codable {
         self.peakLoudnessDb = peakLoudnessDb
         self.audioFilePath = audioFilePath
         self.notes = notes
+        self.avgPitchHz = avgPitchHz
         self.recordedAt = recordedAt
     }
 
@@ -105,6 +109,7 @@ struct ReadingStatsDto {
     var sessionCount: Int
     var avgWordsPerMinute: Double
     var avgLoudnessDb: Double
+    var avgPitchHz: Double
     var bestWpm: Double
     var lastRecordedAt: Date?
 }

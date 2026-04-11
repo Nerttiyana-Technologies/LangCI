@@ -246,7 +246,22 @@ class SettingsViewController: UIViewController {
         ))
         sections.append(SettingsSection(header: "APP", footer: nil, rows: appRows))
 
-        // Section 4: About
+        // Section: Speech (Whisper API)
+        let whisperService = WhisperTranscriptionService.shared
+        let keyStatus = whisperService.hasAPIKey ? "Configured ✓" : "Not set"
+        var speechRows: [SettingsRow] = []
+        speechRows.append(SettingsRow(
+            type: .disclosure,
+            title: "OpenAI API Key",
+            value: keyStatus,
+            action: { [weak self] in self?.showWhisperAPIKeyEntry() }
+        ))
+        sections.append(SettingsSection(
+            header: "SPEECH RECOGNITION",
+            footer: "An OpenAI API key enables accurate Tamil word counting via Whisper. Costs ~$0.006/min of audio. Get a key at platform.openai.com.",
+            rows: speechRows))
+
+        // Section: About
         var aboutRows: [SettingsRow] = []
         aboutRows.append(SettingsRow(
             type: .static,
@@ -264,6 +279,41 @@ class SettingsViewController: UIViewController {
     }
 
     // MARK: - Actions
+
+    private func showWhisperAPIKeyEntry() {
+        let whisper = WhisperTranscriptionService.shared
+        let alert = UIAlertController(
+            title: "OpenAI API Key",
+            message: "Enter your OpenAI API key to enable accurate word counting for Tamil and other unsupported languages via Whisper.\n\nGet a key at platform.openai.com → API Keys.",
+            preferredStyle: .alert)
+
+        alert.addTextField { tf in
+            tf.placeholder = "sk-..."
+            tf.text = whisper.apiKey
+            tf.autocorrectionType = .no
+            tf.autocapitalizationType = .none
+            tf.isSecureTextEntry = true
+            tf.clearButtonMode = .whileEditing
+        }
+
+        alert.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            let key = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            whisper.apiKey = key.isEmpty ? nil : key
+            self?.buildSections()
+            self?.tableView.reloadData()
+        })
+
+        if whisper.hasAPIKey {
+            alert.addAction(UIAlertAction(title: "Remove Key", style: .destructive) { [weak self] _ in
+                whisper.apiKey = nil
+                self?.buildSections()
+                self?.tableView.reloadData()
+            })
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
 
     private func showLanguagePicker() {
         Task {
@@ -864,8 +914,9 @@ class SettingsCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 44)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 24)
         ])
 
         disclosureIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -926,8 +977,9 @@ class SettingsSwitchCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 44)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 24)
         ])
 
         toggle.translatesAutoresizingMaskIntoConstraints = false
@@ -986,8 +1038,9 @@ class SettingsSegmentCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 44)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 24)
         ])
 
         segment.translatesAutoresizingMaskIntoConstraints = false
@@ -1054,8 +1107,9 @@ class SettingsStepperCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 44)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 24)
         ])
 
         stepper.translatesAutoresizingMaskIntoConstraints = false
@@ -1737,8 +1791,7 @@ class AboutViewController: UIViewController {
     }
 
     @objc private func openPrivacyPolicy() {
-        // Placeholder — replace with the hosted privacy policy URL once live.
-        if let url = URL(string: "https://sapthagiri.github.io/langci/privacy") {
+        if let url = URL(string: "https://github.com/isureshsubramanian/LangCI/blob/main/PRIVACY_POLICY.md") {
             UIApplication.shared.open(url)
         }
     }
