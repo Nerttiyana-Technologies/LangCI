@@ -373,12 +373,58 @@ final class GRDBEnvironmentalSoundService: EnvironmentalSoundService {
 
     private func packProgressFromRow(_ row: Row) -> WeeklyPackProgress {
         let unlockedEpoch: Double? = row["unlocked_at"]
+        let lastSessionEpoch: Double? = row["last_session_date"]
+        let practicedStr: String = row["practiced_sound_ids"] ?? ""
+        let practicedIds = practicedStr.isEmpty ? [] : practicedStr.components(separatedBy: ",")
         return WeeklyPackProgress(
             id: row["id"],
             packId: row["pack_id"],
             isUnlocked: row["is_unlocked"] == 1,
             unlockedAt: unlockedEpoch.map { Date(timeIntervalSince1970: $0) },
-            completed: row["completed"] == 1
+            completed: row["completed"] == 1,
+            practicedSoundIds: practicedIds,
+            lastSessionDate: lastSessionEpoch.map { Date(timeIntervalSince1970: $0) }
         )
+    }
+
+    func getPackProgress(for packId: String) async throws -> WeeklyPackProgress? {
+        try await db.read { db in
+            let row = try Row.fetchOne(db, sql: """
+                SELECT * FROM weekly_pack_progress WHERE pack_id = ?
+            """, arguments: [packId])
+            return row.map { self.packProgressFromRow($0) }
+        }
+    }
+
+    func updatePracticedSounds(packId: String, soundIds: [String]) async throws {
+        try await db.write { db in
+            // Merge with existing practiced sounds
+            let row = try Row.fetchOne(db, sql: """
+                SELECT practiced_sound_ids FROM weekly_pack_progress WHERE pack_id = ?
+            """, arguments: [packId])
+
+            let existingStr: String = row?["practiced_sound_ids"] ?? ""
+            var existing = Set(existingStr.isEmpty ? [] : existingStr.components(separatedBy: ","))
+            existing.formUnion(soundIds)
+
+            let merged = existing.sorted().joined(separator: ",")
+            let now = Date().timeIntervalSince1970
+
+            try db.execute(sql: """
+                UPDATE weekly_pack_progress
+                SET practiced_sound_ids = ?, last_session_date = ?
+                WHERE pack_id = ?
+            """, arguments: [merged, now, packId])
+        }
+    }
+
+    func resetPackProgress(_ packId: String) async throws {
+        try await db.write { db in
+            try db.execute(sql: """
+                UPDATE weekly_pack_progress
+                SET practiced_sound_ids = '', last_session_date = NULL, completed = 0
+                WHERE pack_id = ?
+            """, arguments: [packId])
+        }
     }
 }

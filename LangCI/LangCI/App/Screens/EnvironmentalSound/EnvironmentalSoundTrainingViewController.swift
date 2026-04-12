@@ -91,7 +91,9 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
     }()
 
     private var currentVoiceIndex = 0
-    private let voiceLabel = UILabel()     // Shows "Female 1" / "Male 2"
+    /// When true, plays the bundled real audio file instead of TTS
+    private var useNaturalSound = true
+    private let voiceLabel = UILabel()     // Shows "Natural" / "Female 1" / "Male 2"
     private let voicePickerStack = UIStackView()
 
     // MARK: - Recorded (real) voices
@@ -155,6 +157,12 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
     /// Set externally to limit drill to a specific pack's sound IDs
     var packSoundIds: [String]?
 
+    /// The pack ID (e.g. "week1") — used to save progress back
+    var packId: String?
+
+    /// Sound IDs to exclude (already practiced) when resuming a pack
+    var excludeSoundIds: Set<String> = []
+
     private func loadItems() {
         // Start with built-in sounds
         let allItems = EnvironmentalSoundContent.allSounds
@@ -178,6 +186,7 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
                     description: ovr.description ?? item.description,
                     systemSoundName: item.systemSoundName,
                     speechDescription: ovr.speechDescription ?? item.speechDescription,
+                    audioFileName: item.audioFileName,
                     ciDifficulty: ovr.ciDifficulty ?? item.ciDifficulty)
             }
             mergedItems.append(contentsOf: customItems)
@@ -202,7 +211,12 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
 
                 // Filter by pack, environment, or show all
                 if let packIds = self.packSoundIds {
-                    self.items = mergedItems.filter { packIds.contains($0.id) }
+                    var filtered = mergedItems.filter { packIds.contains($0.id) }
+                    // Exclude already-practiced sounds when resuming
+                    if !self.excludeSoundIds.isEmpty {
+                        filtered = filtered.filter { !self.excludeSoundIds.contains($0.id) }
+                    }
+                    self.items = filtered
                 } else if let env = self.environment {
                     self.items = mergedItems.filter { $0.environment == env }
                         .sorted { $0.ciDifficulty < $1.ciDifficulty }
@@ -210,7 +224,7 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
                     self.items = mergedItems.sorted { $0.ciDifficulty < $1.ciDifficulty }
                 }
 
-                // Limit to 10 per session
+                // Limit to 10 per session (shuffled for variety)
                 self.items = Array(self.items.shuffled().prefix(10))
                 self.currentIndex = 0
                 self.correctCount = 0
@@ -309,14 +323,26 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
         // Voice label — shows current speaker
         voiceLabel.font = .systemFont(ofSize: 13, weight: .semibold)
         voiceLabel.textAlignment = .center
-        voiceLabel.textColor = voicePersonas[0].color
-        voiceLabel.text = voicePersonas[0].label
+        voiceLabel.textColor = .lcGreen
+        voiceLabel.text = "Natural"
 
-        // Voice picker — 4 small buttons for F1, F2, M1, M2
+            // Voice picker — "Natural" (real audio) + 4 TTS voices as fallback
         voicePickerStack.axis = .horizontal
         voicePickerStack.spacing = 8
         voicePickerStack.alignment = .center
         voicePickerStack.distribution = .fillEqually
+
+        // "Natural" button — plays the bundled real audio file
+        let naturalBtn = UIButton(type: .system)
+        naturalBtn.tag = -1  // special tag for natural/real audio
+        naturalBtn.setTitle("Natural", for: .normal)
+        naturalBtn.titleLabel?.font = .systemFont(ofSize: 12, weight: .bold)
+        naturalBtn.setTitleColor(.white, for: .normal)
+        naturalBtn.backgroundColor = .lcGreen
+        naturalBtn.layer.cornerRadius = 16
+        naturalBtn.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        naturalBtn.addTarget(self, action: #selector(voicePickerTapped(_:)), for: .touchUpInside)
+        voicePickerStack.addArrangedSubview(naturalBtn)
 
         for (i, persona) in voicePersonas.enumerated() {
             let btn = UIButton(type: .system)
@@ -325,7 +351,7 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
             btn.setTitle(shortLabel, for: .normal)
             btn.titleLabel?.font = .systemFont(ofSize: 12, weight: .bold)
             btn.setTitleColor(.white, for: .normal)
-            btn.backgroundColor = i == 0 ? persona.color : persona.color.withAlphaComponent(0.3)
+            btn.backgroundColor = persona.color.withAlphaComponent(0.3)
             btn.layer.cornerRadius = 16
             btn.heightAnchor.constraint(equalToConstant: 32).isActive = true
             btn.addTarget(self, action: #selector(voicePickerTapped(_:)), for: .touchUpInside)
@@ -518,32 +544,60 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
     }
 
     @objc private func voicePickerTapped(_ sender: UIButton) {
-        currentVoiceIndex = sender.tag
-        selectedRealVoiceIndex = -1  // deselect real voice
+        if sender.tag == -1 {
+            // "Natural" button tapped — use bundled audio files
+            useNaturalSound = true
+            selectedRealVoiceIndex = -1
+        } else {
+            // TTS voice button tapped
+            useNaturalSound = false
+            currentVoiceIndex = sender.tag
+            selectedRealVoiceIndex = -1
+        }
         updateVoicePickerUI()
         playCurrentSound()
         lcHaptic(.light)
     }
 
     private func updateVoicePickerUI() {
-        let persona = voicePersonas[currentVoiceIndex]
-
         if selectedRealVoiceIndex >= 0 {
+            // Recorded voice from Voice Library
             let person = recordedPeople[selectedRealVoiceIndex]
             voiceLabel.text = "🎙 \(person.name)"
             voiceLabel.textColor = colorForKey(person.color)
-            // Dim TTS buttons
+            // Dim all picker buttons
             for case let btn as UIButton in voicePickerStack.arrangedSubviews {
-                btn.backgroundColor = voicePersonas[btn.tag].color.withAlphaComponent(0.15)
+                if btn.tag == -1 {
+                    btn.backgroundColor = UIColor.lcGreen.withAlphaComponent(0.15)
+                } else {
+                    btn.backgroundColor = voicePersonas[btn.tag].color.withAlphaComponent(0.15)
+                }
+            }
+        } else if useNaturalSound {
+            // Natural mode — real audio files
+            voiceLabel.text = "Natural"
+            voiceLabel.textColor = .lcGreen
+            for case let btn as UIButton in voicePickerStack.arrangedSubviews {
+                if btn.tag == -1 {
+                    btn.backgroundColor = .lcGreen  // Natural highlighted
+                } else {
+                    btn.backgroundColor = voicePersonas[btn.tag].color.withAlphaComponent(0.3)
+                }
             }
         } else {
+            // TTS voice mode
+            let persona = voicePersonas[currentVoiceIndex]
             voiceLabel.text = persona.label
             voiceLabel.textColor = persona.color
             for case let btn as UIButton in voicePickerStack.arrangedSubviews {
-                let p = voicePersonas[btn.tag]
-                btn.backgroundColor = btn.tag == currentVoiceIndex
-                    ? p.color
-                    : p.color.withAlphaComponent(0.3)
+                if btn.tag == -1 {
+                    btn.backgroundColor = UIColor.lcGreen.withAlphaComponent(0.3)
+                } else {
+                    let p = voicePersonas[btn.tag]
+                    btn.backgroundColor = btn.tag == currentVoiceIndex
+                        ? p.color
+                        : p.color.withAlphaComponent(0.3)
+                }
             }
         }
 
@@ -609,15 +663,24 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
 
     @objc private func replayTapped() {
         replayCount += 1
-        // Auto-cycle through all voices: TTS personas first, then real voices
+        // Auto-cycle: Natural → TTS voices → recorded voices
         if learningMode {
-            let totalVoices = voicePersonas.count + recordedPeople.count
-            let nextIdx = (replayCount) % totalVoices
-            if nextIdx < voicePersonas.count {
+            // Cycle order: Natural (0), then TTS voices (1..4), then recorded voices
+            let totalOptions = 1 + voicePersonas.count + recordedPeople.count
+            let nextIdx = (replayCount) % totalOptions
+            if nextIdx == 0 {
+                // Natural sound
+                useNaturalSound = true
                 selectedRealVoiceIndex = -1
-                currentVoiceIndex = nextIdx
+            } else if nextIdx <= voicePersonas.count {
+                // TTS voice
+                useNaturalSound = false
+                selectedRealVoiceIndex = -1
+                currentVoiceIndex = nextIdx - 1
             } else {
-                selectedRealVoiceIndex = nextIdx - voicePersonas.count
+                // Recorded voice
+                useNaturalSound = false
+                selectedRealVoiceIndex = nextIdx - 1 - voicePersonas.count
             }
             updateVoicePickerUI()
         }
@@ -625,6 +688,8 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
         let voiceName: String
         if selectedRealVoiceIndex >= 0, selectedRealVoiceIndex < recordedPeople.count {
             voiceName = "🎙 \(recordedPeople[selectedRealVoiceIndex].name)"
+        } else if useNaturalSound {
+            voiceName = "Natural"
         } else {
             voiceName = voicePersonas[currentVoiceIndex].label
         }
@@ -750,7 +815,10 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
 
         if currentLevel == .discrimination, let pair = discriminationPair {
             setSoundNameLabel(pair.0)
-            UIView.animate(withDuration: 0.25) { self.soundNameLabel.alpha = 1 }
+            // Only reveal sound name in learning mode — quiz mode keeps it hidden
+            if learningMode {
+                UIView.animate(withDuration: 0.25) { self.soundNameLabel.alpha = 1 }
+            }
             playSound(pair.0) { [weak self] in
                 guard let self = self else { return }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
@@ -760,7 +828,11 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
             }
         } else {
             setSoundNameLabel(item)
-            UIView.animate(withDuration: 0.25) { self.soundNameLabel.alpha = 1 }
+            // Only reveal sound name in learning mode — in quiz mode the user
+            // must identify the sound from choices, not from the label on screen
+            if learningMode {
+                UIView.animate(withDuration: 0.25) { self.soundNameLabel.alpha = 1 }
+            }
             playSound(item, completion: nil)
         }
 
@@ -773,13 +845,46 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
         }
     }
 
-    /// Unified play: uses recorded voice if available for selected person, else TTS
+    /// Unified play priority:
+    ///   1. Real audio file (bundled .mp3/.wav of the actual sound)
+    ///   2. Recorded familiar voice (from Voice Library)
+    ///   3. TTS description (last resort — female voice saying "moo" isn't a cow!)
     private func playSound(_ item: EnvironmentalSoundItem, completion: (() -> Void)?) {
+
+        // If user explicitly chose a TTS voice (not Natural), skip audio file
+        if !useNaturalSound && selectedRealVoiceIndex < 0 {
+            speakSound(item, completion: completion)
+            return
+        }
+
+        // 1. Try bundled real audio file — this is the ideal experience
+        if let url = item.audioFileURL {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+                #if DEBUG
+                print("[LangCI] Playing audio file: \(url.lastPathComponent) for '\(item.name)'")
+                #endif
+                if let completion = completion {
+                    let dur = audioPlayer?.duration ?? 2.0
+                    DispatchQueue.main.asyncAfter(deadline: .now() + dur + 0.3) { completion() }
+                }
+                return
+            } catch {
+                #if DEBUG
+                print("[LangCI] Audio file error for '\(item.name)': \(error)")
+                #endif
+            }
+        } else {
+            #if DEBUG
+            print("[LangCI] No audio file found for '\(item.name)' (audioFileName: \(item.audioFileName ?? "nil"))")
+            #endif
+        }
+
+        // 2. Try recorded familiar voice (Voice Library)
         if selectedRealVoiceIndex >= 0,
            selectedRealVoiceIndex < recordedPeople.count {
             let person = recordedPeople[selectedRealVoiceIndex]
-            // Try to find a clip for this person — any clip works since
-            // the point is hearing their familiar voice, not a perfect match
             if let clips = recordedClips[person.id],
                let anyClip = clips.values.flatMap({ $0 }).randomElement() {
                 let url = anyClip.fileURL
@@ -796,7 +901,8 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
                 }
             }
         }
-        // Fallback to TTS
+
+        // 3. Fallback to TTS description
         speakSound(item, completion: completion)
     }
 
@@ -893,6 +999,11 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
 
         feedbackLabel.isHidden = false
 
+        // Now reveal the sound name (safe to show after answering)
+        if !learningMode {
+            UIView.animate(withDuration: 0.3) { self.soundNameLabel.alpha = 1 }
+        }
+
         if currentIndex < items.count - 1 {
             nextButton.isHidden = false
         } else {
@@ -929,6 +1040,25 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
                 _ = try? await service.updateProgress(
                     soundId: item.id, environment: item.environment.rawValue,
                     level: currentLevel, correct: 1, total: 1)
+            }
+
+            // Save practiced sounds to pack progress for resume
+            if let packId = self.packId {
+                let practicedIds = items.map { $0.id }
+                try? await service.updatePracticedSounds(packId: packId, soundIds: practicedIds)
+
+                // Check if all sounds in this pack are now practiced
+                if let packDef = EnvironmentalSoundContent.weeklyPackDefinitions.first(where: { $0.id == packId }) {
+                    let progress = try? await service.getPackProgress(for: packId)
+                    let totalInPack = packDef.soundIds.count
+                    let practicedCount = progress?.practicedCount(totalSoundIds: packDef.soundIds) ?? 0
+                    if practicedCount >= totalInPack {
+                        try? await service.markPackCompleted(packId)
+                        await MainActor.run {
+                            self.showPackCompletedBanner(packId: packId)
+                        }
+                    }
+                }
             }
         }
 
@@ -1006,7 +1136,25 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
         buttonRow.spacing = 12
         buttonRow.distribution = .fillEqually
 
-        let retryBtn = LCButton(title: learningMode ? "Listen Again" : "Practice Again", color: .lcTeal)
+        // Check if there are more unpracticed sounds in this pack
+        let hasMoreSounds: Bool = {
+            guard let packId = self.packId,
+                  let packDef = EnvironmentalSoundContent.weeklyPackDefinitions.first(where: { $0.id == packId }) else {
+                return false
+            }
+            let allDone = excludeSoundIds.union(items.map { $0.id })
+            return allDone.count < packDef.soundIds.count
+        }()
+
+        let retryTitle: String
+        if hasMoreSounds {
+            retryTitle = "Continue Next Sounds"
+        } else if learningMode {
+            retryTitle = "Listen Again"
+        } else {
+            retryTitle = "Practice Again"
+        }
+        let retryBtn = LCButton(title: retryTitle, color: hasMoreSounds ? .lcGreen : .lcTeal)
         retryBtn.addTarget(self, action: #selector(retrySession), for: .touchUpInside)
         buttonRow.addArrangedSubview(retryBtn)
 
@@ -1034,6 +1182,10 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
 
     @objc private func retrySession() {
         sessionStartedAt = Date()
+        // Add just-practiced sounds to exclude list so next batch picks new ones
+        if packId != nil {
+            excludeSoundIds.formUnion(items.map { $0.id })
+        }
         resultsCard.isHidden = true
         instructionCard.isHidden = false
         choiceStack.isHidden = false
@@ -1049,6 +1201,24 @@ final class EnvironmentalSoundTrainingViewController: UIViewController {
         instructionCard.isHidden = false
         choiceStack.isHidden = false
         loadItems()
+    }
+
+    private func showPackCompletedBanner(packId: String) {
+        let packName = packId.replacingOccurrences(of: "week", with: "Week ").capitalized
+        let nextPack: String? = {
+            let all = ["week1", "week2", "week3", "week4"]
+            guard let idx = all.firstIndex(of: packId), idx + 1 < all.count else { return nil }
+            return all[idx + 1].replacingOccurrences(of: "week", with: "Week ").capitalized
+        }()
+
+        let alert = UIAlertController(
+            title: "\u{1F31F} \(packName) Complete!",
+            message: nextPack != nil
+                ? "Great work! You've practiced all the sounds in this pack. \(nextPack!) is now unlocked!"
+                : "Congratulations! You've completed all weekly sound packs!",
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Awesome!", style: .default))
+        present(alert, animated: true)
     }
 
     // MARK: - Choice Button Builder

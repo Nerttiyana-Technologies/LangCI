@@ -37,6 +37,9 @@ protocol EnvironmentalSoundService {
 
     // MARK: - Weekly Packs
     func getPackProgress() async throws -> [WeeklyPackProgress]
+    func getPackProgress(for packId: String) async throws -> WeeklyPackProgress?
     func unlockPack(_ packId: String) async throws
     func markPackCompleted(_ packId: String) async throws
+    func updatePracticedSounds(packId: String, soundIds: [String]) async throws
+    func resetPackProgress(_ packId: String) async throws
 }

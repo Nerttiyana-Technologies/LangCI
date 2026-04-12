@@ -738,6 +738,22 @@ enum Migrations {
             """)
         }
 
+        // ─── v10 — Track practiced sounds per pack for resume ────────────
+        migrator.registerMigration("v10_pack_resume_progress") { db in
+
+            // practiced_sound_ids: comma-separated list of sound IDs already practiced
+            // last_session_date: when user last practiced this pack
+            try db.execute(sql: """
+                ALTER TABLE weekly_pack_progress
+                ADD COLUMN practiced_sound_ids TEXT NOT NULL DEFAULT ''
+            """)
+
+            try db.execute(sql: """
+                ALTER TABLE weekly_pack_progress
+                ADD COLUMN last_session_date REAL
+            """)
+        }
+
         try migrator.migrate(dbQueue)
     }
 

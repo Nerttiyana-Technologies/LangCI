@@ -129,10 +129,43 @@ struct EnvironmentalSoundItem: Identifiable {
     let systemSoundName: String? // iOS system sound ID (if available)
     let speechDescription: String // TTS fallback: describe the sound verbally
 
+    /// Audio file name in Resources/Sounds/ (e.g. "sound_thunder.mp3")
+    /// Real environmental audio is preferred over TTS for CI training.
+    var audioFileName: String?
+
     /// Difficulty 1-5 for CI users.
     /// Low-frequency, simple sounds (knock, clap) = 1
     /// High-frequency, complex sounds (birds, music) = 5
     let ciDifficulty: Int
+
+    /// URL for the bundled audio file (nil if not bundled or file missing).
+    /// Tries several lookup paths because Xcode may flatten folder references
+    /// or keep them in a subdirectory depending on project settings.
+    var audioFileURL: URL? {
+        guard let file = audioFileName else { return nil }
+        let name = (file as NSString).deletingPathExtension
+        let ext = (file as NSString).pathExtension
+
+        // 1. Try as a subdirectory "Sounds" (folder reference)
+        if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "Sounds") {
+            return url
+        }
+        // 2. Try "Resources/Sounds" path (if Resources is a folder reference)
+        if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "Resources/Sounds") {
+            return url
+        }
+        // 3. Try flat bundle root (group-based, files copied to root)
+        if let url = Bundle.main.url(forResource: name, withExtension: ext) {
+            return url
+        }
+        // 4. Try looking in the bundle by path directly
+        let bundlePath = Bundle.main.bundlePath as NSString
+        let directPath = bundlePath.appendingPathComponent("Sounds/\(file)")
+        if FileManager.default.fileExists(atPath: directPath) {
+            return URL(fileURLWithPath: directPath)
+        }
+        return nil
+    }
 }
 
 // MARK: - Training Session
@@ -175,6 +208,7 @@ struct CustomEnvironmentalSound: Identifiable, Codable {
             description: description,
             systemSoundName: nil,
             speechDescription: speechDescription,
+            audioFileName: nil,
             ciDifficulty: ciDifficulty)
     }
 }
@@ -214,6 +248,24 @@ struct WeeklyPackProgress: Identifiable, Codable {
     var isUnlocked: Bool
     var unlockedAt: Date?
     var completed: Bool
+    var practicedSoundIds: [String]
+    var lastSessionDate: Date?
+
+    /// How many sounds in this pack have been practiced at least once
+    func practicedCount(totalSoundIds: [String]) -> Int {
+        Set(practicedSoundIds).intersection(totalSoundIds).count
+    }
+
+    /// Sound IDs in this pack that haven't been practiced yet
+    func remainingSoundIds(totalSoundIds: [String]) -> [String] {
+        let done = Set(practicedSoundIds)
+        return totalSoundIds.filter { !done.contains($0) }
+    }
+
+    /// Whether the user has started but not finished this pack
+    var hasProgress: Bool {
+        !practicedSoundIds.isEmpty && !completed
+    }
 }
 
 // MARK: - Environmental Sound Progress

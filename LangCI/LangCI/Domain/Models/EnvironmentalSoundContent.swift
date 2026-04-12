@@ -5,10 +5,10 @@
 // Low-frequency, simple-pattern sounds (knocking, clapping) are easiest.
 // High-frequency, complex sounds (birds, music) are hardest.
 //
-// Since bundling actual audio files is complex, we use a hybrid approach:
-// 1. iOS system sounds (AudioServicesPlaySystemSound) for alerts
-// 2. AVSpeechSynthesizer to describe sounds verbally for identification drills
-// 3. Sound effect descriptions the user can match to real-world experience
+// Audio playback priority (see EnvironmentalSoundTrainingViewController):
+// 1. Bundled audio file (audioFileName → Sounds/ folder) — real recordings
+// 2. Recorded familiar voice (Voice Library)
+// 3. AVSpeechSynthesizer TTS fallback (speechDescription)
 
 import UIKit
 
@@ -25,6 +25,7 @@ enum EnvironmentalSoundContent {
             description: "Someone knocking on a door",
             systemSoundName: nil,
             speechDescription: "knock knock knock",
+            audioFileName: "sound_door_knock.mp3",
             ciDifficulty: 1
         ),
         EnvironmentalSoundItem(
@@ -32,6 +33,7 @@ enum EnvironmentalSoundContent {
             description: "A door closing shut",
             systemSoundName: nil,
             speechDescription: "thud",
+            audioFileName: "sound_door_close.mp3",
             ciDifficulty: 1
         ),
         EnvironmentalSoundItem(
@@ -39,6 +41,7 @@ enum EnvironmentalSoundContent {
             description: "Hands clapping together",
             systemSoundName: nil,
             speechDescription: "clap clap clap clap",
+            audioFileName: "sound_clapping.mp3",
             ciDifficulty: 1
         ),
         EnvironmentalSoundItem(
@@ -46,6 +49,7 @@ enum EnvironmentalSoundContent {
             description: "Someone walking on a hard floor",
             systemSoundName: nil,
             speechDescription: "tap tap tap tap tap",
+            audioFileName: "sound_footsteps.mp3",
             ciDifficulty: 1
         ),
         EnvironmentalSoundItem(
@@ -53,6 +57,7 @@ enum EnvironmentalSoundContent {
             description: "A doorbell ringing",
             systemSoundName: "1007",
             speechDescription: "ding dong",
+            audioFileName: "sound_doorbell.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -60,6 +65,7 @@ enum EnvironmentalSoundContent {
             description: "A vacuum cleaner running",
             systemSoundName: nil,
             speechDescription: "vrrrrrrrrrrr",
+            audioFileName: "sound_vacuum.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -67,6 +73,7 @@ enum EnvironmentalSoundContent {
             description: "A television playing in the background",
             systemSoundName: nil,
             speechDescription: "muffled talking and music from a television",
+            audioFileName: "sound_tv_static.mp3",
             ciDifficulty: 4
         ),
 
@@ -77,6 +84,7 @@ enum EnvironmentalSoundContent {
             description: "Water flowing from a tap",
             systemSoundName: nil,
             speechDescription: "shhhhhhhh, water flowing",
+            audioFileName: "sound_water_running.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -84,6 +92,7 @@ enum EnvironmentalSoundContent {
             description: "A kettle whistling when water boils",
             systemSoundName: nil,
             speechDescription: "wheeeeeee, a high pitched whistle",
+            audioFileName: "sound_kettle_boil.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -91,6 +100,7 @@ enum EnvironmentalSoundContent {
             description: "A microwave beeping when done",
             systemSoundName: nil,
             speechDescription: "beep beep beep",
+            audioFileName: "sound_microwave.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -98,6 +108,7 @@ enum EnvironmentalSoundContent {
             description: "Plates and dishes clinking together",
             systemSoundName: nil,
             speechDescription: "clink clank clink",
+            audioFileName: "sound_dishes.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -105,6 +116,7 @@ enum EnvironmentalSoundContent {
             description: "A knife chopping vegetables on a board",
             systemSoundName: nil,
             speechDescription: "chop chop chop chop",
+            audioFileName: "sound_chopping.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -112,6 +124,7 @@ enum EnvironmentalSoundContent {
             description: "Food sizzling in a frying pan",
             systemSoundName: nil,
             speechDescription: "sssssizzle sssssizzle",
+            audioFileName: "sound_sizzling.mp3",
             ciDifficulty: 3
         ),
 
@@ -122,6 +135,7 @@ enum EnvironmentalSoundContent {
             description: "Rain falling on a roof",
             systemSoundName: nil,
             speechDescription: "pitter patter pitter patter",
+            audioFileName: "sound_rain.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -129,6 +143,7 @@ enum EnvironmentalSoundContent {
             description: "A loud thunder clap",
             systemSoundName: nil,
             speechDescription: "boom, rumble rumble rumble",
+            audioFileName: "sound_thunder.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -136,6 +151,7 @@ enum EnvironmentalSoundContent {
             description: "Wind blowing through trees",
             systemSoundName: nil,
             speechDescription: "whoooosh, whoooosh",
+            audioFileName: "sound_wind.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -143,6 +159,7 @@ enum EnvironmentalSoundContent {
             description: "Dry leaves rustling on the ground",
             systemSoundName: nil,
             speechDescription: "crinkle crinkle, rustle rustle",
+            audioFileName: "sound_leaves.mp3",
             ciDifficulty: 4
         ),
 
@@ -153,6 +170,7 @@ enum EnvironmentalSoundContent {
             description: "A person laughing",
             systemSoundName: nil,
             speechDescription: "ha ha ha ha ha",
+            audioFileName: "sound_laughing.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -160,6 +178,7 @@ enum EnvironmentalSoundContent {
             description: "A person coughing",
             systemSoundName: nil,
             speechDescription: "cough cough, ahem",
+            audioFileName: "sound_coughing.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -167,6 +186,7 @@ enum EnvironmentalSoundContent {
             description: "A person sneezing",
             systemSoundName: nil,
             speechDescription: "ah ah ah choo!",
+            audioFileName: "sound_sneezing.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -174,6 +194,7 @@ enum EnvironmentalSoundContent {
             description: "A baby crying",
             systemSoundName: nil,
             speechDescription: "waaah waaah waaah",
+            audioFileName: "sound_crying.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -181,6 +202,7 @@ enum EnvironmentalSoundContent {
             description: "Someone whispering quietly",
             systemSoundName: nil,
             speechDescription: "psst psst, shh shh",
+            audioFileName: "sound_whispering.mp3",
             ciDifficulty: 5
         ),
 
@@ -191,6 +213,7 @@ enum EnvironmentalSoundContent {
             description: "A dog barking",
             systemSoundName: nil,
             speechDescription: "woof woof woof, bow wow",
+            audioFileName: "sound_dog_bark.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -198,6 +221,7 @@ enum EnvironmentalSoundContent {
             description: "A cat meowing",
             systemSoundName: nil,
             speechDescription: "meow meow meow",
+            audioFileName: "sound_cat_meow.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -205,6 +229,7 @@ enum EnvironmentalSoundContent {
             description: "Birds singing in the morning",
             systemSoundName: nil,
             speechDescription: "tweet tweet, chirp chirp chirp",
+            audioFileName: "sound_bird_chirp.mp3",
             ciDifficulty: 4
         ),
         EnvironmentalSoundItem(
@@ -212,6 +237,7 @@ enum EnvironmentalSoundContent {
             description: "A rooster crowing at dawn",
             systemSoundName: nil,
             speechDescription: "cock a doodle doo!",
+            audioFileName: "sound_rooster.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -219,6 +245,7 @@ enum EnvironmentalSoundContent {
             description: "A cow mooing in a field",
             systemSoundName: nil,
             speechDescription: "moooooo, mooooo",
+            audioFileName: "sound_cow_moo.mp3",
             ciDifficulty: 2
         ),
 
@@ -229,6 +256,7 @@ enum EnvironmentalSoundContent {
             description: "A car honking its horn",
             systemSoundName: nil,
             speechDescription: "beep beep! honk honk!",
+            audioFileName: "sound_car_horn.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -236,6 +264,7 @@ enum EnvironmentalSoundContent {
             description: "A car engine starting and running",
             systemSoundName: nil,
             speechDescription: "vroom vroom vroom",
+            audioFileName: "sound_car_engine.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -243,6 +272,7 @@ enum EnvironmentalSoundContent {
             description: "An ambulance siren wailing",
             systemSoundName: nil,
             speechDescription: "wee woo wee woo wee woo",
+            audioFileName: "sound_siren.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -250,6 +280,7 @@ enum EnvironmentalSoundContent {
             description: "A train horn and wheels on tracks",
             systemSoundName: nil,
             speechDescription: "choo choo, chugga chugga chugga",
+            audioFileName: "sound_train.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -257,6 +288,7 @@ enum EnvironmentalSoundContent {
             description: "An airplane flying overhead",
             systemSoundName: nil,
             speechDescription: "roarrrrr, whoooosh",
+            audioFileName: "sound_airplane.mp3",
             ciDifficulty: 4
         ),
 
@@ -267,6 +299,7 @@ enum EnvironmentalSoundContent {
             description: "A mobile phone ringing",
             systemSoundName: "1000",
             speechDescription: "ring ring, ring ring",
+            audioFileName: "sound_phone_ring.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -274,6 +307,7 @@ enum EnvironmentalSoundContent {
             description: "An alarm clock buzzing",
             systemSoundName: "1005",
             speechDescription: "beep beep beep beep beep beep",
+            audioFileName: "sound_alarm_clock.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -281,6 +315,7 @@ enum EnvironmentalSoundContent {
             description: "A smoke detector beeping loudly",
             systemSoundName: nil,
             speechDescription: "BEEP BEEP BEEP, loud high-pitched beeping",
+            audioFileName: "sound_smoke_alarm.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -288,6 +323,7 @@ enum EnvironmentalSoundContent {
             description: "A kitchen timer going off",
             systemSoundName: "1013",
             speechDescription: "ding ding ding",
+            audioFileName: "sound_timer.mp3",
             ciDifficulty: 2
         ),
 
@@ -298,6 +334,7 @@ enum EnvironmentalSoundContent {
             description: "A pressure cooker whistle — the most common Indian kitchen sound",
             systemSoundName: nil,
             speechDescription: "psssshhhh, WEEEEE! psssshhhh, WEEEEE!",
+            audioFileName: "sound_pressure_cooker.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -305,6 +342,7 @@ enum EnvironmentalSoundContent {
             description: "A wet grinder or mixer running in the kitchen",
             systemSoundName: nil,
             speechDescription: "grrrrrrr, whirrrrrr, grrrrrrr",
+            audioFileName: "sound_mixer_grinder.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -312,6 +350,7 @@ enum EnvironmentalSoundContent {
             description: "A brass bell ringing during pooja",
             systemSoundName: nil,
             speechDescription: "ding ding ding, clang clang clang",
+            audioFileName: "sound_temple_bell.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -319,6 +358,7 @@ enum EnvironmentalSoundContent {
             description: "The front door calling bell",
             systemSoundName: nil,
             speechDescription: "tring tring! tring tring!",
+            audioFileName: "sound_calling_bell.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -326,6 +366,7 @@ enum EnvironmentalSoundContent {
             description: "A three-wheeler auto horn on the street",
             systemSoundName: nil,
             speechDescription: "pom pom! pom pom pom!",
+            audioFileName: "sound_auto_horn.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -333,6 +374,7 @@ enum EnvironmentalSoundContent {
             description: "A ceiling fan spinning overhead",
             systemSoundName: nil,
             speechDescription: "whirrrrr, whirrrrr, whirrrrr",
+            audioFileName: "sound_ceiling_fan.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -340,6 +382,7 @@ enum EnvironmentalSoundContent {
             description: "Stainless steel vessels clanking together",
             systemSoundName: nil,
             speechDescription: "clang clang, clatter clatter, ting ting",
+            audioFileName: "sound_steel_vessels.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -347,6 +390,7 @@ enum EnvironmentalSoundContent {
             description: "Scraping coconut with a coconut scraper",
             systemSoundName: nil,
             speechDescription: "scritch scritch scritch, scratch scratch",
+            audioFileName: "sound_coconut_scraping.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -354,6 +398,7 @@ enum EnvironmentalSoundContent {
             description: "Sweeping the floor with a broom early morning",
             systemSoundName: nil,
             speechDescription: "swish swish swish, swish swish swish",
+            audioFileName: "sound_kolam_sweeping.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -361,6 +406,7 @@ enum EnvironmentalSoundContent {
             description: "Hand-washing clothes and slapping on stone",
             systemSoundName: nil,
             speechDescription: "splash splash, thwack thwack, splash",
+            audioFileName: "sound_washing_clothes.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -368,6 +414,7 @@ enum EnvironmentalSoundContent {
             description: "Striking a match to light agarbathi",
             systemSoundName: nil,
             speechDescription: "scratch, fsssss, fssss",
+            audioFileName: "sound_agarbathi.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -375,6 +422,7 @@ enum EnvironmentalSoundContent {
             description: "A water pump motor running",
             systemSoundName: nil,
             speechDescription: "brrrrrr, hummmmmm, brrrrrr",
+            audioFileName: "sound_water_pump.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -382,6 +430,7 @@ enum EnvironmentalSoundContent {
             description: "Steam escaping from an idli cooker",
             systemSoundName: nil,
             speechDescription: "pssshhhh, psssshhhh, bubbly steam",
+            audioFileName: "sound_idli_cooker.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -389,6 +438,7 @@ enum EnvironmentalSoundContent {
             description: "Crows cawing outside the window — very common in India",
             systemSoundName: nil,
             speechDescription: "caw caw caw! caw caw!",
+            audioFileName: "sound_crow_caw.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -396,6 +446,7 @@ enum EnvironmentalSoundContent {
             description: "A motorcycle or scooter starting up",
             systemSoundName: nil,
             speechDescription: "vroom vroom vrrrrrrr, put put put put",
+            audioFileName: "sound_two_wheeler.mp3",
             ciDifficulty: 2
         ),
 
@@ -500,6 +551,7 @@ enum EnvironmentalSoundContent {
             description: "A single drum beat — low-frequency percussion",
             systemSoundName: nil,
             speechDescription: "boom, boom, boom boom boom",
+            audioFileName: "sound_single_drum.mp3",
             ciDifficulty: 1
         ),
         EnvironmentalSoundItem(
@@ -507,6 +559,7 @@ enum EnvironmentalSoundContent {
             description: "A simple clapping rhythm pattern",
             systemSoundName: nil,
             speechDescription: "clap, clap, clap clap clap, clap, clap, clap clap clap",
+            audioFileName: "sound_clap_rhythm.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -514,6 +567,7 @@ enum EnvironmentalSoundContent {
             description: "A deep, low-pitched humming sound",
             systemSoundName: nil,
             speechDescription: "hmmmmmmm, hummmmmmm, very deep and low",
+            audioFileName: "sound_low_pitch.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -521,6 +575,7 @@ enum EnvironmentalSoundContent {
             description: "A bright, high-pitched tone",
             systemSoundName: nil,
             speechDescription: "eeeeee, a high bright sound, eeeeee",
+            audioFileName: "sound_high_pitch.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -528,6 +583,7 @@ enum EnvironmentalSoundContent {
             description: "A tone going up then coming down — pitch training",
             systemSoundName: nil,
             speechDescription: "do re mi fa so la ti do, do ti la so fa mi re do",
+            audioFileName: "sound_pitch_up_down.mp3",
             ciDifficulty: 4
         ),
         EnvironmentalSoundItem(
@@ -535,6 +591,7 @@ enum EnvironmentalSoundContent {
             description: "Indian tabla drums — dha dhin rhythms",
             systemSoundName: nil,
             speechDescription: "dha dhin dha, dha dhin dha, ta tin ta, ta tin ta",
+            audioFileName: "sound_tabla.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -542,6 +599,7 @@ enum EnvironmentalSoundContent {
             description: "A veena string being plucked — Carnatic music",
             systemSoundName: nil,
             speechDescription: "twang, twaang, twing twing twang",
+            audioFileName: "sound_veena.mp3",
             ciDifficulty: 4
         ),
         EnvironmentalSoundItem(
@@ -549,6 +607,7 @@ enum EnvironmentalSoundContent {
             description: "A bamboo flute playing a melody",
             systemSoundName: nil,
             speechDescription: "toooo tooo, teee tooo, flowing melody",
+            audioFileName: "sound_flute.mp3",
             ciDifficulty: 4
         ),
         EnvironmentalSoundItem(
@@ -556,6 +615,7 @@ enum EnvironmentalSoundContent {
             description: "A harmonium drone — continuous reedy sound",
             systemSoundName: nil,
             speechDescription: "hmmmmmm, aaahhhh, a continuous reedy tone",
+            audioFileName: "sound_harmonium.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -563,6 +623,7 @@ enum EnvironmentalSoundContent {
             description: "A guitar being strummed once",
             systemSoundName: nil,
             speechDescription: "strum, twang twang twang",
+            audioFileName: "sound_guitar_strum.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -570,6 +631,7 @@ enum EnvironmentalSoundContent {
             description: "A single piano key being pressed",
             systemSoundName: nil,
             speechDescription: "ding, a clear single note, ding",
+            audioFileName: "sound_piano_key.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -577,6 +639,7 @@ enum EnvironmentalSoundContent {
             description: "Comparing fast and slow rhythmic patterns",
             systemSoundName: nil,
             speechDescription: "tap, tap, tap. Now faster: tap tap tap tap tap tap tap",
+            audioFileName: "sound_fast_vs_slow.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -584,6 +647,7 @@ enum EnvironmentalSoundContent {
             description: "The same sound at different volumes — loudness training",
             systemSoundName: nil,
             speechDescription: "hello. Hello. HELLO!",
+            audioFileName: "sound_loud_vs_soft.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -591,6 +655,7 @@ enum EnvironmentalSoundContent {
             description: "Counting beats — 2 taps vs 3 taps",
             systemSoundName: nil,
             speechDescription: "tap tap. Now three: tap tap tap.",
+            audioFileName: "sound_two_beat.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -598,6 +663,7 @@ enum EnvironmentalSoundContent {
             description: "Someone humming a simple melody",
             systemSoundName: nil,
             speechDescription: "hmm hmm hmm, hm hm hm hmm, la la la",
+            audioFileName: "sound_humming_song.mp3",
             ciDifficulty: 4
         ),
 
@@ -608,6 +674,7 @@ enum EnvironmentalSoundContent {
             description: "A goat bleating — common in rural India",
             systemSoundName: nil,
             speechDescription: "maa maa, baa baa, maa maa",
+            audioFileName: "sound_goat_bleat.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -615,6 +682,7 @@ enum EnvironmentalSoundContent {
             description: "A parrot squawking loudly",
             systemSoundName: nil,
             speechDescription: "squawk! aawk aawk! screech!",
+            audioFileName: "sound_parrot.mp3",
             ciDifficulty: 3
         ),
         EnvironmentalSoundItem(
@@ -622,6 +690,7 @@ enum EnvironmentalSoundContent {
             description: "A mosquito buzzing near your ear",
             systemSoundName: nil,
             speechDescription: "bzzzzzz, zzzzz, bzzzzzzz",
+            audioFileName: "sound_mosquito.mp3",
             ciDifficulty: 5
         ),
         EnvironmentalSoundItem(
@@ -629,6 +698,7 @@ enum EnvironmentalSoundContent {
             description: "A red-whiskered bulbul singing",
             systemSoundName: nil,
             speechDescription: "pip pip pip, cheer cheer, pip pip",
+            audioFileName: "sound_bulbul.mp3",
             ciDifficulty: 4
         ),
 
@@ -639,6 +709,7 @@ enum EnvironmentalSoundContent {
             description: "A city bus honking its loud horn",
             systemSoundName: nil,
             speechDescription: "paaaan paaaan! loud deep horn blast",
+            audioFileName: "sound_bus_horn.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -646,6 +717,7 @@ enum EnvironmentalSoundContent {
             description: "A bicycle bell ringing",
             systemSoundName: nil,
             speechDescription: "tring tring! tring tring tring!",
+            audioFileName: "sound_cycle_bell.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -653,6 +725,7 @@ enum EnvironmentalSoundContent {
             description: "An Indian train horn — long and deep",
             systemSoundName: nil,
             speechDescription: "poooooo! poooo poooo! long deep whistle",
+            audioFileName: "sound_train_horn_indian.mp3",
             ciDifficulty: 2
         ),
 
@@ -663,6 +736,7 @@ enum EnvironmentalSoundContent {
             description: "The WhatsApp notification sound",
             systemSoundName: nil,
             speechDescription: "da dum!",
+            audioFileName: "sound_whatsapp_tone.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -670,6 +744,7 @@ enum EnvironmentalSoundContent {
             description: "Clicking a gas stove igniter",
             systemSoundName: nil,
             speechDescription: "click click click, fwoosh",
+            audioFileName: "sound_gas_stove_click.mp3",
             ciDifficulty: 2
         ),
         EnvironmentalSoundItem(
@@ -677,6 +752,7 @@ enum EnvironmentalSoundContent {
             description: "Power inverter beeping during power cut",
             systemSoundName: nil,
             speechDescription: "beep, beep, beep, continuous beeping",
+            audioFileName: "sound_inverter_beep.mp3",
             ciDifficulty: 2
         ),
     ]
@@ -727,54 +803,100 @@ enum EnvironmentalSoundContent {
     /// Safety: Always-available critical alert sounds.
     static let weeklyPackDefinitions: [(id: String, title: String, subtitle: String,
                                          icon: String, colorName: String, soundIds: [String])] = [
+        // Week 1: 25 sounds — all difficulty 1 + easiest difficulty 2.
+        // Focus on low-frequency, familiar, high-contrast sounds.
+        // Brain needs LOTS of repetition at this stage (3-4 sessions to finish pack).
         (
             id: "week1",
             title: "Week 1 — First Sounds",
-            subtitle: "Simple sounds your brain learns first: knocks, claps, yes/no",
+            subtitle: "Simple, familiar sounds your brain maps first",
             icon: "1.circle.fill",
             colorName: "lcGreen",
-            soundIds: ["door_knock", "door_close", "clapping", "footsteps", "doorbell",
-                       "thunder", "laughing", "cow_moo", "yes_no", "single_drum",
-                       "calling_bell", "pressure_cooker"]
+            soundIds: [
+                // Difficulty 1 — easiest (all 6)
+                "door_knock", "door_close", "clapping", "footsteps", "yes_no", "single_drum",
+                // Difficulty 2 — familiar home & Indian sounds
+                "doorbell", "calling_bell", "pressure_cooker", "temple_bell",
+                "thunder", "cow_moo", "dog_bark", "crow_caw",
+                "laughing", "car_horn", "auto_horn", "two_wheeler",
+                // Difficulty 2 — basic speech & rhythm
+                "female_hello", "name_calling", "vanakkam", "counting",
+                "loud_vs_soft", "clap_rhythm", "piano_key"
+            ]
         ),
+        // Week 2: 24 sounds — remaining difficulty 2 + kitchen/alert sounds.
+        // Brain is starting to map patterns. Introduce more variety.
         (
             id: "week2",
             title: "Week 2 — Home & People",
-            subtitle: "Kitchen, Indian home sounds, and basic speech",
+            subtitle: "Kitchen, alerts, people sounds, and basic speech",
             icon: "2.circle.fill",
             colorName: "lcBlue",
-            soundIds: ["water_running", "microwave", "dishes", "chopping",
-                       "coughing", "sneezing", "dog_bark", "car_horn",
-                       "steel_vessels", "auto_horn", "temple_bell",
-                       "female_hello", "name_calling", "vanakkam",
-                       "counting", "clap_rhythm", "loud_vs_soft"]
+            soundIds: [
+                // Kitchen
+                "water_running", "microwave", "dishes", "chopping",
+                // People
+                "coughing", "sneezing", "thank_you",
+                // Animals
+                "goat_bleat",
+                // Transport
+                "siren", "bus_horn", "cycle_bell", "train_horn_indian",
+                // Indian home
+                "steel_vessels",
+                // Alerts
+                "phone_ring", "alarm_clock", "smoke_alarm", "timer",
+                "whatsapp_tone", "gas_stove_click", "inverter_beep",
+                // Tones
+                "low_pitch", "fast_vs_slow", "two_beat"
+            ]
         ),
+        // Week 3: 25 sounds — difficulty 3 core. More complex patterns.
+        // Brain is adapting. Introduce similar-sounding pairs for discrimination.
         (
             id: "week3",
             title: "Week 3 — World & Voice",
-            subtitle: "Outdoor sounds, transport, speech emotions & rhythm",
+            subtitle: "Outdoor, transport, speech emotions & instruments",
             icon: "3.circle.fill",
             colorName: "lcPurple",
-            soundIds: ["rain", "wind", "sizzling", "kettle_boil", "cat_meow",
-                       "rooster", "car_engine", "siren", "train",
-                       "mixer_grinder", "ceiling_fan", "two_wheeler",
-                       "male_hello", "child_voice", "question_voice",
-                       "tabla", "fast_vs_slow", "two_beat",
-                       "bus_horn", "cycle_bell", "goat_bleat"]
+            soundIds: [
+                // Kitchen & home (harder)
+                "sizzling", "kettle_boil", "vacuum", "mixer_grinder",
+                "ceiling_fan", "coconut_scraping", "kolam_sweeping",
+                "washing_clothes", "agarbathi", "water_pump", "idli_cooker",
+                // Outdoors
+                "rain", "wind",
+                // Animals
+                "cat_meow", "rooster",
+                // Transport
+                "car_engine", "train",
+                // Speech — pitch & emotion
+                "male_hello", "child_voice", "question_voice",
+                "happy_voice", "angry_voice", "whisper_vs_shout",
+                // Music
+                "tabla", "harmonium"
+            ]
         ),
+        // Week 4+: 15 sounds — difficulty 4-5. High-frequency, subtle, complex.
+        // Brain needs advanced pattern recognition for these.
         (
             id: "week4",
             title: "Week 4+ — Complex Sounds",
             subtitle: "Challenging speech, music, instruments & pitch",
             icon: "4.circle.fill",
             colorName: "lcOrange",
-            soundIds: ["vacuum", "tv_static", "leaves", "crying", "whispering",
-                       "bird_chirp", "airplane",
-                       "whisper_vs_shout", "happy_voice", "sad_voice", "angry_voice",
-                       "high_pitch", "pitch_up_down",
-                       "veena", "flute", "harmonium", "guitar_strum", "humming_song",
-                       "parrot", "mosquito", "bulbul"]
+            soundIds: [
+                // High-frequency sounds
+                "crying", "parrot", "bird_chirp", "bulbul", "mosquito",
+                // Complex environment
+                "tv_static", "leaves", "airplane",
+                // Subtle speech
+                "sad_voice", "whispering",
+                // Music & pitch (hardest)
+                "high_pitch", "pitch_up_down",
+                "veena", "flute", "guitar_strum", "humming_song"
+            ]
         ),
+        // Safety: 12 sounds — critical alerts, always unlocked.
         (
             id: "safety",
             title: "Safety Sounds",

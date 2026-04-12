@@ -6,6 +6,20 @@
 
 import UIKit
 
+// MARK: - Recent Activity (unified model for both session types)
+
+enum RecentActivity {
+    case word(TrainingSession)
+    case sound(EnvironmentalSoundSession)
+
+    var date: Date {
+        switch self {
+        case .word(let s):  return s.startedAt
+        case .sound(let s): return s.startedAt
+        }
+    }
+}
+
 // MARK: - HomeViewController
 
 final class HomeViewController: UIViewController {
@@ -57,7 +71,7 @@ final class HomeViewController: UIViewController {
     private var isActivityExpanded = true
 
     // State
-    private var recentSessions: [TrainingSession] = []
+    private var recentActivities: [RecentActivity] = []
     private var homeStats: HomeStats?
 
     // MARK: - Lifecycle
@@ -549,10 +563,19 @@ final class HomeViewController: UIViewController {
             do {
                 // Load home stats and recent sessions in parallel
                 async let stats = ServiceLocator.shared.progressService.getHomeStats()
-                async let sessions = ServiceLocator.shared.trainingService.getRecentSessions(count: 3)
+                async let sessions = ServiceLocator.shared.trainingService.getRecentSessions(count: 5)
+                async let envSessions = ServiceLocator.shared.environmentalSoundService!.getRecentSessions(count: 5)
 
                 self.homeStats = try await stats
-                self.recentSessions = try await sessions
+                let wordSessions = try await sessions
+                let soundSessions = (try? await envSessions) ?? []
+
+                // Merge both session types into unified recent activities
+                var activities: [RecentActivity] = []
+                activities += wordSessions.map { RecentActivity.word($0) }
+                activities += soundSessions.map { RecentActivity.sound($0) }
+                activities.sort { $0.date > $1.date }
+                self.recentActivities = Array(activities.prefix(5))
 
                 await MainActor.run {
                     self.updateUI()
@@ -655,13 +678,13 @@ final class HomeViewController: UIViewController {
     /// midnight local time. Used to fill the daily-goal ring.
     private func countSessionsToday() -> Int {
         let start = Calendar.current.startOfDay(for: Date())
-        return recentSessions.filter { $0.startedAt >= start }.count
+        return recentActivities.filter { $0.date >= start }.count
     }
 
     private func updateTableHeight() {
         // Calculate height based on row count
         let rowHeight: CGFloat = 60
-        let estimatedHeight = CGFloat(recentSessions.count) * rowHeight
+        let estimatedHeight = CGFloat(recentActivities.count) * rowHeight
         activityHeightConstraint.constant = max(estimatedHeight, 60) // Min height for empty state
         view.layoutIfNeeded()
     }
@@ -725,13 +748,18 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentSessions.count
+        return recentActivities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ActivitySessionCell.identifier, for: indexPath) as! ActivitySessionCell
-        let session = recentSessions[indexPath.row]
-        cell.configure(with: session)
+        let activity = recentActivities[indexPath.row]
+        switch activity {
+        case .word(let session):
+            cell.configure(with: session)
+        case .sound(let session):
+            cell.configureSound(with: session)
+        }
         return cell
     }
 
@@ -829,6 +857,30 @@ final class ActivitySessionCell: UITableViewCell {
             ? Int(Double(session.completedWords) / Double(session.totalWords) * 100)
             : 0
         accuracyLabel.text = "\(accuracy)%"
+    }
+
+    func configureSound(with session: EnvironmentalSoundSession) {
+        // Format date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        dateLabel.text = formatter.string(from: session.startedAt)
+
+        // Build detail string
+        let envLabel = SoundEnvironment(rawValue: session.environment)?.label ?? session.environment.capitalized
+        detailLabel.text = "\(session.totalItems) sounds • \(envLabel)"
+
+        // Set icon for environmental sound
+        let cfg = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+        modeIcon.image = UIImage(systemName: "waveform.badge.magnifyingglass", withConfiguration: cfg)
+        modeIcon.tintColor = .lcGreen
+
+        // Calculate accuracy
+        let accuracy = session.totalItems > 0
+            ? Int(Double(session.correctItems) / Double(session.totalItems) * 100)
+            : 0
+        accuracyLabel.text = "\(accuracy)%"
+        accuracyLabel.textColor = accuracy >= 80 ? .lcGreen : (accuracy >= 50 ? .lcAmber : .lcRed)
     }
 
     private func modeString(for mode: TrainingMode) -> String {
