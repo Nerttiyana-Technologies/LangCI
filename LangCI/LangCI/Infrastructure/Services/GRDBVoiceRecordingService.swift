@@ -156,6 +156,54 @@ final class GRDBVoiceRecordingService: VoiceRecordingService {
         }
     }
 
+    // MARK: - Custom Prompts
+
+    func getAllCustomPrompts() async throws -> [CustomVoicePrompt] {
+        try await db.read { db in
+            let rows = try Row.fetchAll(db, sql: """
+                SELECT * FROM custom_voice_prompt
+                ORDER BY category, created_at DESC
+            """)
+            return rows.map { self.customPromptFromRow($0) }
+        }
+    }
+
+    func getCustomPrompts(category: String) async throws -> [CustomVoicePrompt] {
+        try await db.read { db in
+            let rows = try Row.fetchAll(db, sql: """
+                SELECT * FROM custom_voice_prompt
+                WHERE category = ?
+                ORDER BY created_at DESC
+            """, arguments: [category])
+            return rows.map { self.customPromptFromRow($0) }
+        }
+    }
+
+    func addCustomPrompt(_ prompt: CustomVoicePrompt) async throws -> CustomVoicePrompt {
+        let now = Date().timeIntervalSince1970
+        let id = try await db.write { db -> Int64 in
+            try db.execute(sql: """
+                INSERT INTO custom_voice_prompt
+                    (text, transliteration, meaning, category, created_by, is_built_in, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, arguments: [prompt.text, prompt.transliteration,
+                             prompt.meaning, prompt.category,
+                             prompt.createdBy, prompt.isBuiltIn ? 1 : 0, now])
+            return db.lastInsertedRowID
+        }
+        var result = prompt
+        result.id = Int(id)
+        result.createdAt = Date(timeIntervalSince1970: now)
+        return result
+    }
+
+    func deleteCustomPrompt(id: Int) async throws {
+        try await db.write { db in
+            try db.execute(sql: "DELETE FROM custom_voice_prompt WHERE id = ?",
+                           arguments: [id])
+        }
+    }
+
     // MARK: - Row mappers
 
     private func personFromRow(_ row: Row) -> RecordedPerson {
@@ -180,6 +228,18 @@ final class GRDBVoiceRecordingService: VoiceRecordingService {
             label: row["label"] ?? "",
             fileName: row["file_name"] ?? "",
             durationSeconds: row["duration_seconds"] ?? 0,
+            createdAt: Date(timeIntervalSince1970: row["created_at"] ?? 0))
+    }
+
+    private func customPromptFromRow(_ row: Row) -> CustomVoicePrompt {
+        CustomVoicePrompt(
+            id: row["id"],
+            text: row["text"] ?? "",
+            transliteration: row["transliteration"] ?? "",
+            meaning: row["meaning"] ?? "",
+            category: row["category"] ?? "custom",
+            createdBy: row["created_by"],
+            isBuiltIn: (row["is_built_in"] as Int?) == 1,
             createdAt: Date(timeIntervalSince1970: row["created_at"] ?? 0))
     }
 }

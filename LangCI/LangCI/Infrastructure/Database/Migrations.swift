@@ -754,6 +754,24 @@ enum Migrations {
             """)
         }
 
+        // v11: Custom voice prompts — Tamil words/phrases added by family
+        migrator.registerMigration("v11_custom_voice_prompts") { db in
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS custom_voice_prompt (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    text            TEXT    NOT NULL,
+                    transliteration TEXT    NOT NULL DEFAULT '',
+                    meaning         TEXT    NOT NULL DEFAULT '',
+                    category        TEXT    NOT NULL DEFAULT 'custom',
+                    created_by      INTEGER,
+                    is_built_in     INTEGER NOT NULL DEFAULT 0,
+                    created_at      REAL    NOT NULL,
+                    FOREIGN KEY (created_by) REFERENCES recorded_person(id) ON DELETE SET NULL
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_custom_prompt_category ON custom_voice_prompt(category)")
+        }
+
         try migrator.migrate(dbQueue)
     }
 

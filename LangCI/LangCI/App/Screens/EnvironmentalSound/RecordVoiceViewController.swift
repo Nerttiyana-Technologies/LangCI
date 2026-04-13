@@ -48,6 +48,10 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
     private var currentPromptIndex = 0
     private var recordedClips: [String: URL] = [:]  // promptId → file URL
 
+    /// Combined prompts: built-in + custom Tamil words from DB
+    private var allPrompts: [(id: String, title: String, instruction: String, icon: String)] = []
+    private var customPrompts: [CustomVoicePrompt] = []
+
     private var audioRecorder: AVAudioRecorder?
     private var audioPlayer: AVAudioPlayer?
     private var isRecording = false
@@ -115,6 +119,8 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
     private func loadData() {
         Task {
             people = (try? await service.getAllPeople()) ?? []
+            customPrompts = (try? await service.getAllCustomPrompts()) ?? []
+            buildAllPrompts()
             await MainActor.run {
                 rebuildPersonPicker()
                 if let pre = preselectedPerson {
@@ -123,6 +129,23 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
                 }
                 updatePromptCard()
             }
+        }
+    }
+
+    private func buildAllPrompts() {
+        allPrompts = Self.prompts
+        // Append custom Tamil prompts
+        for cp in customPrompts {
+            let title = cp.transliteration.isEmpty ? cp.text : cp.transliteration
+            let instruction = cp.meaning.isEmpty
+                ? "Say: \"\(cp.text)\""
+                : "Say: \"\(cp.text)\" (\(cp.meaning))"
+            allPrompts.append((
+                id: cp.promptId,
+                title: title,
+                instruction: instruction,
+                icon: "character.textbox"
+            ))
         }
     }
 
@@ -188,6 +211,16 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
         addPersonButton.setTitleColor(.lcTeal, for: .normal)
         addPersonButton.addTarget(self, action: #selector(addPersonTapped), for: .touchUpInside)
         contentStack.addArrangedSubview(addPersonButton)
+
+        // — Add Tamil Words button
+        let addWordsBtn = UIButton(type: .system)
+        addWordsBtn.setTitle("+ Add Tamil Words to Record", for: .normal)
+        addWordsBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        addWordsBtn.setTitleColor(.lcAmber, for: .normal)
+        addWordsBtn.setImage(UIImage(systemName: "character.textbox"), for: .normal)
+        addWordsBtn.tintColor = .lcAmber
+        addWordsBtn.addTarget(self, action: #selector(addTamilWordsTapped), for: .touchUpInside)
+        contentStack.addArrangedSubview(addWordsBtn)
 
         // — Prompt card
         buildPromptCard()
@@ -306,15 +339,15 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
     }
 
     private func updatePromptCard() {
-        guard currentPromptIndex < Self.prompts.count else {
+        guard currentPromptIndex < allPrompts.count else {
             showDoneCard()
             return
         }
-        let prompt = Self.prompts[currentPromptIndex]
+        let prompt = allPrompts[currentPromptIndex]
         promptIcon.image = UIImage(systemName: prompt.icon)
         promptTitle.text = prompt.title
         promptInstruction.text = prompt.instruction
-        promptProgress.text = "\(currentPromptIndex + 1) of \(Self.prompts.count)"
+        promptProgress.text = "\(currentPromptIndex + 1) of \(allPrompts.count)"
         promptCard.isHidden = false
 
         // Reset record state
@@ -457,6 +490,20 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
         }
     }
 
+    // MARK: - Add Tamil Words
+
+    @objc private func addTamilWordsTapped() {
+        let vc = CustomPromptsViewController()
+        vc.person = selectedPerson
+        vc.onPromptsAdded = { [weak self] newPrompts in
+            guard let self = self else { return }
+            self.customPrompts.append(contentsOf: newPrompts)
+            self.buildAllPrompts()
+            self.updatePromptCard()
+        }
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
     // MARK: - Recording
 
     @objc private func recordTapped() {
@@ -465,13 +512,13 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
 
     private func startRecording() {
         guard selectedPerson != nil else { return }
-        guard currentPromptIndex < Self.prompts.count else { return }
+        guard currentPromptIndex < allPrompts.count else { return }
 
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("VoiceRecordings")
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
 
-        let prompt = Self.prompts[currentPromptIndex]
+        let prompt = allPrompts[currentPromptIndex]
         let ts = Int(Date().timeIntervalSince1970)
         let tag = selectedPerson?.name.lowercased().replacingOccurrences(of: " ", with: "_") ?? "x"
         let fileName = "voice_\(tag)_\(prompt.id)_\(ts).m4a"
@@ -543,7 +590,7 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
     // MARK: - Playback
 
     @objc private func playTapped() {
-        let prompt = Self.prompts[currentPromptIndex]
+        let prompt = allPrompts[currentPromptIndex]
         guard let url = recordedClips[prompt.id] else { return }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -555,7 +602,7 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
     }
 
     @objc private func reRecordTapped() {
-        let prompt = Self.prompts[currentPromptIndex]
+        let prompt = allPrompts[currentPromptIndex]
         if let url = recordedClips[prompt.id] {
             try? FileManager.default.removeItem(at: url)
             recordedClips.removeValue(forKey: prompt.id)
@@ -570,7 +617,7 @@ final class RecordVoiceViewController: UIViewController, AVAudioRecorderDelegate
 
     @objc private func saveAndNextTapped() {
         guard let person = selectedPerson else { return }
-        let prompt = Self.prompts[currentPromptIndex]
+        let prompt = allPrompts[currentPromptIndex]
         guard let url = recordedClips[prompt.id] else { return }
 
         let recording = VoiceRecording(

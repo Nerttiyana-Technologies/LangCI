@@ -18,6 +18,12 @@ protocol VoiceRecordingService {
     func addRecording(_ recording: VoiceRecording) async throws -> VoiceRecording
     func deleteRecording(id: Int) async throws
 
+    // MARK: - Custom Prompts
+    func getAllCustomPrompts() async throws -> [CustomVoicePrompt]
+    func getCustomPrompts(category: String) async throws -> [CustomVoicePrompt]
+    func addCustomPrompt(_ prompt: CustomVoicePrompt) async throws -> CustomVoicePrompt
+    func deleteCustomPrompt(id: Int) async throws
+
     // MARK: - Stats
     func totalRecordingCount() async throws -> Int
     func recordingCount(forPerson personId: Int) async throws -> Int
