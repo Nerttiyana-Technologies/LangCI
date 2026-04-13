@@ -222,7 +222,7 @@ final class CustomPromptsViewController: UIViewController {
                     await MainActor.run {
                         self.existingPrompts.append(saved)
                         self.rebuildContent()
-                        lcHapticSuccess()
+                        self.lcHapticSuccess()
                     }
                 }
             }
