@@ -15,6 +15,7 @@ final class VoiceLibraryViewController: UIViewController {
     private let service = ServiceLocator.shared.voiceRecordingService!
     private var people: [RecordedPerson] = []
     private var recordings: [Int: [VoiceRecording]] = [:]  // personId → clips
+    private var expandedPersonIds: Set<Int> = []            // collapsed by default
     private var audioPlayer: AVAudioPlayer?
 
     // MARK: - UI
@@ -226,54 +227,117 @@ final class VoiceLibraryViewController: UIViewController {
     // MARK: - Person Section
 
     private func buildPersonSection(_ person: RecordedPerson) -> UIView {
+        let card = LCCard()
         let wrapper = UIStackView()
         wrapper.axis = .vertical
         wrapper.spacing = 8
+        wrapper.translatesAutoresizingMaskIntoConstraints = false
 
-        // Header
-        let header = UIStackView()
-        header.axis = .horizontal
-        header.spacing = 10
-        header.alignment = .center
-
+        let isExpanded = expandedPersonIds.contains(person.id)
+        let clips = recordings[person.id] ?? []
         let color = colorForKey(person.color)
+
+        // Header — tappable to expand/collapse
+        let header = UIView()
+        header.isUserInteractionEnabled = true
+        let headerStack = UIStackView()
+        headerStack.axis = .horizontal
+        headerStack.spacing = 10
+        headerStack.alignment = .center
+        headerStack.translatesAutoresizingMaskIntoConstraints = false
+        headerStack.isUserInteractionEnabled = false
+        header.addSubview(headerStack)
+        NSLayoutConstraint.activate([
+            headerStack.topAnchor.constraint(equalTo: header.topAnchor),
+            headerStack.bottomAnchor.constraint(equalTo: header.bottomAnchor),
+            headerStack.leadingAnchor.constraint(equalTo: header.leadingAnchor),
+            headerStack.trailingAnchor.constraint(equalTo: header.trailingAnchor),
+        ])
+
+        let iconBg = UIView()
+        iconBg.backgroundColor = color.withAlphaComponent(0.12)
+        iconBg.layer.cornerRadius = 18
+        iconBg.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        iconBg.heightAnchor.constraint(equalToConstant: 36).isActive = true
+
         let icon = UIImageView(image: UIImage(systemName: person.icon))
         icon.tintColor = color
         icon.contentMode = .scaleAspectFit
-        icon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        iconBg.addSubview(icon)
+        NSLayoutConstraint.activate([
+            icon.centerXAnchor.constraint(equalTo: iconBg.centerXAnchor),
+            icon.centerYAnchor.constraint(equalTo: iconBg.centerYAnchor),
+            icon.widthAnchor.constraint(equalToConstant: 16),
+            icon.heightAnchor.constraint(equalToConstant: 16),
+        ])
 
+        let textStack = UIStackView()
+        textStack.axis = .vertical
+        textStack.spacing = 1
         let name = UILabel()
-        name.text = "\(person.name) — \(person.relationship)"
+        name.text = person.name
         name.font = .systemFont(ofSize: 16, weight: .bold)
         name.textColor = .label
+        let sub = UILabel()
+        sub.text = "\(person.relationship) \u{2022} \(clips.count) clips"
+        sub.font = .systemFont(ofSize: 12, weight: .medium)
+        sub.textColor = .secondaryLabel
+        textStack.addArrangedSubview(name)
+        textStack.addArrangedSubview(sub)
 
-        let clips = recordings[person.id] ?? []
-        let countLabel = UILabel()
-        countLabel.text = "\(clips.count) clips"
-        countLabel.font = UIFont.lcCaption()
-        countLabel.textColor = .secondaryLabel
-        countLabel.setContentHuggingPriority(.required, for: .horizontal)
+        let chevron = UIImageView(image: UIImage(systemName: isExpanded ? "chevron.up" : "chevron.down"))
+        chevron.tintColor = .tertiaryLabel
+        chevron.contentMode = .scaleAspectFit
+        chevron.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        chevron.setContentHuggingPriority(.required, for: .horizontal)
 
-        header.addArrangedSubview(icon)
-        header.addArrangedSubview(name)
-        header.addArrangedSubview(countLabel)
+        headerStack.addArrangedSubview(iconBg)
+        headerStack.addArrangedSubview(textStack)
+        headerStack.addArrangedSubview(chevron)
+
+        let tap = PersonToggleGesture(target: self, action: #selector(togglePersonSection(_:)))
+        tap.personId = person.id
+        header.addGestureRecognizer(tap)
+
         wrapper.addArrangedSubview(header)
 
-        // Recording rows
-        for clip in clips {
-            wrapper.addArrangedSubview(buildClipRow(clip, person: person))
+        // Clip rows + delete button — only visible when expanded
+        if isExpanded {
+            for clip in clips {
+                wrapper.addArrangedSubview(buildClipRow(clip, person: person))
+            }
+
+            let deleteBtn = UIButton(type: .system)
+            deleteBtn.setTitle("Remove \(person.name)", for: .normal)
+            deleteBtn.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+            deleteBtn.setTitleColor(.lcRed, for: .normal)
+            deleteBtn.tag = person.id
+            deleteBtn.addTarget(self, action: #selector(deletePersonTapped(_:)), for: .touchUpInside)
+            wrapper.addArrangedSubview(deleteBtn)
         }
 
-        // Delete person button
-        let deleteBtn = UIButton(type: .system)
-        deleteBtn.setTitle("Remove \(person.name)", for: .normal)
-        deleteBtn.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
-        deleteBtn.setTitleColor(.lcRed, for: .normal)
-        deleteBtn.tag = person.id
-        deleteBtn.addTarget(self, action: #selector(deletePersonTapped(_:)), for: .touchUpInside)
-        wrapper.addArrangedSubview(deleteBtn)
+        card.addSubview(wrapper)
+        NSLayoutConstraint.activate([
+            wrapper.topAnchor.constraint(equalTo: card.topAnchor, constant: 14),
+            wrapper.bottomAnchor.constraint(equalTo: card.bottomAnchor, constant: -14),
+            wrapper.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 14),
+            wrapper.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: -14),
+        ])
 
-        return wrapper
+        return card
+    }
+
+    @objc private func togglePersonSection(_ gesture: PersonToggleGesture) {
+        let pid = gesture.personId
+        if expandedPersonIds.contains(pid) {
+            expandedPersonIds.remove(pid)
+        } else {
+            expandedPersonIds.insert(pid)
+        }
+        rebuildCards()
+        lcHaptic(.light)
     }
 
     private func buildClipRow(_ clip: VoiceRecording, person: RecordedPerson) -> UIView {
@@ -442,4 +506,10 @@ final class VoiceLibraryViewController: UIViewController {
         default:         return .lcTeal
         }
     }
+}
+
+// MARK: - Gesture subclass
+
+private class PersonToggleGesture: UITapGestureRecognizer {
+    var personId: Int = 0
 }
