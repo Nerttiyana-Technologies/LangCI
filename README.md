@@ -15,6 +15,13 @@ The screen snapshots of initial version of LangCI application
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/MinimalPairs.png" alt="MinimalPairs" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/MusicPerception.png" alt="MusicPerception" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/SoundTherapy.png" alt="Sound Therapy" style="width:50%; height:50%;">
-<img src="https://github.com/isureshsubramanian/LangCI/blob/main/SoundTraining.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/11-AudiologistTest.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/12-SelfTest.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/13-VoiceLibrary.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/14-SoundTraining.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/15-SoundTraining.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/16-SoundTraining.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/17-HomePage.png" alt="Sound Training" style="width:50%; height:50%;">
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/18-ReadNewsPaper.png" alt="Sound Training" style="width:50%; height:50%;">
 
 
