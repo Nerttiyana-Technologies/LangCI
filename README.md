@@ -2,6 +2,7 @@ As part of my Cochlear Implant Journey, I have developed this application (works
 
 The screen snapshots of initial version of LangCI application
 
+<img src="https://github.com/isureshsubramanian/LangCI/blob/main/about.png" alt="Home" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/10-Home.png" alt="Home" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/09-Train.png" alt="Train" style="width:50%; height:50%;">
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/08-Record.png" alt="Record" style="width:50%; height:50%;">
