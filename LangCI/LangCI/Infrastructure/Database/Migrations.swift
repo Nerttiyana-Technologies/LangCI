@@ -772,6 +772,87 @@ enum Migrations {
             try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_custom_prompt_category ON custom_voice_prompt(category)")
         }
 
+        // v12: Sound Detection Test — audiologist tracking grid
+        migrator.registerMigration("v12_sound_detection_test") { db in
+            // Customizable sounds to test
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS test_sound (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    symbol          TEXT    NOT NULL,
+                    tamil_label     TEXT,
+                    ipa_symbol      TEXT,
+                    audio_file_name TEXT,
+                    sort_order      INTEGER NOT NULL DEFAULT 0,
+                    is_active       INTEGER NOT NULL DEFAULT 1,
+                    is_default      INTEGER NOT NULL DEFAULT 0,
+                    created_at      REAL    NOT NULL
+                )
+            """)
+
+            // A test session (one visit / one self-test run)
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS detection_test_session (
+                    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tested_at        REAL    NOT NULL,
+                    mode             INTEGER NOT NULL DEFAULT 0,
+                    trials_per_sound INTEGER NOT NULL DEFAULT 9,
+                    distance_cm      INTEGER NOT NULL DEFAULT 100,
+                    tester_name      TEXT,
+                    notes            TEXT,
+                    is_complete      INTEGER NOT NULL DEFAULT 0,
+                    created_at       REAL    NOT NULL
+                )
+            """)
+
+            // Individual trial results (one per sound per trial number)
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS detection_trial (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    session_id      INTEGER NOT NULL,
+                    sound_id        INTEGER NOT NULL,
+                    trial_number    INTEGER NOT NULL,
+                    is_detected     INTEGER NOT NULL DEFAULT 0,
+                    is_correct      INTEGER NOT NULL DEFAULT 0,
+                    user_response   TEXT,
+                    response_time_ms INTEGER,
+                    created_at      REAL    NOT NULL,
+                    FOREIGN KEY (session_id) REFERENCES detection_test_session(id) ON DELETE CASCADE,
+                    FOREIGN KEY (sound_id) REFERENCES test_sound(id) ON DELETE CASCADE
+                )
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_detection_trial_session ON detection_trial(session_id)")
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_detection_trial_sound ON detection_trial(sound_id)")
+
+            // Seed default sounds (Ling 6 + audiologist extras)
+            let now = Date().timeIntervalSince1970
+            let defaults: [(String, String?, String?, Int)] = [
+                ("a",   nil,   "/ɑː/", 0),
+                ("e",   nil,   "/ɛ/",  1),
+                ("mm",  nil,   "/m/",  2),
+                ("o",   nil,   "/oː/", 3),
+                ("sh",  "ஷ்",  "/ʃ/",  4),
+                ("ush", nil,   "/ʊʃ/", 5),
+                ("ee",  nil,   "/iː/", 6),
+                ("oo",  nil,   "/uː/", 7),
+                ("ss",  "ஸ்",  "/s/",  8),
+            ]
+            for (symbol, tamil, ipa, order) in defaults {
+                try db.execute(
+                    sql: """
+                        INSERT INTO test_sound (symbol, tamil_label, ipa_symbol, sort_order, is_active, is_default, created_at)
+                        VALUES (?, ?, ?, ?, 1, 1, ?)
+                    """,
+                    arguments: [symbol, tamil, ipa, order, now])
+            }
+        }
+
+        // v13 — Add TTS pronunciation hint for custom sounds
+        migrator.registerMigration("v13_tts_hint") { db in
+            try db.execute(sql: """
+                ALTER TABLE test_sound ADD COLUMN tts_hint TEXT
+            """)
+        }
+
         try migrator.migrate(dbQueue)
     }
 

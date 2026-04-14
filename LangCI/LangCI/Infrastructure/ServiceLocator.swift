@@ -34,6 +34,7 @@ final class ServiceLocator {
     private(set) var soundTherapyService: SoundTherapyService!
     private(set) var environmentalSoundService: EnvironmentalSoundService!
     private(set) var voiceRecordingService: VoiceRecordingService!
+    private(set) var soundDetectionService: SoundDetectionService!
 
     // MARK: - Configuration
 
@@ -61,5 +62,6 @@ final class ServiceLocator {
         soundTherapyService  = GRDBSoundTherapyService(db: db)
         environmentalSoundService = GRDBEnvironmentalSoundService(db: db)
         voiceRecordingService     = GRDBVoiceRecordingService(db: db)
+        soundDetectionService     = GRDBSoundDetectionService(db: db)
     }
 }

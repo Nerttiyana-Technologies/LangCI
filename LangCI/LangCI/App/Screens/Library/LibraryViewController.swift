@@ -12,6 +12,7 @@
 // The companion WordDetailViewController is declared at the bottom.
 
 import UIKit
+import AVFoundation
 
 // MARK: - LibraryViewController
 
@@ -600,6 +601,9 @@ final class WordDetailViewController: UIViewController {
     private let translationLabel = UILabel()
     private let playButton = LCIconButton(systemIcon: "speaker.wave.2.fill", tint: .lcOrange, size: 56)
 
+    // TTS fallback
+    private let synthesizer = AVSpeechSynthesizer()
+
     // Details card
     private let detailsCard = LCCard()
 
@@ -840,14 +844,17 @@ final class WordDetailViewController: UIViewController {
     // MARK: Actions
     @objc private func playTapped() {
         lcHaptic(.light)
-        // Play most recent recording if any, else show hint
+        // Play most recent recording if any, else use TTS
         if let first = recordings.first {
             playRecording(first)
         } else {
-            lcShowToast("No audio yet — record this word to hear it",
-                        icon: "info.circle.fill",
-                        tint: .lcBlue)
+            speakWithTTS(wordEntry.nativeScript)
         }
+    }
+
+    private func speakWithTTS(_ text: String) {
+        // Use MultiVoiceTTS with user's selected accent
+        MultiVoiceTTS.shared.speakNextVoice(text)
     }
 
     private func playRecording(_ recording: Recording) {

@@ -171,8 +171,15 @@ final class CIHubViewController: UIViewController {
                                    tint: .lcRed,
                                    action: #selector(didTapMusic))
 
+        let detectionRow = makeToolRow(icon: "ear.trianglebadge.exclamationmark",
+                                       title: "Sound Detection Test",
+                                       subtitle: "Audiologist grid & self-test",
+                                       tint: .lcOrange,
+                                       action: #selector(didTapSoundDetection))
+
         let inner = UIStackView(arrangedSubviews: [
             ling6Row, LCDivider(),
+            detectionRow, LCDivider(),
             mappingRow, LCDivider(),
             fatigueRow, LCDivider(),
             minimalRow, LCDivider(),
@@ -322,6 +329,11 @@ final class CIHubViewController: UIViewController {
     @objc private func didTapMinimalPairs() {
         lcHaptic(.light)
         navigationController?.pushViewController(MinimalPairsViewController(), animated: true)
+    }
+
+    @objc private func didTapSoundDetection() {
+        lcHaptic(.light)
+        navigationController?.pushViewController(SoundDetectionHomeViewController(), animated: true)
     }
 
     @objc private func didTapMusic() {

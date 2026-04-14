@@ -5,6 +5,7 @@
 // tap-to-reveal translation, rating buttons with haptics, and clean completion state.
 
 import UIKit
+import AVFoundation
 
 final class TrainingSessionViewController: UIViewController {
 
@@ -53,6 +54,14 @@ final class TrainingSessionViewController: UIViewController {
     private var currentSessionWord: SessionWord?
     private var currentTranslation: String?
 
+    // MARK: - Multi-Voice Audio
+
+    /// Voice Library recordings keyed by word text (lowercased)
+    private var voiceClips: [String: [VoiceRecording]] = [:]
+    private var audioPlayer: AVAudioPlayer?
+    /// Label showing which voice is playing ("Tamil Female", "Priya", etc.)
+    private let voiceNameLabel = UILabel()
+
     // MARK: - Init
 
     init(session: TrainingSession) {
@@ -71,6 +80,7 @@ final class TrainingSessionViewController: UIViewController {
         super.viewDidLoad()
         setupNavigation()
         buildUI()
+        loadVoiceLibrary()
         loadSessionWords()
     }
 
@@ -97,13 +107,18 @@ final class TrainingSessionViewController: UIViewController {
 
     // MARK: - UI Setup
 
+    private let accentPicker = VoiceAccentPicker()
+
     private func buildUI() {
         buildProgressCard()
         buildWordCard()
         buildRatingStack()
         buildCompletion()
 
-        let mainStack = UIStackView(arrangedSubviews: [progressCard, wordCard, ratingStack])
+        // Voice accent picker — includes Tamil for word training
+        accentPicker.includeTamil = true
+
+        let mainStack = UIStackView(arrangedSubviews: [progressCard, accentPicker, wordCard, ratingStack])
         mainStack.axis = .vertical
         mainStack.spacing = 16
         mainStack.translatesAutoresizingMaskIntoConstraints = false
@@ -194,6 +209,12 @@ final class TrainingSessionViewController: UIViewController {
             playButton.centerXAnchor.constraint(equalTo: playWrap.centerXAnchor)
         ])
 
+        // Voice name indicator (shows "🔊 Tamil Female" etc. when playing)
+        voiceNameLabel.font = UIFont.lcCaption()
+        voiceNameLabel.textColor = .lcBlue
+        voiceNameLabel.textAlignment = .center
+        voiceNameLabel.alpha = 0
+
         translationLabel.font = .systemFont(ofSize: 22, weight: .semibold)
         translationLabel.textColor = .label
         translationLabel.textAlignment = .center
@@ -206,7 +227,7 @@ final class TrainingSessionViewController: UIViewController {
         tapRevealHint.textAlignment = .center
 
         let stack = UIStackView(arrangedSubviews: [
-            nativeScriptLabel, ipaLabel, playWrap, translationLabel, tapRevealHint
+            nativeScriptLabel, ipaLabel, playWrap, voiceNameLabel, translationLabel, tapRevealHint
         ])
         stack.axis = .vertical
         stack.alignment = .center
@@ -414,14 +435,99 @@ final class TrainingSessionViewController: UIViewController {
     @objc private func handlePlayAudio() {
         guard let word = currentWord else { return }
         lcHaptic(.light)
+
+        // Strategy:
+        // 1. Try family word recordings (RecordingService)
+        // 2. Try Voice Library clips matching this word text
+        // 3. Fall back to MultiVoiceTTS with rotating voices
         Task {
-            do {
-                let recordings = try await ServiceLocator.shared.recordingService.getRecordings(for: word.id)
-                if let recording = recordings.first, !recording.filePath.isEmpty {
-                    try await ServiceLocator.shared.recordingService.playRecording(path: recording.filePath)
+            // 1. Check family recordings for this specific word
+            let familyRecordings = (try? await ServiceLocator.shared.recordingService.getRecordings(for: word.id)) ?? []
+            if let rec = familyRecordings.randomElement(), !rec.filePath.isEmpty {
+                if let played = try? await ServiceLocator.shared.recordingService.playRecording(path: rec.filePath) {
+                    await MainActor.run {
+                        self.showVoiceName("Family Recording")
+                    }
+                    return
                 }
-            } catch {
-                // Silent fail — user can retry
+            }
+
+            // 2. Check Voice Library clips matching word text
+            let key = word.nativeScript.lowercased().trimmingCharacters(in: .whitespaces)
+            if let clips = self.voiceClips[key], !clips.isEmpty,
+               let clip = clips.randomElement() {
+                await MainActor.run {
+                    self.playVoiceClip(clip)
+                }
+                return
+            }
+
+            // 3. TTS with rotating voice profiles
+            await MainActor.run {
+                let text = word.nativeScript
+                let profile = MultiVoiceTTS.shared.speakNextVoice(text)
+                self.showVoiceName(profile.name)
+            }
+        }
+    }
+
+    /// Play a Voice Library recording via AVAudioPlayer
+    private func playVoiceClip(_ clip: VoiceRecording) {
+        let url = clip.fileURL
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            // Fallback to TTS if file missing
+            let profile = MultiVoiceTTS.shared.speakNextVoice(currentWord?.nativeScript ?? "")
+            showVoiceName(profile.name)
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+            // Look up the person name
+            Task {
+                let people = (try? await ServiceLocator.shared.voiceRecordingService?.getAllPeople()) ?? []
+                let name = people.first(where: { $0.id == clip.personId })?.name ?? "Recorded"
+                await MainActor.run {
+                    self.showVoiceName(name)
+                }
+            }
+        } catch {
+            let profile = MultiVoiceTTS.shared.speakNextVoice(currentWord?.nativeScript ?? "")
+            showVoiceName(profile.name)
+        }
+    }
+
+    /// Load all Voice Library recordings and index by word text
+    /// Indexes by both label and soundId for flexible matching
+    private func loadVoiceLibrary() {
+        Task {
+            guard let voiceService = ServiceLocator.shared.voiceRecordingService else { return }
+            let allClips = (try? await voiceService.getAllRecordings()) ?? []
+            var index: [String: [VoiceRecording]] = [:]
+            for clip in allClips {
+                // Index by label (e.g. "Push", "Say Hello")
+                let labelKey = clip.label.lowercased().trimmingCharacters(in: .whitespaces)
+                index[labelKey, default: []].append(clip)
+                // Also index by soundId if present (e.g. "custom_42")
+                if let sid = clip.soundId {
+                    index[sid.lowercased(), default: []].append(clip)
+                }
+            }
+            self.voiceClips = index
+        }
+    }
+
+    /// Show which voice is playing under the play button
+    private func showVoiceName(_ name: String) {
+        voiceNameLabel.text = "🔊 \(name)"
+        voiceNameLabel.alpha = 0
+        UIView.animate(withDuration: 0.2) {
+            self.voiceNameLabel.alpha = 1
+        }
+        // Fade out after 2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            UIView.animate(withDuration: 0.5) {
+                self.voiceNameLabel.alpha = 0
             }
         }
     }
