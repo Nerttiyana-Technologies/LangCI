@@ -309,13 +309,13 @@ final class AboutViewController: UIViewController {
             icon: "chevron.left.forwardslash.chevron.right",
             title: "Source code on GitHub",
             subtitle: "Free and open source",
-            url: "https://github.com/sureshsubramanian/LangCI")
+            url: "https://github.com/isureshsubramanian/LangCI")
 
         let privacyRow = linkRow(
             icon: "lock.shield",
             title: "Privacy Policy",
             subtitle: "All data stays on your device",
-            url: "https://sureshsubramanian.github.io/LangCI/PRIVACY_POLICY")
+            url: "https://github.com/isureshsubramanian/LangCI/blob/main/docs/PRIVACY_POLICY.md")
 
         let sourcesRow = linkRow(
             icon: "book.closed.fill",

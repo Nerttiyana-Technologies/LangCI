@@ -71,7 +71,7 @@ See the **Sources & References** screen in the app for citations to the clinical
 ## 10. Open source
 
 LangCI is open source. You can audit the exact data handling in the source code at:
-https://github.com/sureshsubramanian/LangCI
+https://github.com/isureshsubramanian/LangCI
 
 ## 11. Contact
 
