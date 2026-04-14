@@ -60,14 +60,16 @@ struct TestSound: Identifiable, Codable {
 /// One complete test session (e.g. "07/07/2026 — audiologist visit")
 struct DetectionTestSession: Identifiable, Codable {
     var id: Int
-    var testedAt: Date
+    var testedAt: Date              // When the test happened — editable for offline/backdated entries
     var mode: TestMode              // audiologist or self-test
     var trialsPerSound: Int         // typically 9 (like the paper)
     var distanceCm: Int             // distance from speaker (100cm standard)
-    var testerName: String?         // "Dr. Priya" or nil for self
+    var patientId: Int?             // FK → patient table (enables longitudinal tracking)
+    var patientName: String?        // Denormalised for display (kept in sync with Patient.name)
+    var testerName: String?         // Audiologist's name (e.g. "Dr. Priya")
     var notes: String?
     var isComplete: Bool
-    var createdAt: Date
+    var createdAt: Date             // When this row was created in DB (always now)
 }
 
 enum TestMode: Int, Codable {

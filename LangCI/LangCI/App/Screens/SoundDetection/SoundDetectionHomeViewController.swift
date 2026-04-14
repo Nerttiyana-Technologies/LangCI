@@ -45,7 +45,18 @@ final class SoundDetectionHomeViewController: UIViewController {
             image: UIImage(systemName: "slider.horizontal.3"),
             style: .plain, target: self, action: #selector(manageSoundsTapped))
         manageBtn.tintColor = .lcTeal
-        navigationItem.rightBarButtonItem = manageBtn
+
+        let patientsBtn = UIBarButtonItem(
+            image: UIImage(systemName: "person.2.fill"),
+            style: .plain, target: self, action: #selector(patientsTapped))
+        patientsBtn.tintColor = .lcTeal
+
+        navigationItem.rightBarButtonItems = [manageBtn, patientsBtn]
+    }
+
+    @objc private func patientsTapped() {
+        lcHaptic(.light)
+        navigationController?.pushViewController(PatientListViewController(), animated: true)
     }
 
     private func loadData() {
@@ -206,17 +217,29 @@ final class SoundDetectionHomeViewController: UIViewController {
             modeIcon.heightAnchor.constraint(equalToConstant: 24)
         ])
 
-        let dateLabel = UILabel()
-        dateLabel.text = dateFormatter.string(from: session.testedAt)
-        dateLabel.font = UIFont.lcBody()
-        dateLabel.textColor = .label
+        let titleLabel = UILabel()
+        // Prefer patient name, fall back to the date
+        if let patient = session.patientName, !patient.isEmpty {
+            titleLabel.text = patient
+        } else {
+            titleLabel.text = dateFormatter.string(from: session.testedAt)
+        }
+        titleLabel.font = UIFont.lcBodyBold()
+        titleLabel.textColor = .label
 
         let detailLabel = UILabel()
         let modeText = session.mode == .audiologist ? "Audiologist" : "Self-test"
         let testerText = session.testerName.map { " • \($0)" } ?? ""
-        detailLabel.text = "\(modeText)\(testerText) • \(session.trialsPerSound) trials"
+        let dateText = session.patientName?.isEmpty == false
+            ? "\(dateFormatter.string(from: session.testedAt)) • "
+            : ""
+        detailLabel.text = "\(dateText)\(modeText)\(testerText) • \(session.trialsPerSound) trials"
         detailLabel.font = UIFont.lcCaption()
         detailLabel.textColor = .secondaryLabel
+        detailLabel.numberOfLines = 2
+
+        // Alias for keep-compat name below
+        let dateLabel = titleLabel
 
         let statusBadge = UILabel()
         statusBadge.text = session.isComplete ? "Complete" : "In Progress"
@@ -261,8 +284,20 @@ final class SoundDetectionHomeViewController: UIViewController {
 
     @objc private func startAudiologistMode() {
         lcHaptic(.light)
-        let vc = AudiologistTestViewController()
-        navigationController?.pushViewController(vc, animated: true)
+
+        // Patient picker (search existing, add new, backdate, consent)
+        let picker = PatientPickerViewController()
+        picker.onConfirm = { [weak self] patient, tester, testedAt in
+            guard let self = self else { return }
+            let vc = AudiologistTestViewController()
+            vc.prefilledPatient = patient
+            vc.prefilledTesterName = tester
+            vc.prefilledTestedAt = testedAt
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        let nav = UINavigationController(rootViewController: picker)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
     }
 
     @objc private func startSelfTestMode() {

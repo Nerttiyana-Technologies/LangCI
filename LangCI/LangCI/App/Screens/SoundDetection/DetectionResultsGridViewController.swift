@@ -130,15 +130,25 @@ final class DetectionResultsGridViewController: UIViewController {
         formatter.dateStyle = .long
         formatter.timeStyle = .short
 
-        let dateLabel = UILabel()
-        dateLabel.text = formatter.string(from: session.testedAt)
-        dateLabel.font = UIFont.lcBodyBold()
-        dateLabel.textColor = .label
+        // Patient name as the main title (if present), else the date
+        let titleLabel = UILabel()
+        if let patient = session.patientName, !patient.isEmpty {
+            titleLabel.text = patient
+            titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        } else {
+            titleLabel.text = formatter.string(from: session.testedAt)
+            titleLabel.font = UIFont.lcBodyBold()
+        }
+        titleLabel.textColor = .label
 
+        // Date + mode + tester combined
         let modeText = session.mode == .audiologist ? "Audiologist Mode" : "Self-Test"
         let testerText = session.testerName.map { " • \($0)" } ?? ""
+        let dateText = session.patientName?.isEmpty == false
+            ? formatter.string(from: session.testedAt) + "  •  "
+            : ""
         let detailLabel = UILabel()
-        detailLabel.text = "\(modeText)\(testerText) • \(session.trialsPerSound) trials per sound"
+        detailLabel.text = "\(dateText)\(modeText)\(testerText) • \(session.trialsPerSound) trials per sound"
         detailLabel.font = UIFont.lcCaption()
         detailLabel.textColor = .secondaryLabel
         detailLabel.numberOfLines = 0
@@ -154,7 +164,7 @@ final class DetectionResultsGridViewController: UIViewController {
         accuracyLabel.textColor = pct >= 80 ? .lcGreen : (pct >= 50 ? .lcAmber : .lcRed)
         accuracyLabel.textAlignment = .center
 
-        let stack = UIStackView(arrangedSubviews: [dateLabel, detailLabel, accuracyLabel])
+        let stack = UIStackView(arrangedSubviews: [titleLabel, detailLabel, accuracyLabel])
         stack.axis = .vertical
         stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false

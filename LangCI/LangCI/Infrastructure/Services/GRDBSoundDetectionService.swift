@@ -65,19 +65,43 @@ final class GRDBSoundDetectionService: SoundDetectionService {
 
     // MARK: - Sessions
 
-    func createSession(mode: TestMode, trialsPerSound: Int, distanceCm: Int, testerName: String?) async throws -> DetectionTestSession {
+    func createSession(mode: TestMode, trialsPerSound: Int, distanceCm: Int,
+                       patientId: Int?, patientName: String?, testerName: String?, testedAt: Date) async throws -> DetectionTestSession {
         try await db.write { db in
             let now = Date()
             try db.execute(
                 sql: """
-                    INSERT INTO detection_test_session (tested_at, mode, trials_per_sound, distance_cm, tester_name, is_complete, created_at)
-                    VALUES (?, ?, ?, ?, ?, 0, ?)
+                    INSERT INTO detection_test_session (tested_at, mode, trials_per_sound, distance_cm, patient_id, patient_name, tester_name, is_complete, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?)
                 """,
-                arguments: [now.timeIntervalSince1970, mode.rawValue, trialsPerSound, distanceCm, testerName, now.timeIntervalSince1970])
+                arguments: [testedAt.timeIntervalSince1970, mode.rawValue, trialsPerSound, distanceCm,
+                           patientId, patientName, testerName, now.timeIntervalSince1970])
             return DetectionTestSession(
-                id: Int(db.lastInsertedRowID), testedAt: now, mode: mode,
+                id: Int(db.lastInsertedRowID), testedAt: testedAt, mode: mode,
                 trialsPerSound: trialsPerSound, distanceCm: distanceCm,
-                testerName: testerName, notes: nil, isComplete: false, createdAt: now)
+                patientId: patientId, patientName: patientName, testerName: testerName,
+                notes: nil, isComplete: false, createdAt: now)
+        }
+    }
+
+    func updateSessionInfo(id: Int, testedAt: Date, patientId: Int?, patientName: String?, testerName: String?) async throws {
+        try await db.write { db in
+            try db.execute(
+                sql: """
+                    UPDATE detection_test_session
+                    SET tested_at = ?, patient_id = ?, patient_name = ?, tester_name = ?
+                    WHERE id = ?
+                """,
+                arguments: [testedAt.timeIntervalSince1970, patientId, patientName, testerName, id])
+        }
+    }
+
+    func deleteAllSessions(forPatient patientId: Int) async throws {
+        try await db.write { db in
+            // Trials are deleted via CASCADE on session_id FK
+            try db.execute(
+                sql: "DELETE FROM detection_test_session WHERE patient_id = ?",
+                arguments: [patientId])
         }
     }
 
@@ -212,6 +236,8 @@ final class GRDBSoundDetectionService: SoundDetectionService {
             mode: TestMode(rawValue: row["mode"] as Int) ?? .audiologist,
             trialsPerSound: row["trials_per_sound"],
             distanceCm: row["distance_cm"],
+            patientId: row["patient_id"],
+            patientName: row["patient_name"],
             testerName: row["tester_name"],
             notes: row["notes"],
             isComplete: row["is_complete"] as Int == 1,

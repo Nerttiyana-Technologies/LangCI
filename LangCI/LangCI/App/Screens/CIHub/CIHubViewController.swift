@@ -60,6 +60,18 @@ final class CIHubViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         view.backgroundColor = .lcBackground
+
+        // Sources button — required for clinical content (App Guideline 1.4.1)
+        let refsBtn = UIBarButtonItem(
+            image: UIImage(systemName: "book.closed.fill"),
+            style: .plain, target: self, action: #selector(sourcesTapped))
+        refsBtn.tintColor = .lcTeal
+        navigationItem.rightBarButtonItem = refsBtn
+    }
+
+    @objc private func sourcesTapped() {
+        lcHaptic(.light)
+        navigationController?.pushViewController(MedicalReferencesViewController(), animated: true)
     }
 
     private func buildUI() {

@@ -48,6 +48,21 @@ final class ReportsViewController: UIViewController {
         title = "Reports"
         navigationItem.largeTitleDisplayMode = .always
         view.backgroundColor = .lcBackground
+
+        // References button — required by App Store Guideline 1.4.1
+        // for any medical/health information shown in the app.
+        let refsBtn = UIBarButtonItem(
+            image: UIImage(systemName: "book.closed.fill"),
+            style: .plain, target: self, action: #selector(sourcesTapped))
+        refsBtn.tintColor = .lcTeal
+        refsBtn.accessibilityLabel = "Sources and References"
+        navigationItem.rightBarButtonItem = refsBtn
+    }
+
+    @objc private func sourcesTapped() {
+        lcHaptic(.light)
+        let vc = MedicalReferencesViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     private func buildScaffold() {
@@ -116,6 +131,9 @@ final class ReportsViewController: UIViewController {
     private func renderSections() {
         contentStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
+        // Medical disclaimer at top — required for App Store Guideline 1.4.1
+        contentStack.addArrangedSubview(buildDisclaimerCard())
+
         contentStack.addArrangedSubview(buildOverviewSection())
         contentStack.addArrangedSubview(buildLevelJourneySection())
         contentStack.addArrangedSubview(buildBadgesSection())
@@ -123,6 +141,98 @@ final class ReportsViewController: UIViewController {
         contentStack.addArrangedSubview(buildLing6TrendSection())
         contentStack.addArrangedSubview(buildFatigueTrendSection())
         contentStack.addArrangedSubview(buildMilestonesSection())
+
+        // Sources link at bottom — user-visible citations entry point
+        contentStack.addArrangedSubview(buildSourcesCard())
+    }
+
+    // MARK: - Disclaimer banner (App Store Guideline 1.4.1)
+
+    private func buildDisclaimerCard() -> LCCard {
+        let card = LCCard()
+        card.contentView.backgroundColor = UIColor.lcBlue.withAlphaComponent(0.08)
+        card.layer.borderColor = UIColor.lcBlue.withAlphaComponent(0.3).cgColor
+        card.layer.borderWidth = 1
+
+        let icon = UIImageView(image: UIImage(systemName: "info.circle.fill"))
+        icon.tintColor = .lcBlue
+        icon.contentMode = .scaleAspectFit
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.widthAnchor.constraint(equalToConstant: 22).isActive = true
+
+        let text = UILabel()
+        text.numberOfLines = 0
+        text.font = UIFont.systemFont(ofSize: 13)
+        text.textColor = .label
+        text.text = "LangCI tracks your practice but is not a diagnostic tool. Scores and trends do not constitute medical advice. Tap ⓘ Sources above for clinical references, and always consult your audiologist for clinical decisions."
+
+        let row = UIStackView(arrangedSubviews: [icon, text])
+        row.axis = .horizontal
+        row.alignment = .top
+        row.spacing = 10
+        row.translatesAutoresizingMaskIntoConstraints = false
+        card.contentView.addSubview(row)
+        NSLayoutConstraint.activate([
+            row.topAnchor.constraint(equalTo: card.contentView.topAnchor, constant: 12),
+            row.bottomAnchor.constraint(equalTo: card.contentView.bottomAnchor, constant: -12),
+            row.leadingAnchor.constraint(equalTo: card.contentView.leadingAnchor, constant: 14),
+            row.trailingAnchor.constraint(equalTo: card.contentView.trailingAnchor, constant: -14),
+        ])
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(sourcesTapped))
+        card.addGestureRecognizer(tap)
+        card.isUserInteractionEnabled = true
+        return card
+    }
+
+    // MARK: - Sources link (bottom)
+
+    private func buildSourcesCard() -> LCCard {
+        let card = LCCard()
+
+        let icon = UIImageView(image: UIImage(systemName: "book.closed.fill"))
+        icon.tintColor = .lcTeal
+        icon.contentMode = .scaleAspectFit
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+
+        let title = UILabel()
+        title.text = "Sources & Clinical References"
+        title.font = UIFont.lcBodyBold()
+        title.textColor = .label
+
+        let subtitle = UILabel()
+        subtitle.text = "Ling 6, AVT, fatigue, music perception — with links to peer-reviewed sources and professional associations."
+        subtitle.font = UIFont.lcCaption()
+        subtitle.textColor = .secondaryLabel
+        subtitle.numberOfLines = 0
+
+        let texts = UIStackView(arrangedSubviews: [title, subtitle])
+        texts.axis = .vertical
+        texts.spacing = 2
+
+        let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevron.tintColor = .tertiaryLabel
+        chevron.translatesAutoresizingMaskIntoConstraints = false
+        chevron.widthAnchor.constraint(equalToConstant: 12).isActive = true
+
+        let row = UIStackView(arrangedSubviews: [icon, texts, chevron])
+        row.axis = .horizontal
+        row.alignment = .center
+        row.spacing = 12
+        row.translatesAutoresizingMaskIntoConstraints = false
+        card.contentView.addSubview(row)
+        NSLayoutConstraint.activate([
+            row.topAnchor.constraint(equalTo: card.contentView.topAnchor, constant: 14),
+            row.bottomAnchor.constraint(equalTo: card.contentView.bottomAnchor, constant: -14),
+            row.leadingAnchor.constraint(equalTo: card.contentView.leadingAnchor, constant: 14),
+            row.trailingAnchor.constraint(equalTo: card.contentView.trailingAnchor, constant: -14),
+        ])
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(sourcesTapped))
+        card.addGestureRecognizer(tap)
+        card.isUserInteractionEnabled = true
+        return card
     }
 
     private func sectionBlock(title: String, card: UIView) -> UIView {

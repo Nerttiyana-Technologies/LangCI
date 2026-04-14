@@ -853,6 +853,58 @@ enum Migrations {
             """)
         }
 
+        // v14 — Patient name for audiologist sessions (supports offline paper entries)
+        migrator.registerMigration("v14_patient_name") { db in
+            try db.execute(sql: """
+                ALTER TABLE detection_test_session ADD COLUMN patient_name TEXT
+            """)
+        }
+
+        // v15 — Promote patient to a first-class entity (enables longitudinal tracking,
+        // duplicate-name handling via identifier, per-patient progress charts)
+        migrator.registerMigration("v15_patient_entity") { db in
+            try db.execute(sql: """
+                CREATE TABLE IF NOT EXISTS patient (
+                    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name        TEXT    NOT NULL,
+                    identifier  TEXT,
+                    notes       TEXT,
+                    created_at  REAL    NOT NULL,
+                    updated_at  REAL    NOT NULL
+                )
+            """)
+            // Case-insensitive name search
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_patient_name ON patient(name COLLATE NOCASE)")
+
+            // Add FK to existing sessions
+            try db.execute(sql: """
+                ALTER TABLE detection_test_session ADD COLUMN patient_id INTEGER REFERENCES patient(id)
+            """)
+            try db.execute(sql: "CREATE INDEX IF NOT EXISTS idx_session_patient ON detection_test_session(patient_id)")
+
+            // Backfill: promote every unique patient_name already in sessions into
+            // the patient table, and link the session via patient_id. Sessions with
+            // no name stay unlinked.
+            let now = Date().timeIntervalSince1970
+            let rows = try Row.fetchAll(db, sql: """
+                SELECT DISTINCT patient_name FROM detection_test_session
+                WHERE patient_name IS NOT NULL AND patient_name <> ''
+            """)
+            for row in rows {
+                guard let name = row["patient_name"] as? String else { continue }
+                try db.execute(
+                    sql: """
+                        INSERT INTO patient (name, created_at, updated_at)
+                        VALUES (?, ?, ?)
+                    """,
+                    arguments: [name, now, now])
+                let newId = db.lastInsertedRowID
+                try db.execute(
+                    sql: "UPDATE detection_test_session SET patient_id = ? WHERE patient_name = ?",
+                    arguments: [newId, name])
+            }
+        }
+
         try migrator.migrate(dbQueue)
     }
 

@@ -144,6 +144,19 @@ final class MoreViewController: UIViewController {
             tint: .secondaryLabel,
             action: #selector(openSettings)
         ))
+
+        contentStack.addArrangedSubview(buildListCard(
+            title: "About LangCI",
+            subtitle: "The story behind the app",
+            icon: "heart.text.square.fill",
+            tint: .lcTeal,
+            action: #selector(openAbout)
+        ))
+    }
+
+    @objc private func openAbout() {
+        lcHaptic(.light)
+        navigationController?.pushViewController(AboutViewController(), animated: true)
     }
 
     // MARK: - Card Builders

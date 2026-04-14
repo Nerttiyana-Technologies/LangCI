@@ -17,6 +17,12 @@ final class AudiologistTestViewController: UIViewController {
 
     private let service = ServiceLocator.shared.soundDetectionService!
 
+    // MARK: - Prefilled patient info (set before pushing)
+
+    var prefilledPatient: Patient?
+    var prefilledTesterName: String?
+    var prefilledTestedAt: Date = Date()
+
     // MARK: - State
 
     private var session: DetectionTestSession!
@@ -30,6 +36,13 @@ final class AudiologistTestViewController: UIViewController {
 
     /// For playing recorded audio files
     private var audioPlayer: AVAudioPlayer?
+
+    // MARK: - Patient info UI
+
+    private let patientCard = LCCard()
+    private let patientNameLabel = UILabel()
+    private let sessionDateLabel = UILabel()
+    private let editPatientButton = UIButton(type: .system)
 
     // MARK: - UI
 
@@ -96,7 +109,11 @@ final class AudiologistTestViewController: UIViewController {
 
             session = try? await service.createSession(
                 mode: .audiologist, trialsPerSound: trialsPerSound,
-                distanceCm: 100, testerName: nil)
+                distanceCm: 100,
+                patientId: prefilledPatient?.id,
+                patientName: prefilledPatient?.name,
+                testerName: prefilledTesterName,
+                testedAt: prefilledTestedAt)
 
             // Init grid + per-sound trial selection (start at row 1)
             grid = Array(repeating: Array(repeating: nil, count: trialsPerSound), count: sounds.count)
@@ -135,11 +152,153 @@ final class AudiologistTestViewController: UIViewController {
             contentStack.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
         ])
 
+        buildPatientCard()
         buildAccentPicker()
         buildSoundChips()
         buildControls()
         buildGrid()
         buildSaveArea()
+    }
+
+    // MARK: - Patient Info Card
+
+    private func buildPatientCard() {
+        patientCard.translatesAutoresizingMaskIntoConstraints = false
+
+        let headerLabel = UILabel()
+        headerLabel.text = "Patient"
+        headerLabel.font = UIFont.lcCaption()
+        headerLabel.textColor = .secondaryLabel
+
+        patientNameLabel.font = UIFont.lcBodyBold()
+        patientNameLabel.textColor = .label
+        patientNameLabel.numberOfLines = 0
+
+        sessionDateLabel.font = UIFont.lcCaption()
+        sessionDateLabel.textColor = .secondaryLabel
+        sessionDateLabel.numberOfLines = 0
+
+        let editCfg = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
+        editPatientButton.setImage(UIImage(systemName: "pencil.circle", withConfiguration: editCfg), for: .normal)
+        editPatientButton.tintColor = .lcTeal
+        editPatientButton.addTarget(self, action: #selector(editPatientTapped), for: .touchUpInside)
+        editPatientButton.translatesAutoresizingMaskIntoConstraints = false
+        editPatientButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
+
+        let textStack = UIStackView(arrangedSubviews: [headerLabel, patientNameLabel, sessionDateLabel])
+        textStack.axis = .vertical
+        textStack.spacing = 2
+
+        let row = UIStackView(arrangedSubviews: [textStack, editPatientButton])
+        row.axis = .horizontal
+        row.alignment = .center
+        row.spacing = 8
+        row.translatesAutoresizingMaskIntoConstraints = false
+        patientCard.addSubview(row)
+
+        NSLayoutConstraint.activate([
+            row.topAnchor.constraint(equalTo: patientCard.topAnchor, constant: 14),
+            row.bottomAnchor.constraint(equalTo: patientCard.bottomAnchor, constant: -14),
+            row.leadingAnchor.constraint(equalTo: patientCard.leadingAnchor, constant: 16),
+            row.trailingAnchor.constraint(equalTo: patientCard.trailingAnchor, constant: -16),
+        ])
+
+        contentStack.addArrangedSubview(patientCard)
+        updatePatientCard()
+    }
+
+    private func updatePatientCard() {
+        patientNameLabel.text = session.patientName?.isEmpty == false
+            ? session.patientName
+            : "No patient selected"
+
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        var subtitle = formatter.string(from: session.testedAt)
+
+        // Show identifier if we have a linked patient
+        if let patient = prefilledPatient, let id = patient.identifier, !id.isEmpty {
+            subtitle = "\(id)  •  \(subtitle)"
+        }
+
+        if let tester = session.testerName, !tester.isEmpty {
+            subtitle += "  •  \(tester)"
+        }
+        sessionDateLabel.text = subtitle
+    }
+
+    @objc private func editPatientTapped() {
+        lcHaptic(.light)
+
+        // Simple inline editor for tester name + backdated time.
+        // Patient identity stays fixed during a running session — to switch
+        // patients the audiologist must start a new session.
+        let alert = UIAlertController(
+            title: "Edit Session Info",
+            message: "Update tester name or adjust the recorded date/time for this session.",
+            preferredStyle: .alert)
+
+        alert.addTextField { tf in
+            tf.text = self.session.testerName
+            tf.placeholder = "Tester / Audiologist"
+            tf.autocapitalizationType = .words
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Change Date…", style: .default) { [weak self] _ in
+            self?.presentDatePicker()
+        })
+        alert.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let tester = alert.textFields?[0].text?.trimmingCharacters(in: .whitespaces)
+            self.session.testerName = tester?.isEmpty == true ? nil : tester
+            Task {
+                try? await self.service.updateSessionInfo(
+                    id: self.session.id,
+                    testedAt: self.session.testedAt,
+                    patientId: self.session.patientId,
+                    patientName: self.session.patientName,
+                    testerName: self.session.testerName)
+                await MainActor.run { self.updatePatientCard() }
+            }
+        })
+        present(alert, animated: true)
+    }
+
+    private func presentDatePicker() {
+        let sheet = UIAlertController(title: "Test Date & Time", message: "\n\n\n\n\n\n\n\n\n", preferredStyle: .actionSheet)
+        let picker = UIDatePicker()
+        picker.datePickerMode = .dateAndTime
+        picker.preferredDatePickerStyle = .wheels
+        picker.date = session.testedAt
+        picker.maximumDate = Date()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        sheet.view.addSubview(picker)
+        NSLayoutConstraint.activate([
+            picker.centerXAnchor.constraint(equalTo: sheet.view.centerXAnchor),
+            picker.topAnchor.constraint(equalTo: sheet.view.topAnchor, constant: 50),
+        ])
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        sheet.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.session.testedAt = picker.date
+            Task {
+                try? await self.service.updateSessionInfo(
+                    id: self.session.id,
+                    testedAt: self.session.testedAt,
+                    patientId: self.session.patientId,
+                    patientName: self.session.patientName,
+                    testerName: self.session.testerName)
+                await MainActor.run { self.updatePatientCard() }
+            }
+        })
+        // iPad compatibility
+        if let pop = sheet.popoverPresentationController {
+            pop.sourceView = editPatientButton
+            pop.sourceRect = editPatientButton.bounds
+        }
+        present(sheet, animated: true)
     }
 
     // MARK: - Accent Picker

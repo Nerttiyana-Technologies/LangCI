@@ -77,7 +77,8 @@ final class SelfTestViewController: UIViewController {
 
             session = try? await service.createSession(
                 mode: .selfTest, trialsPerSound: trialsPerSound,
-                distanceCm: 0, testerName: nil)
+                distanceCm: 0,
+                patientId: nil, patientName: nil, testerName: nil, testedAt: Date())
 
             // Build shuffled trial queue
             var queue: [(Int, Int)] = []
