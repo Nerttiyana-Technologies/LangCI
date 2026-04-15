@@ -1,5 +1,7 @@
 As part of my Cochlear Implant Journey, I have developed this application (works only in IOS)
 
+Apple App Store: https://apps.apple.com/in/app/langci/id6761967987
+
 The screen snapshots of initial version of LangCI application
 
 <img src="https://github.com/isureshsubramanian/LangCI/blob/main/about.png" alt="Home" style="width:50%; height:50%;">
