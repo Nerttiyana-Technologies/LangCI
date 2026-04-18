@@ -39,6 +39,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             try? await ServiceLocator.shared.milestoneService.autoDetectFirsts()
             try? await ServiceLocator.shared.milestoneService.autoCheck()
         }
+
+
         return true
     }
 
